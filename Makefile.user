@@ -1,10 +1,10 @@
 # Please do not commit this file !
 
 # Path to the yuicompressor-2.4.1.jar file
-YUICOMPRESSOR = java -jar $(abspath ../xml/external/yuicompressor-2.4.1/yuicompressor-2.4.1.jar)
+YUICOMPRESSOR = java -jar $(abspath ../yuicompressor-2.4.1/yuicompressor-2.4.1.jar)
 
 # Path to the folder that contains the JSDoc toolkit
-JSDOCPATH = $(abspath ../../Documents/Private/Code/JS/jsdoc/jsdoc_toolkit-2.0.2/jsdoc-toolkit)
+JSDOCPATH = $(abspath ../jsdoc/jsdoc_toolkit-2.0.2/jsdoc-toolkit)
 
 # Path to the folder that contains the JS/CC Parser Generator
-JSCC_DIR		=	$(abspath ../../Documents/Private/Code/JS/jscc_ex)
+JSCC_DIR		=	$(abspath ../jscc_ex)
