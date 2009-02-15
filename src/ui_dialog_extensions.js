@@ -19,13 +19,14 @@
 /** @fileOverview This file defines YUI dialog extensions
 	@requires utils.js
 */
-if (!UI) var UI = {};
-if (!UI.Dialogs)
+if (!RXBuild) var RXBuild = {};
+if (!RXBuild.UI) RXBuild.UI = {};
+if (!RXBuild.UI.Dialogs)
 	/**
-		@namespace UI.Dialogs
+		@namespace RXBuild.UI.Dialogs
 		Holds various dialog utility functions.
 	*/
-	UI.Dialogs = { };
+	RXBuild.UI.Dialogs = { };
 
 (function() {
 
@@ -40,7 +41,7 @@ if (!UI.Dialogs)
 		@constructor
 		@param {String} divName The name of the div element that this item will provide to YUI
 	*/
-	UI.Dialogs.TextAreaDialog = function (divName) {
+	RXBuild.UI.Dialogs.TextAreaDialog = function (divName) {
 		this.divName = divName;
 		this.dialog = new YAHOO.widget.Dialog(divName, 
 			{
@@ -88,8 +89,8 @@ if (!UI.Dialogs)
 		this._btnCancel = oButtons[1];
 		this._oPendingCallback = null;
 	}
-	UI.Dialogs.TextAreaDialog.prototype.constructor = UI.Dialogs.TextAreaDialog;
-	UI.Dialogs.TextAreaDialog.prototype._buttonPressed = function(buttonId) {
+	RXBuild.UI.Dialogs.TextAreaDialog.prototype.constructor = RXBuild.UI.Dialogs.TextAreaDialog;
+	RXBuild.UI.Dialogs.TextAreaDialog.prototype._buttonPressed = function(buttonId) {
 		var oTemp = this._oPendingCallback;
 		this._oPendingCallback = null;
 		this.dialog.hide();
@@ -97,7 +98,7 @@ if (!UI.Dialogs)
 			oTemp(this.textBox.value);
 		}
 	};
-	UI.Dialogs.TextAreaDialog.prototype.show = function(headerHTML, defaultText, verbs, callback, callbackContext) {
+	RXBuild.UI.Dialogs.TextAreaDialog.prototype.show = function(headerHTML, defaultText, verbs, callback, callbackContext) {
 		if (this._oPendingCallback != null) throw "There is already a dialog expecting a response being shown."
 		this.dialog.header.innerHTML = headerHTML;
 		this.textBox.value = defaultText;

@@ -21,17 +21,18 @@
 	@requires regex_parser.js
 */
 
-if (!UI)
+if (!RXBuild)
 	/**
-		@namespace UI
+		@namespace RXBuild
 	*/
-	var UI = { };
+	var RXBuild = { };
+if (!RXBuild.UI) RXBuild.UI = {};
 
 (function() {
 
 	/** 
-		Creates a new instance of UI.RX
-		@class The UI.RX class holds a regular expression as input by the user, and connects with the various operations
+		Creates a new instance of RXBuild.UI.RX
+		@class The RXBuild.UI.RX class holds a regular expression as input by the user, and connects with the various operations
 		@property {String} pattern Gets the regular expression as input by the user
 		@property {Options} options Gets the options selected by the user. This object has the properties <strong>g</strong>, <strong>m</strong> and
 		 							<strong>i</strong> set to true if the corresponding option is active. There is also a <strong>str</strong> property
@@ -42,7 +43,7 @@ if (!UI)
 		@param {Boolean} i True if the pattern is case insensitive
 		@param {Boolean} m True if the pattern is in multiline mode
 	*/
-	UI.RX = function (pattern, g, i, m) {
+	RXBuild.UI.RX = function (pattern, g, i, m) {
 		this.pattern = pattern;
 		this.options = {};
 		if (g) this.options.g = true;
@@ -50,13 +51,13 @@ if (!UI)
 		if (i) this.options.i = true;
 		this.options.str = (i ? "i" : "") + (g ? "g" : "") + (m ? "m" : "");
 	};
-	UI.RX.prototype.constructor = UI.RX;
-	UI.RX.prototype.CodeBuilders = [];
+	RXBuild.UI.RX.prototype.constructor = RXBuild.UI.RX;
+	RXBuild.UI.RX.prototype.CodeBuilders = [];
 
 	/** Compiles the regexp using the custom parser, and returns the expressions DOM, or throws a string with errors encountered during parse
 		@return {Matcher} The root compiled matcher if the pattern was valid
 	*/
-	UI.RX.prototype.compile = function()
+	RXBuild.UI.RX.prototype.compile = function()
 	{
 		var oParser = new regex_parser();
 		var oResult = oParser.compile(this.pattern, this.options.i, this.options.m, this.options.g);
@@ -66,7 +67,7 @@ if (!UI)
 			throw oResult;
 	};
 	
-	UI.RX.prototype.getJSCode = function()
+	RXBuild.UI.RX.prototype.getJSCode = function()
 	{
 		var sResult = "var oRegExp = new RegExp(" + this.pattern.escapeJS() + ", \"" + this.options.str + "\");\n";
 		sResult += "var oMatches;\n";
@@ -75,9 +76,9 @@ if (!UI)
 		sResult += "}\n";
 		return sResult;
 	};
-	UI.RX.prototype.CodeBuilders.push(["JavaScript", UI.RX.prototype.getJSCode]);
+	RXBuild.UI.RX.prototype.CodeBuilders.push(["JavaScript", RXBuild.UI.RX.prototype.getJSCode]);
 
-	UI.RX.prototype.getCSCode = function()
+	RXBuild.UI.RX.prototype.getCSCode = function()
 	{
 		var sResult = "System.Text.RegularExpressions.Regex oRegExp = new System.Text.RegularExpressions.Regex(" + this.pattern.escapeCS() + ", ";
 		sResult += "   RegexOptions.Compiled.RegexOptions.Compiled|RegexOptions.Compiled.RegexOptions.ECMAScript";
@@ -92,9 +93,9 @@ if (!UI)
 	    "}\n";
 		return sResult;
 	};
-	UI.RX.prototype.CodeBuilders.push(["C#", UI.RX.prototype.getCSCode]);
+	RXBuild.UI.RX.prototype.CodeBuilders.push(["C#", RXBuild.UI.RX.prototype.getCSCode]);
 
-	UI.RX.prototype.getPerlCode = function() {
+	RXBuild.UI.RX.prototype.getPerlCode = function() {
 		var sRegExStart = "";
 		var sRegex = this.pattern.normaliseNewLines();
 		if (sRegex.indexOf("$") > -1) {
@@ -113,9 +114,9 @@ if (!UI)
 		return sRegExStart + "while ($ReplaceMeWithTheInputText =~ m/" + sRegex + "/" + this.options.str +") {\n" +
 			"# matches are in $1, $2... position in pos $ReplaceMeWithTheInputText\n# but please! Consider learning a real language\n}"; 
 	};
-	UI.RX.prototype.CodeBuilders.push(["Perl", UI.RX.prototype.getPerlCode]);
+	RXBuild.UI.RX.prototype.CodeBuilders.push(["Perl", RXBuild.UI.RX.prototype.getPerlCode]);
 	
-	UI.RX.prototype.getBashGrepCode = function () {
+	RXBuild.UI.RX.prototype.getBashGrepCode = function () {
 		var sRes = "grep -E -o ";
 		var sOptions = "";
 		if (this.options.i) sOptions += "-i ";
@@ -130,5 +131,5 @@ if (!UI)
 		sRes += sOptions + sEscapedRegExp;
 		return sRes;
 	};
-	UI.RX.prototype.CodeBuilders.push(["Bash and grep", UI.RX.prototype.getBashGrepCode]);
+	RXBuild.UI.RX.prototype.CodeBuilders.push(["Bash and grep", RXBuild.UI.RX.prototype.getBashGrepCode]);
 })();

@@ -20,17 +20,18 @@
 	@requires utils.js
 */
 
-if (!UI)
-	var UI = { };
+if (!RXBuild)
+	var RXBuild = { };
+if (!RXBuild.UI) RXBuild.UI = {};
 
 (function() {
 	/** 
-		Creates a new instance of UI.Status
-		@class The UI.Status controls an always-on-top div that shows a tasks status
+		Creates a new instance of RXBuild.UI.Status
+		@class The RXBuild.UI.Status controls an always-on-top div that shows a tasks status
 		@constructor
 		@param {String} divName The name of the div to use in the end
 	*/
-	UI.Status = function (divName) {
+	RXBuild.UI.Status = function (divName) {
 		this.div = document.createElement("DIV");
 		this.div.setAttribute("class", "");
 		this.div.setAttribute("id", divName);
@@ -41,16 +42,16 @@ if (!UI)
 		YAHOO.util.Dom.setStyle(this.div, 'opacity', '0');
 		this.div.innerHTML = "Fo' shizzle";
 		document.body.appendChild(this.div);
-		this._oAutoHide = new UI.DelayedRefresh(5000);
+		this._oAutoHide = new RXBuild.UI.DelayedRefresh(5000);
 		this._isVisible = false;
 	}
-	UI.Status.prototype.constructor = UI.Status;
+	RXBuild.UI.Status.prototype.constructor = RXBuild.UI.Status;
 	/** Displays the status in the top right
 		@param {String} text The text to display in the body
 		@param {String} color An (optional) color to use as the new background color (in format #fffff)
 		@param {Number} autohideTimeout The number of milliseconds after which to hide the status object
 	*/
-	UI.Status.prototype.show = function(text, color, autohideTimeout) {
+	RXBuild.UI.Status.prototype.show = function(text, color, autohideTimeout) {
 		this.div.innerHTML = text;
 		this._oAutoHide.setPendingEvent(null);
 		if (!this._isVisible || color) {
@@ -67,7 +68,7 @@ if (!UI)
 	};
 	/** Hides this status from view
 	*/
-	UI.Status.prototype.hide = function() {
+	RXBuild.UI.Status.prototype.hide = function() {
 		this._oAutoHide.setPendingEvent(null);
 		try {
 			this._isVisible = false;

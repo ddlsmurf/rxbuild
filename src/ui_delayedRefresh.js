@@ -18,15 +18,17 @@
 /** @fileOverview Holds the async delayed cancellable class used for refreshes
 	@requires utils.js
 */
-if (!UI)
+if (!RXBuild)
 	/** @namespace The UI namespace holds GUI related stuff */
-	var UI = {};
+	var RXBuild = {};
+
+if (!RXBuild.UI) RXBuild.UI = {};
 
 (function() {
 
 	/** 
-		Creates a new instance of UI.DelayedRefresh
-		@class The UI.DelayedRefresh Holds a triggerable and cancelable delayed event object.
+		Creates a new instance of RXBuild.UI.DelayedRefresh
+		@class The RXBuild.UI.DelayedRefresh Holds a triggerable and cancelable delayed event object.
 		@property {Number} defaultDelay The delay with which to raise the delegate if none is specified
 		@constructor
 		@param {Number} defaultDelay The default delay to use when none is specified.
@@ -36,7 +38,7 @@ if (!UI)
 						the defaultDelay. If set to 0, the defaultDelay never changes, if set to 1.0, it is always the duration
 						of the last execution of the callback, in between, the delay is averaged at each execution. A good value is 0.1.
 	*/
-	UI.DelayedRefresh = function (defaultDelay, callBack, invalidateCallback, adaptiveSpeed) {
+	RXBuild.UI.DelayedRefresh = function (defaultDelay, callBack, invalidateCallback, adaptiveSpeed) {
 		this.defaultDelay = defaultDelay;
 		if (!adaptiveSpeed) adaptiveSpeed = 0;
 		if (adaptiveSpeed < 0) adaptiveSpeed = 0;
@@ -47,8 +49,8 @@ if (!UI)
 		this.callBack = callBack;
 		this.invalidateCallback = invalidateCallback;
 	}
-	UI.DelayedRefresh.prototype.constructor = UI.DelayedRefresh;
-	UI.DelayedRefresh.prototype.stop = function() {
+	RXBuild.UI.DelayedRefresh.prototype.constructor = RXBuild.UI.DelayedRefresh;
+	RXBuild.UI.DelayedRefresh.prototype.stop = function() {
 		this.nextTimeout = 0;
 		if (this.pendingEvent)
 			{
@@ -56,7 +58,7 @@ if (!UI)
 				this.pendingEvent = null;
 			}
 	}
-	UI.DelayedRefresh.prototype.__runDelegate = function() {
+	RXBuild.UI.DelayedRefresh.prototype.__runDelegate = function() {
 		this.pendingEvent = null;
 		var iStart = new Date();
 		try {
@@ -70,7 +72,7 @@ if (!UI)
 			if (this.defaultDelay < 10) this.defaultDelay = 10;
 		}
 	}
-	UI.DelayedRefresh.prototype.reset = function(timeout) {
+	RXBuild.UI.DelayedRefresh.prototype.reset = function(timeout) {
 		if (typeof timeout == "undefined")
 			timeout = this.defaultDelay;
 		var iNextTimeout = new Date((new Date()).getTime() + timeout);

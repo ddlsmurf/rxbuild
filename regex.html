@@ -726,14 +726,14 @@ function showHtmlDialog(title, s) {
 function showNodeDetails(node) {
 	if ((typeof node.data) == "string")
 	{
-		UI.dlg.show("Match details", node.data);
+		RXBuild.UI.dlg.show("Match details", node.data);
 		return;
 	}
 	var oText = document.getElementById("txtSample");
 	if (oText == null)
 	  return;
 	oText = oText.value.substr(node.data[0], node.data[1]);
-	UI.dlg.show("Match details", oText);
+	RXBuild.UI.dlg.show("Match details", oText);
 }
 
 function getAbbridged(s) {
@@ -745,7 +745,7 @@ function getAbbridged(s) {
 }
 
 function testRegEx() {
-	var oRegExpSpecs = UI.rx.getRX();
+	var oRegExpSpecs = RXBuild.UI.rx.getRX();
 	tree.removeChildren(tree.getRoot());
 	var oRegExpControl = document.getElementById("txtRegEx");
 	var oRegExp = oRegExpControl;
@@ -855,32 +855,33 @@ YAHOO.util.Event.addListener("txtSample", "keyup", delayedTestRegEx);
 
 tree.subscribe("labelClick", clickedOnNode);
 
-if (!UI) var UI = {};
-	UI.RXEditor = function(containerDiv, headerDiv, textBox) {
+if (!RXBuild) var RXBuild = {};
+if (!RXBuild.UI) RXBuild.UI = {};
+	RXBuild.UI.RXEditor = function(containerDiv, headerDiv, textBox) {
 		this.container = typeof(containerDiv) == "string" ? document.getElementById(containerDiv) : containerDiv;
 		this.header = typeof(headerDiv) == "string" ? document.getElementById(headerDiv) : headerDiv;
 		this.textBox = typeof(textBox) == "string" ? document.getElementById(textBox) : textBox;
 		this.onRegExpChanged = new YAHOO.util.CustomEvent("onRegExpChanged");
 		this.onRegExpInvalidated = new YAHOO.util.CustomEvent("onRegExpInvalidated");
 		this.onRegExpApplyChanges = new YAHOO.util.CustomEvent("onRegExpUpdate");
-		this.changedEventTime = new UI.DelayedRefresh(300,
+		this.changedEventTime = new RXBuild.UI.DelayedRefresh(300,
 			createDelegate(this, function() { this.onRegExpApplyChanges.fire(this.getRX()); }),
 			createDelegate(this, function() { this.onRegExpInvalidated.fire(this); }),
 			0.1);
 	}
-	UI.RXEditor.prototype.constructor = UI.RXEditor;
-	UI.RXEditor.prototype.__raiseRegExpChanged = function() {
+	RXBuild.UI.RXEditor.prototype.constructor = RXBuild.UI.RXEditor;
+	RXBuild.UI.RXEditor.prototype.__raiseRegExpChanged = function() {
 		this.onRegExpChanged.fire(this);
 		this.changedEventTime.reset();
 	}
-	UI.RXEditor.prototype.getRX = function() {
-		return new UI.RX(this.textBox.value, this.chkGlobal.checked, this.chkCaseInsensitive.checked, this.chkMultiline.checked);
+	RXBuild.UI.RXEditor.prototype.getRX = function() {
+		return new RXBuild.UI.RX(this.textBox.value, this.chkGlobal.checked, this.chkCaseInsensitive.checked, this.chkMultiline.checked);
 	}
-	UI.RXEditor.prototype.updateOptionsButtonLabel = function() {
+	RXBuild.UI.RXEditor.prototype.updateOptionsButtonLabel = function() {
 		this.btnDisplayOptions.set("label", "Options (" + this.getRX().options.str + ")");
 		this.__raiseRegExpChanged();
 	}
-	UI.RXEditor.prototype.insertIntoRegexp = function(str) {
+	RXBuild.UI.RXEditor.prototype.insertIntoRegexp = function(str) {
 		if (this.textBox == null) return;
 		var iPos = this.getCaretPosition();
 		var sValueBefore = this.textBox.value.substr(0, iPos[0]);
@@ -891,7 +892,7 @@ if (!UI) var UI = {};
 			this.textBox.selectionEnd = sValueBefore.length + str.length;
 		}
 	};
-	UI.RXEditor.prototype.getCaretPosition = function() {
+	RXBuild.UI.RXEditor.prototype.getCaretPosition = function() {
 		// thanks to http://blog.vishalon.net/index.php/javascript-getting-and-setting-caret-position-in-textarea/
 		var iCaretPos = 0;
 		var iEnd = 0;
@@ -910,13 +911,13 @@ if (!UI) var UI = {};
 		}
 		return [iCaretPos, iEnd];
 	}
-	UI.RXEditor.prototype.textBoxPosChanged = function () {
+	RXBuild.UI.RXEditor.prototype.textBoxPosChanged = function () {
 		var iPos = this.getCaretPosition();
 		this.divCaretPosition.setBody("c:" + iPos[0] + (iPos[1] != iPos[0] ? "-" + iPos[1] : ""));
 		this.divCaretPosition.__ds_align();
 		this.divCaretPosition.height = this.header.offsetHeight + "px";
 	}
-	UI.RXEditor.prototype.explainRegexp = function () {
+	RXBuild.UI.RXEditor.prototype.explainRegexp = function () {
 		function makeHtmlCharsOfString(str) {
 			var sResult = "";
 			for (var i=0; i < str.length; i++) {
@@ -935,10 +936,10 @@ if (!UI) var UI = {};
 		var sRegexBlock = makeHtmlCharsOfString(oRegExp.pattern);
 		showHtmlDialog("Explanation of " + sRegexBlock, "<br>" + "<br>" + oCompiledRegExp);
 	}
-	UI.RXEditor.prototype.textBoxChanged = function () {
+	RXBuild.UI.RXEditor.prototype.textBoxChanged = function () {
 		this.__raiseRegExpChanged();
 	}
-	UI.RXEditor.prototype.initUI = function() {
+	RXBuild.UI.RXEditor.prototype.initUI = function() {
 		try {
 			function buildRegexpOptionsOverlay(prefix) {
 				var oRes = new YAHOO.widget.Overlay(prefix + "divChkContainer", { visible: false });
@@ -981,11 +982,11 @@ if (!UI) var UI = {};
 			}
 			function buildInserterMenu(scope, prefix) {
 				function insertEscapedRegExp(s, f) {
-					UI.dlg.show("Enter text to escape and insert in the pattern:", "", "Insert",
+					RXBuild.UI.dlg.show("Enter text to escape and insert in the pattern:", "", "Insert",
 						function(text) { f(text.escapeRegexp()); });
 				}
 				function insertTokenList(s, f, c) {
-						UI.dlg.show("Enter each token on its own line:", "abstract\nevent\nnew\nstruct\nas\nexplicit\nnull\nswitch\nbase\nextern\nobject\n" +
+						RXBuild.UI.dlg.show("Enter each token on its own line:", "abstract\nevent\nnew\nstruct\nas\nexplicit\nnull\nswitch\nbase\nextern\nobject\n" +
 																		 "this\nbool\nfalse\noperator\nthrow\nbreak\nfinally\nout\ntrue\nbyte\nfixed\n" +
 																		 "override\ntry\ncase\nfloat\nparams\ntypeof\ncatch\nfor\nprivate\nuint\nchar\n" + 
 																		 "foreach\nprotected\nulong\nchecked\ngoto\npublic\nunchecked\nclass\nif\nreadonly\n" +
@@ -1042,7 +1043,7 @@ if (!UI) var UI = {};
 			function buildGeneratorMenu(scope, prefix) {
 				function buildSimpleGeneratorMenuItem(scope, text, fn) {
 					var oDelegate = createDelegate(scope, function(f) {
-							UI.dlg.show(text, f.call(this.getRX()));
+							RXBuild.UI.dlg.show(text, f.call(this.getRX()));
 						});
 					return {text: text,
 						onclick: {
@@ -1051,8 +1052,8 @@ if (!UI) var UI = {};
 						}};
 				}
 				var oRes = [];
-				for (var i=0; i < UI.RX.prototype.CodeBuilders.length; i++) {
-					var oGenerator = UI.RX.prototype.CodeBuilders[i];
+				for (var i=0; i < RXBuild.UI.RX.prototype.CodeBuilders.length; i++) {
+					var oGenerator = RXBuild.UI.RX.prototype.CodeBuilders[i];
 					oRes.push(buildSimpleGeneratorMenuItem(scope, oGenerator[0], oGenerator[1]));
 				};
 				return oRes;
@@ -1118,7 +1119,7 @@ if (!UI) var UI = {};
 		}catch(e) { alert(e);}
 	}
 
-	UI.initUI = function() {
+	RXBuild.UI.initUI = function() {
 		var iItemHeight = Math.round(YAHOO.util.Dom.getViewportHeight() / 3);
         this.layout = new YAHOO.widget.Layout({
             units: [
@@ -1130,10 +1131,10 @@ if (!UI) var UI = {};
         	});
        	this.layout.render();
 
-		this.status = new UI.Status("divGeneralStatus");
-		this.dlg = new UI.Dialogs.TextAreaDialog("divGeneralDialog");
+		this.status = new RXBuild.UI.Status("divGeneralStatus");
+		this.dlg = new RXBuild.UI.Dialogs.TextAreaDialog("divGeneralDialog");
 		var oCenterLayoutUnit = this.layout.getUnitByPosition("center");
-		this.rx = new UI.RXEditor("contTxtRegEx", oCenterLayoutUnit.header.getElementsByTagName("H2")[0], "txtRegEx");
+		this.rx = new RXBuild.UI.RXEditor("contTxtRegEx", oCenterLayoutUnit.header.getElementsByTagName("H2")[0], "txtRegEx");
 		this.rx.initUI();
 		this.rx.onRegExpInvalidated.subscribe(invalidateTree);
 		this.rx.onRegExpApplyChanges.subscribe(testRegEx);
@@ -1159,7 +1160,7 @@ if (!UI) var UI = {};
 
     YAHOO.util.Event.onDOMReady(function() {	
 		try {
-			UI.initUI();
+			RXBuild.UI.initUI();
 			//delayedTestRegEx();
 		}catch(e) { alert(e);}
        });
