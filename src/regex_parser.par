@@ -1,0 +1,269 @@
+[*
+/* (c) Copyright 2009 Eric Doughty-Papassideris. All Rights Reserved.
+
+	This file is part of RXBuild.
+
+    RXBuild is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    RXBuild is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with RXBuild.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+	var __regex_parse_result;
+
+*]
+
+
+	'\|'																		[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'\*'																		[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'\+'																		[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'\$'																		[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'\^'																		[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'\?'																		[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'\(\?:'  NON_CAPTURING_OPEN_GROUP											[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'\(\?='  POS_LOOKAHEAD_OPEN_GROUP											[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'\(\?!'  NEG_LOOKAHEAD_OPEN_GROUP											[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'\('																		[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'\)'																		[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'\['																		[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'\]'																		[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'{'																			[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'}'																			[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	','																			[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'\.'		ANY_CHAR														[* %match = new ##PREFIX##.TokenInfo(%match, %offset, function(input) { return "."; }); *]
+	'\\x[0-9a-fA-F][0-9a-fA-F]'							ASCII_HEX_CODE			[* %match = new ##PREFIX##.TokenInfo(%match, %offset, this.converterASCII_HEX_CODE); *]
+	'\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]'	UNICODE_HEX_CODE		[* %match = new ##PREFIX##.TokenInfo(%match, %offset, this.converterUNICODE_HEX_CODE); *]
+	'\\[dDsSwW]'										CHARACTER_CLASS			[* %match = new ##PREFIX##.TokenInfo(%match, %offset, this.converterCHARACTER_CLASS); *]
+	'\\[fnrtv]'											SPECIAL_CHAR			[* %match = new ##PREFIX##.TokenInfo(%match, %offset, this.converterSPECIAL_CHAR); *]
+	'\\[bB]'											WORD_BOUNDARY_CHAR		[* %match = new ##PREFIX##.TokenInfo(%match, %offset, this.converterWORD_BOUNDARY_CHAR); *]
+	'\\[0-9]+'	ESCAPED_NUM														[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'\\.'		ESCAPED_CHAR													[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'[0-9]+'	INT																[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	'.'			ANY																[* %match = new ##PREFIX##.TokenInfo(%match, %offset); *]
+	;
+
+
+##
+
+
+RegEx:			Expression						[*	%% = __regex_parse_result = %1; *]
+				;
+
+Expression:		Expression '|' Catenation		[*	if (%1 instanceof AlternativeMatch)
+													{
+														%% = %1;
+														%1.AddAlternative(%3);
+													}
+													else
+														%% = new AlternativeMatch(%1, %3);
+													%%.AddTokens(%2);  *]
+				| Catenation
+				;
+				
+Catenation:		Catenation Factor				[*	%1.AppendAtEnd(%2); %% = %1; *]
+				| Factor
+				;
+				
+Factor:			Term '*' '?'						[* 	%% = new RepeatedMatch(%1, 0, -1, false); %%.AddTokens(%2, %3); *]
+				| Term '+' '?'						[* 	%% = new RepeatedMatch(%1, 1, -1, false); %%.AddTokens(%2, %3); *]
+				| Term '?' '?'						[* 	%% = new RepeatedMatch(%1, 0, 1, false); %%.AddTokens(%2, %3); *]
+				| Term '{' INT '}' '?'				[* 	%% = new RepeatedMatch(%1, parseInt(%3.value), parseInt(%3.value), false); %%.AddTokens(%2, %3, %4, %5); *]
+				| Term '{' INT ',' '}' '?'			[* 	%% = new RepeatedMatch(%1, parseInt(%3.value), -1, false); %%.AddTokens(%2, %3, %4, %5, %6); *]
+				| Term '{' INT ',' INT '}' '?'		[* 	%% = new RepeatedMatch(%1, parseInt(%3.value), parseInt(%5.value), false); %%.AddTokens(%2, %3, %4, %5, %6, %7); *]
+				| Term '*'							[* 	%% = new RepeatedMatch(%1, 0, -1, true); %%.AddTokens(%2); *]
+				| Term '+'							[* 	%% = new RepeatedMatch(%1, 1, -1, true); %%.AddTokens(%2); *]
+				| Term '?'							[* 	%% = new RepeatedMatch(%1, 0, 1, true); %%.AddTokens(%2); *]
+				| Term '{' INT '}'					[* 	%% = new RepeatedMatch(%1, parseInt(%3.value), parseInt(%3.value), true);  %%.AddTokens(%2, %3, %4); *]
+				| Term '{' INT ',' '}'				[* 	%% = new RepeatedMatch(%1, parseInt(%3.value), -1, true); %%.AddTokens(%2, %3, %4, %5); *]
+				| Term '{' INT ',' INT '}'			[* 	%% = new RepeatedMatch(%1, parseInt(%3.value), parseInt(%5.value), true); %%.AddTokens(%2, %3, %4, %5, %6); *]
+				| Term
+				;
+
+Term:			Character
+				| CharacterSet
+				| NON_CAPTURING_OPEN_GROUP Expression ')'			[*	%% = new GroupMatch(%2, "no_capture"); %%.AddTokens(%1, %3); *]
+				| POS_LOOKAHEAD_OPEN_GROUP Expression ')'			[*	%% = new GroupMatch(%2, "pos_la"); %%.AddTokens(%1, %3); *]
+				| NEG_LOOKAHEAD_OPEN_GROUP Expression ')'			[*	%% = new GroupMatch(%2, "neg_la"); %%.AddTokens(%1, %3); *]
+				| '(' Expression ')'								[*	%% = new GroupMatch(%2, "capture"); %%.AddTokens(%1, %3); *]
+				| Positional
+				;
+
+Positional:     '$'								[*  %% = new PositionalMatch(%1.value, this.options.m); %%.AddTokens(%1); *] 
+				| '^'							[*  %% = new PositionalMatch(%1.value, this.options.m); %%.AddTokens(%1); *]
+				| WORD_BOUNDARY_CHAR			[*  %% = new PositionalMatch(%1.value); %%.AddTokens(%1); *]
+				;
+
+CharacterSet:	'[' CharClass ']'				[*	%% = %2; %%.AddTokens(%1, %3); *]
+				| ANY_CHAR						[*	%% = new CharacterRangeMatch(true); %%.AddTokens(%1); *]
+				| CHARACTER_CLASS				[*  %% = new CharacterRangeMatch(false); %%.AddClass(%1.value); %%.AddTokens(%1); *]
+				;
+												
+CharClass:		CharClass Character					[*	%1.AddChars(%2); %% = %1; *]
+				| CharClass CHARACTER_CLASS			[*	%1.AddClass(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass ANY_CHAR				[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass NON_CAPTURING_OPEN_GROUP [*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass POS_LOOKAHEAD_OPEN_GROUP [*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass NEG_LOOKAHEAD_OPEN_GROUP [*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass '|'						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass '*'						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass '+'						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass '$'						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass '^'						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass '?'						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass '{'						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass '}'						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass ','						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass '('						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass ')'						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass WORD_BOUNDARY_CHAR		[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				|									[*	%% = new CharacterRangeMatch(false); *]
+				;
+
+
+Character:		ASCII_HEX_CODE			[*	%% = new LiteralMatcher(%1.value); %%.AddTokens(%1); *]
+				| UNICODE_HEX_CODE		[*	%% = new LiteralMatcher(%1.value); %%.AddTokens(%1); *]
+				| SPECIAL_CHAR			[*	%% = new LiteralMatcher(%1.value); %%.AddTokens(%1); *]
+				| ESCAPED_CHAR			[*	%% = new LiteralMatcher(%1.value.substr(1, 1)); %%.AddTokens(%1); *]
+				| ESCAPED_NUM			[*	%% = new BackTrackOrEscapeTempMatch(%1.value.substr(1)); %%.AddTokens(%1); *]
+				| INT					[*	%% = new LiteralMatcher(%1.value); %%.AddTokens(%1); *]
+				| ANY					[*	%% = new LiteralMatcher(%1.value); %%.AddTokens(%1); *]
+				;
+
+[*
+	/** 
+		Creates a new instance of TokenInfo
+		@class The TokenInfo class holds information about a token from the input stream
+		@property {Number} offset The index of this token in the input stream
+		@property {Number} length The length of this token as it appeared originally in the input stream
+		@property {String} value The actual value (possibly converted) of the part matched by this token
+		@constructor
+		@param {String} value The value from the input stream
+		@param {Number} offset The first index of this token in the input string
+		@param {function} converter If defined, this function is called with the value as parameter, and its return value is used as the new value.
+	*/
+	##PREFIX##.TokenInfo = function (value, offset, converter) {
+		this.length = value.length;
+		this.value = converter ? converter(value) : value;
+		this.offset = offset;
+		if (value == null)
+		  throw ("new TokenInfo - Error, null value");
+	};
+	##PREFIX##.TokenInfo.prototype.constructor = ##PREFIX##.TokenInfo;
+
+	/** @private */
+	##PREFIX##.prototype.converterASCII_HEX_CODE = function(input) {
+		return String.fromCharCode(parseInt("0x" + input.substr(2)));
+	};
+	/** @private */
+	##PREFIX##.prototype.converterUNICODE_HEX_CODE = function(input) {
+		return String.fromCharCode(parseInt("0x" + input.substr(2)));
+	};
+	/** @private */
+	##PREFIX##.prototype.converterSPECIAL_CHAR = function(input) {
+		input = input.substr(1);
+		if (input == "f")
+			return String.fromCharCode(12);
+		if (input == "n")
+			return String.fromCharCode(10);
+		if (input == "r")
+			return String.fromCharCode(13);
+		if (input == "t")
+			return String.fromCharCode(9);
+		if (input == "v")
+			return String.fromCharCode(11);		
+		throw "Unknown special character: \\" + input;
+	};
+	/** @private */
+	##PREFIX##.prototype.converterWORD_BOUNDARY_CHAR = function(input) {
+		if (input == "\\b")
+			return "\b";
+		return input;
+	};
+	/** @private */
+	##PREFIX##.prototype.converterCHARACTER_CLASS = function(input) {
+		var sClass = input.substr(1);
+		if (sClass == "d") {
+			return "0-9";
+		} else if (sClass == "D") {
+			return "^0-9";
+		} else if (sClass == "s") {
+			return "\t\n\v\f\r \u00a0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000";
+		} else if (sClass == "S") {
+			return "^\t\n\v\f\r \u00a0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000";
+		} else if (sClass == "w") {
+			return "A-Za-z0-9_";
+		} else if (sClass == "W") {
+			return "^A-Za-z0-9_";
+		}
+		throw "Unknown character class: \\" + input.substr(1);
+	};
+	/** Compiles the provided regexp, and returns the resulting tree, if succesfull, or an error string.
+		@param {String} str The regexp string to parse
+		@return {String|Matcher} The error string if any error occured while parsing, or the resulting root matcher
+	*/
+	##PREFIX##.prototype.compile = function (str, caseInsensitive, multiline, global) 
+	{ 
+	    var i, j; 
+	    var error_offsets = new Array(); 
+	    var error_expects = new Array(); 
+	    var error_count = 0; 
+
+		this.options = {};
+		if (caseInsensitive) this.options.i = true;
+		if (multiline) this.options.m = true;
+		if (global) this.options.g = true;
+	    if( str == "" ) 
+	        return; 
+	    if( ( error_count = this.parse( str, error_offsets, error_expects, false ) ) == 0 ) 
+	    { 
+	    	var idArray = [1, 1];
+			__regex_parse_result = __regex_parse_result.Flatten();
+	        __regex_parse_result = __regex_parse_result.RunForAll(function(current_ids) {
+				this.id = current_ids[0]++;
+				if (this instanceof GroupMatch && this.captured)
+					this.groupIndex = current_ids[1]++;
+				return this;
+				}, idArray);
+	        __regex_parse_result = __regex_parse_result.RunForAll(function(max_group_id) { 
+	            if (this instanceof BackTrackOrEscapeTempMatch) 
+	                if (this.number >= max_group_id) 
+	                { 
+	                    var oEscapeMatcher = new LiteralMatcher(String.fromCharCode( this.number )); 
+	                    oEscapeMatcher.next = this.next; 
+	                    oEscapeMatcher.id = this.id; 
+	                    return oEscapeMatcher; 
+	                } 
+	            return this; 
+	        }, idArray[1]);
+	        return __regex_parse_result; 
+	    } 
+	    else 
+	    {
+			var sResult = error_count + " errors encountered:\n"
+	        for( i = 0; i < error_count; i++ ) 
+	        {
+				if (i > 0)
+					sResult += "\n\n";
+				sResult += "Error #" + (i + 1) + ":\n";
+	            var spaces = new String(); 
+	            for( j = 0; j < error_offsets[i]; j++ ) 
+	                spaces += " "; 
+             
+	            sResult += "\"" + str + "\"\n" + 
+	             " " + spaces + "^\n" + 
+	             " expecting \"" + error_expects[i].join() + "\""; 
+	        } 
+			return sResult;
+	    } 
+	};
+
+*]
+

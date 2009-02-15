@@ -1,0 +1,65 @@
+    _/_/_/    _/      _/            _/_/_/              _/  _/        _/   
+   _/    _/    _/  _/              _/    _/  _/    _/      _/    _/_/_/    
+  _/_/_/        _/    _/_/_/_/_/  _/_/_/    _/    _/  _/  _/  _/    _/     
+ _/    _/    _/  _/              _/    _/  _/    _/  _/  _/  _/    _/      
+_/    _/  _/      _/            _/_/_/      _/_/_/  _/  _/    _/_/_/       
+
+Purpose
+-------
+The goal is to provide a usefull, crossplatform, light and free toolset for working with regular expressions.
+RXBuild is a bunch of javascripts and an html main page gluing them together.
+
+Features
+--------
+- Edit the regular expression with a big font. (Yes, it's a feature!)
+- Run the regular expression against sample input text during editing to check edit impact on results
+- Analyse the regular expression by using the built-in regular expression to english translator
+- Insert common regular expression patterns quickly
+- Quick reference from Mozilla
+- Create token list type regular expressions
+- Escape text to a regular expression litteral (one that would match exactly that text) and insert it
+- Generate various code outputs for the regular expression (Outputs C# code that would run the current expression)
+
+Run RXBuild
+-----------
+Simply open regex.html in your favorite browser (or Firefox).
+
+Platforms
+---------
+The code is tested only with Opera 9.6. Support for Firefox, Safari and IE7+ seems ok though.
+
+Requirements
+------------
+Should be independent at runtime, however, to build, you need at least JS/CC (http://jscc.jmksf.com/).
+The Makefile uses JSDoc (http://code.google.com/p/jsdoc-toolkit/) to build the documentation
+and YUI Compressor to reduce the sources size http://www.julienlecomte.net/yuicompressor/
+
+Compile Instructions
+--------------------
+There is no need to compile, unless you are editing the parser's grammar (src/regex_parser.par).
+See the MakeFile. Update the paths in Makefile.user before hoping for anything.
+
+Credits
+-------
+	Based on the Yahoo User Interface Library - http://developer.yahoo.com/yui/
+	The parser is built using JS/CC the Parser Generator - http://jscc.jmksf.com/ - Copyright © 2007, 2008 by Jan Max Meyer, J.M.K S.F. Software Technologies
+	The quick reference is taken from https://developer.mozilla.org/En/Core_JavaScript_1.5_Reference/Global_Objects/RegExp
+
+Licencing and Copyright
+-----------------------
+Copyright © 2009 by Eric Doughty-Papassideris
+
+This file is part of RXBuild.
+
+RXBuild is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+RXBuild is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with RXBuild.  If not, see <http://www.gnu.org/licenses/>.
