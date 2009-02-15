@@ -242,36 +242,8 @@ String.prototype.parseURLKeyValues = function () {
 	};
 })();
 
-/**
-	Looks for an equal item in an array, and returns true if it was in the array.
-	@param {Array} arr The array to search through
-	@param {Whatever} txt The item to look for
-	@type boolean
-	@static
-*/
-function arrayHasString(arr, txt) {
-	for (var s in arr) if (arr[s] == txt) return true;
-	return false;
-}
-
-
-/**
-	Returns a string in the format l: 12 c:34 from an offset in a string
-	@param {String} txt The original string (used to find the line number)
-	@param {number} pos The offset in txt
-	@type String
-	@static
-*/
-function getLineNoByCharPos(txt, pos) {
-	var iLines= 1;
-	var iLineStart = 0;
-	if (pos > 0) pos --;
-	for (var i=0; i<=pos; i++) if (txt[i] == "\n"){
-		iLineStart = i;
-		iLines++;
-	}
-	return "l: " + iLines + " c:" + (pos - iLineStart);
-}
+if (!RXBuild) var RXBuild = {};
+if (!RXBuild.Utils) RXBuild.Utils = {};
 
 /** Tries really hard to build a flat array with all parameters
 	If the first argument is an array, it will be the one to which the other items are added.
@@ -281,7 +253,7 @@ function getLineNoByCharPos(txt, pos) {
 	@type Array
 	@static
 */
-function JoinArrays() {
+RXBuild.Utils.JoinArrays = function () {
 	var oArg = Array.prototype.slice.call(arguments);
 	var oResult = oArg[0];
 	var i = 1;
@@ -305,7 +277,7 @@ function JoinArrays() {
 	if (oResult.length == 0)
 		return null;
 	return oResult;
-}
+};
 
 /** Creates a callable delegate by using a closure to store the objects instance
 	@param {object} object The scope for the callback.
@@ -313,7 +285,7 @@ function JoinArrays() {
 	@type Function
 	@static
 */
-function createDelegate(object, method) {
+RXBuild.Utils.createDelegate = function(object, method) {
     return function() { method.apply(object, arguments); };
 };
 
@@ -327,21 +299,99 @@ function createDelegate(object, method) {
 	@type String
 	@static
 */
-function getObjectDesc(o, skip, includeFunctions, i) {
-		if (i == null) i = "";
-		if (o == null) return "<null>";
-		var oType = typeof(o);
-		if (oType == "string") return "'" + o.escapeToBackslashes() + "'";
-		if (oType == "number" || oType == "boolean") return o;
-		if (oType == "function") return "{...}";
-		var sResult = oType + "\n" + i;
-		var bFirst = true;
-		for (var prop in o)
-			if (o.hasOwnProperty(prop) &&
-				(includeFunctions || typeof(o[prop]) != "function") &&
-				(skip == null || !arrayHasString(skip, prop))) {
-				sResult += (bFirst ? "" : "\n" + i) + "-" + prop + ": " + getObjectDesc(o[prop], skip, includeFunctions, i + "  |");
-				if (bFirst) bFirst = false;
-			}
-		return sResult;
+RXBuild.Utils.getObjectDesc = function(o, skip, includeFunctions, i) {
+	function arrayHasString(arr, txt) {
+		for (var s in arr) if (arr[s] == txt) return true;
+		return false;
+	}
+	if (i == null) i = "";
+	if (o == null) return "<null>";
+	var oType = typeof(o);
+	if (oType == "string") return "'" + o.escapeToBackslashes() + "'";
+	if (oType == "number" || oType == "boolean") return o;
+	if (oType == "function") return "{...}";
+	var sResult = oType + "\n" + i;
+	var bFirst = true;
+	for (var prop in o)
+		if (o.hasOwnProperty(prop) &&
+			(includeFunctions || typeof(o[prop]) != "function") &&
+			(skip == null || !arrayHasString(skip, prop))) {
+			sResult += (bFirst ? "" : "\n" + i) + "-" + prop + ": " + getObjectDesc(o[prop], skip, includeFunctions, i + "  |");
+			if (bFirst) bFirst = false;
+		}
+	return sResult;
 	};
+
+RXBuild.Utils.buildRegexpFromTokens = function (tokens, noncapturing) {
+	var root = [];
+	function addNode(parent, str) { //Very dumb implementation of a suffix tree (but its home made =)
+		for (var i = 0; i < parent.length; i++) {
+			var iCommon = str.findCommonPrefix(parent[i].s);
+			if (iCommon == str.length) {
+				// Found my terminal node
+				parent[i].terminal = true;
+				return ;
+			} else if (iCommon > 0) {
+				if (iCommon == parent[i].s.length) {
+					// Found a node I should be under
+					if (!parent[i].children)
+						parent[i].children = [];
+					addNode(parent[i].children, str.substr(iCommon));
+					return;
+				} else {
+					// Found a node I must split and get under
+					var sCommonPart = str.substr(0, iCommon);
+					var oNodeToSplit = parent[i];
+					var oNewChildFromPrevious = {
+						s: oNodeToSplit.s.substr(iCommon)
+						};
+					if (oNodeToSplit.terminal) oNewChildFromPrevious.terminal = true;
+					if (oNodeToSplit.children) oNewChildFromPrevious.children = oNodeToSplit.children;
+					var sSuffix = str.substr(iCommon);
+					var oNewChild = {
+						s: sCommonPart,
+						children: [oNewChildFromPrevious]
+						};
+					parent[i] = oNewChild;
+					if (sSuffix.length == 0)
+						oNewChild.terminal = true;
+					else
+						addNode(oNewChild.children, sSuffix)
+					return;
+				}
+			}
+		}
+		// Couldnt find a place for myself, so made myself cosy
+		parent.push({s: str, terminal: true});
+	}
+	function buildRegExp(parent, res, noncapturing) {
+		for (var i=0; i < parent.length; i++) {
+			if (i > 0) res.push("|");
+			if (parent[i].children) {
+				res.push(parent[i].s.escapeRegexp());
+				res.push(noncapturing ? "(?:" : "(");
+				buildRegExp(parent[i].children, res, noncapturing);
+				res.push(")");
+			} else {
+				if (!parent[i].terminal) alert("RXBuild.Dom.Node is not terminal and has no children: '" + parent[i].s + "'");
+				res.push(parent[i].s.escapeRegexp());
+			}
+			if (parent[i].children && parent[i].terminal) {
+				res.push("?");
+			}
+		};
+
+	}
+	tokens = tokens.sort();
+	for (var i = tokens.length - 1; i >= 0; i--){
+		if (tokens[i].trim() == "")
+			tokens.pop();
+		else
+			tokens[i] = tokens[i].trim();
+	};
+	for (var j=0; j < tokens.length; j++)
+		addNode(root, tokens[j]);
+	var oRes = [];
+	buildRegExp(root, oRes, noncapturing);
+	return oRes.join("");
+}

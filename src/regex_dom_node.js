@@ -16,17 +16,20 @@
     along with RXBuild.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function Node()
+if (!RXBuild) var RXBuild = {};
+if (!RXBuild.Dom) RXBuild.Dom = {};
+
+RXBuild.Dom.Node = function ()
 {
 	this.next = null;
 	this.src = null;
 	this.id = null;
 	this.tokens = new Array();
-}
+};
 
-Node.prototype.Match = function() {return false;};
-Node.prototype.GetDescription = function() {return "-Node-";};
-Node.prototype.AddTokens = function() {
+RXBuild.Dom.Node.prototype.Match = function() {return false;};
+RXBuild.Dom.Node.prototype.GetDescription = function() {return "-RXBuild.Dom.Node-";};
+RXBuild.Dom.Node.prototype.AddTokens = function() {
 	for (var i = 0; i < arguments.length; i++)
 		{
 			var obj = arguments[i];
@@ -36,8 +39,8 @@ Node.prototype.AddTokens = function() {
 			else
 				this.tokens.push(obj);
 		}
-}
-Node.prototype.GetChainDescription = function() {
+};
+RXBuild.Dom.Node.prototype.GetChainDescription = function() {
 	var sResult = "";
 	var oItem = this;
 	while (oItem != null)
@@ -47,35 +50,35 @@ Node.prototype.GetChainDescription = function() {
 		oItem = oItem.next;
 	}
 	return sResult;
-}
-Node.prototype.GetLast = function(newLast) {
+};
+RXBuild.Dom.Node.prototype.GetLast = function(newLast) {
 	var oItem = this;
 	while (oItem.next != null)
 		oItem = oItem.next;
 	return oItem;
-}
-Node.prototype.Flatten = function(newLast) {
+};
+RXBuild.Dom.Node.prototype.Flatten = function(newLast) {
 	if (this.next) this.next = this.next.Flatten();
 	return this;
-}
-Node.prototype.AppendAtEnd = function(newLast) {
+};
+RXBuild.Dom.Node.prototype.AppendAtEnd = function(newLast) {
 	var oItem = this.GetLast();
 	oItem.next = newLast;
 };
-Node.prototype.CopyFrom = function(prevNode) {
+RXBuild.Dom.Node.prototype.CopyFrom = function(prevNode) {
 	this.next = prevNode.next; 
 	this.id = prevNode.id;
 	this.tokens = prevNode.tokens;
 };
-Node.prototype.GetHtml = function() {
-	return "<h1>Error - Node.GetHtml sifted through on " + getObjectDesc(this) + "</h1>";
+RXBuild.Dom.Node.prototype.GetHtml = function() {
+	return "<h1>Error - RXBuild.Dom.Node.GetHtml sifted through on " + RXBuild.Utils.getObjectDesc(this) + "</h1>";
 };
-Node.prototype.GetTokenHighlightJS = function() {
+RXBuild.Dom.Node.prototype.GetTokenHighlightJS = function() {
 	var sResult = "";
 	for (var i = 0; i < this.tokens.length; i++)
 		sResult += (i>0 ? ",[" : "[") + this.tokens[i].offset + "," + this.tokens[i].value.length + "]";
 	return sResult;
-}
+};
 function IsCharInTokenList(c, tokenlist) {
 	if (tokenlist == null) return true;
 	for (var i=0; i < tokenlist.length; i++) {
@@ -92,10 +95,10 @@ function NodeRegExTokenHighlight(tokenlist) {
 	}
 	window.event.stopPropagation();
 }
-Node.prototype.GetHtmlOpenTag = function() {
+RXBuild.Dom.Node.prototype.GetHtmlOpenTag = function() {
 	return "<li onmouseover=\"NodeRegExTokenHighlight([" + this.GetTokenHighlightJS() + "]);\" onmouseout=\"NodeRegExTokenHighlight(null);\">" + (this.id != null ? "<span class=\"rx_id\">" + this.id + ")</span> " : "");
 };
-Node.prototype.GetChainHtml = function() {
+RXBuild.Dom.Node.prototype.GetChainHtml = function() {
 	var sResult = "<ul>";
 	var oItem = this;
 	while (oItem != null)
@@ -108,11 +111,11 @@ Node.prototype.GetChainHtml = function() {
 		oItem = oItem.next;
 	}
 	return sResult + "</ul>";
-}
-Node.prototype.RunOnMe = function(func,param) {
+};
+RXBuild.Dom.Node.prototype.RunOnMe = function(func,param) {
 	return func.call(this,param);
-}
-Node.prototype.RunForAll = function(func,param) {
+};
+RXBuild.Dom.Node.prototype.RunForAll = function(func,param) {
 	var oResult = this.RunOnMe(func,param);
 	if (this.next != null)
 		this.next = this.next.RunForAll(func,param);

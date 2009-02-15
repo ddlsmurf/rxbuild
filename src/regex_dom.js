@@ -18,100 +18,28 @@
 
 /*
 ** This code supports the JS/CC grammar (jscc_regex.par) for regexps to build a DOM
-** whose classes are defined here. They are all overloads of the root Node class,
+** whose classes are defined here. They are all overloads of the root RXBuild.Dom.Node class,
 ** this file also includes some simple extensions the JavaScript standard string object.
 */
 
-if (!RX) var RX = {};
-if (!RX.Utils) RX.Utils = {};
-RX.Utils.buildRegexpFromTokens = function (tokens, noncapturing) {
-	var root = [];
-	function addNode(parent, str) { //Very dumb implementation of a suffix tree (but its home made =)
-		for (var i = 0; i < parent.length; i++) {
-			var iCommon = str.findCommonPrefix(parent[i].s);
-			if (iCommon == str.length) {
-				// Found my terminal node
-				parent[i].terminal = true;
-				return ;
-			} else if (iCommon > 0) {
-				if (iCommon == parent[i].s.length) {
-					// Found a node I should be under
-					if (!parent[i].children)
-						parent[i].children = [];
-					addNode(parent[i].children, str.substr(iCommon));
-					return;
-				} else {
-					// Found a node I must split and get under
-					var sCommonPart = str.substr(0, iCommon);
-					var oNodeToSplit = parent[i];
-					var oNewChildFromPrevious = {
-						s: oNodeToSplit.s.substr(iCommon)
-						};
-					if (oNodeToSplit.terminal) oNewChildFromPrevious.terminal = true;
-					if (oNodeToSplit.children) oNewChildFromPrevious.children = oNodeToSplit.children;
-					var sSuffix = str.substr(iCommon);
-					var oNewChild = {
-						s: sCommonPart,
-						children: [oNewChildFromPrevious]
-						};
-					parent[i] = oNewChild;
-					if (sSuffix.length == 0)
-						oNewChild.terminal = true;
-					else
-						addNode(oNewChild.children, sSuffix)
-					return;
-				}
-			}
-		}
-		// Couldnt find a place for myself, so made myself cosy
-		parent.push({s: str, terminal: true});
-	}
-	function buildRegExp(parent, res, noncapturing) {
-		for (var i=0; i < parent.length; i++) {
-			if (i > 0) res.push("|");
-			if (parent[i].children) {
-				res.push(parent[i].s.escapeRegexp());
-				res.push(noncapturing ? "(?:" : "(");
-				buildRegExp(parent[i].children, res, noncapturing);
-				res.push(")");
-			} else {
-				if (!parent[i].terminal) alert("Node is not terminal and has no children: '" + parent[i].s + "'");
-				res.push(parent[i].s.escapeRegexp());
-			}
-			if (parent[i].children && parent[i].terminal) {
-				res.push("?");
-			}
-		};
-		
-	}
-	tokens = tokens.sort();
-	for (var i = tokens.length - 1; i >= 0; i--){
-		if (tokens[i].trim() == "")
-			tokens.pop();
-		else
-			tokens[i] = tokens[i].trim();
-	};
-	for (var j=0; j < tokens.length; j++)
-		addNode(root, tokens[j]);
-	var oRes = [];
-	buildRegExp(root, oRes, noncapturing);
-	return oRes.join("");
-}
+if (!RXBuild) var RXBuild = {};
 
-RepeatedMatch.prototype = new Node;
-RepeatedMatch.prototype.constructor = RepeatedMatch;
-function RepeatedMatch(subMatch, numMin, numMax, greedy)
+if (!RXBuild.Dom) RXBuild.Dom = {};
+
+RXBuild.Dom.RepeatedMatch = function (subMatch, numMin, numMax, greedy)
 {
-	Node.call(this);
+	RXBuild.Dom.Node.call(this);
 	this.minMatches = numMin;
 	this.maxMatches = numMax;
 	this.subMatch = subMatch;
 	this.isGreedy = greedy;
 }
-RepeatedMatch.prototype.GetDescription = function() {
+RXBuild.Dom.RepeatedMatch.prototype = new RXBuild.Dom.Node;
+RXBuild.Dom.RepeatedMatch.prototype.constructor = RXBuild.Dom.RepeatedMatch;
+RXBuild.Dom.RepeatedMatch.prototype.GetDescription = function() {
 	return "[Repeat " + this.subMatch.GetChainDescription() + " between " + this.minMatches + " and " + this.maxMatches + (this.isGreedy ? " greedily": "") + "]";
 };
-RepeatedMatch.prototype.GetHtml = function() {
+RXBuild.Dom.RepeatedMatch.prototype.GetHtml = function() {
 	var sSubMatches = (this.isGreedy ? ": (greedy)" : ": (non greedy)") + "<br>" + this.subMatch.GetChainHtml();
 	if (this.minMatches == 0 && this.maxMatches == 1)
 		return "At most once" + sSubMatches;
@@ -127,33 +55,34 @@ RepeatedMatch.prototype.GetHtml = function() {
 		return "" + this.minMatches + " or " + this.maxMatches + " times" + sSubMatches;
 	return "Between " + this.minMatches + " and " + this.maxMatches + " times" + sSubMatches;
 };
-RepeatedMatch.prototype.RunOnMe = function(func,param) {
-	var oResult = Node.prototype.RunOnMe.call(this,func,param);
+RXBuild.Dom.RepeatedMatch.prototype.RunOnMe = function(func,param) {
+	var oResult = RXBuild.Dom.Node.prototype.RunOnMe.call(this,func,param);
 	if (this.subMatch)
 		this.subMatch = this.subMatch.RunForAll(func,param);
 	return oResult;
 }
-RepeatedMatch.prototype.Flatten = function() {
-	Node.prototype.Flatten.call(this);
+RXBuild.Dom.RepeatedMatch.prototype.Flatten = function() {
+	RXBuild.Dom.Node.prototype.Flatten.call(this);
 	this.subMatch = this.subMatch.Flatten();
 	return this;
 }
 
-AlternativeMatch.prototype = new Node;
-AlternativeMatch.prototype.constructor = AlternativeMatch;
-function AlternativeMatch()
+RXBuild.Dom.AlternativeMatch = function ()
 {
-	Node.call(this);
+	RXBuild.Dom.Node.call(this);
 	this.alternatives = new Array();
 	for (var i=0; i < arguments.length; i++) {
 		this.alternatives.push(arguments[i]);
 	};
 }
-AlternativeMatch.prototype.AddAlternative = function(alt) {
+RXBuild.Dom.AlternativeMatch.prototype = new RXBuild.Dom.Node;
+RXBuild.Dom.AlternativeMatch.prototype.constructor = RXBuild.Dom.AlternativeMatch;
+
+RXBuild.Dom.AlternativeMatch.prototype.AddAlternative = function(alt) {
 	this.alternatives.push(alt);
 }
-AlternativeMatch.prototype.Flatten = function() {
-	Node.prototype.Flatten.call(this);
+RXBuild.Dom.AlternativeMatch.prototype.Flatten = function() {
+	RXBuild.Dom.Node.prototype.Flatten.call(this);
 	for (var i=0; i < this.alternatives.length; i++) {
 		this.alternatives[i] = this.alternatives[i].Flatten();
 	};
@@ -166,7 +95,7 @@ AlternativeMatch.prototype.Flatten = function() {
 	}
 	return this;
 }
-AlternativeMatch.prototype.GetDescription = function() {
+RXBuild.Dom.AlternativeMatch.prototype.GetDescription = function() {
 	if (this.alternatives.length == 1)
 		return this.alternatives[0].GetDescription();
 	var sResult = "[Either ";
@@ -176,13 +105,13 @@ AlternativeMatch.prototype.GetDescription = function() {
 	};
 	return sResult + "]";
 };
-AlternativeMatch.prototype.RunOnMe = function(func,param) {
-	var oResult = Node.prototype.RunOnMe.call(this,func,param);
+RXBuild.Dom.AlternativeMatch.prototype.RunOnMe = function(func,param) {
+	var oResult = RXBuild.Dom.Node.prototype.RunOnMe.call(this,func,param);
 	for (var i=0; i < this.alternatives.length; i++)
 		this.alternatives[i] = this.alternatives[i].RunForAll(func,param);
 	return oResult;
 }
-AlternativeMatch.prototype.GetHtml = function() {
+RXBuild.Dom.AlternativeMatch.prototype.GetHtml = function() {
 	var sResult = "";
 	for (var i=0; i < this.alternatives.length; i++) {
 		sResult += "" + (i==0?"Either":"</li>" + this.GetHtmlOpenTag() + "or") + this.alternatives[i].GetChainHtml();
@@ -190,33 +119,34 @@ AlternativeMatch.prototype.GetHtml = function() {
 	return sResult;
 };
 
-GroupMatch.prototype = new Node;
-GroupMatch.prototype.constructor = GroupMatch;
-function GroupMatch(childMatch, groupType)
+RXBuild.Dom.GroupMatch = function (childMatch, groupType)
 {
-	Node.call(this);
+	RXBuild.Dom.Node.call(this);
 	this.subMatch = childMatch;
 	this.groupIndex = 0;
 	this.groupName = "";
 	this.captured = groupType == "capture";
 	this.groupType = groupType;
 }
-GroupMatch.prototype.GetDescription = function() {
-	return "[GroupMatch]";
+RXBuild.Dom.GroupMatch.prototype = new RXBuild.Dom.Node;
+RXBuild.Dom.GroupMatch.prototype.constructor = RXBuild.Dom.GroupMatch;
+
+RXBuild.Dom.GroupMatch.prototype.GetDescription = function() {
+	return "[RXBuild.Dom.GroupMatch]";
 };
-GroupMatch.prototype.RunOnMe = function(func,param) {
-	var oResult = Node.prototype.RunOnMe.call(this,func,param);
+RXBuild.Dom.GroupMatch.prototype.RunOnMe = function(func,param) {
+	var oResult = RXBuild.Dom.Node.prototype.RunOnMe.call(this,func,param);
 	if (this.subMatch)
 		this.subMatch = this.subMatch.RunForAll(func,param);
 	return oResult;
 }
 
-GroupMatch.prototype.Flatten = function() {
+RXBuild.Dom.GroupMatch.prototype.Flatten = function() {
 	if (this.subMatch)
 		this.subMatch = this.subMatch.Flatten();
-	return Node.prototype.Flatten.call(this);
+	return RXBuild.Dom.Node.prototype.Flatten.call(this);
 }
-GroupMatch.prototype.GetHtml = function() {
+RXBuild.Dom.GroupMatch.prototype.GetHtml = function() {
 	var sSubMatches = ":<br>" + this.subMatch.GetChainHtml();
 	if (!this.captured) {
 		if (this.groupType == "no_capture")

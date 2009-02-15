@@ -923,13 +923,13 @@ switch( act )
 	break;
 	case 2:
 	{
-			if (vstack[ vstack.length - 3 ] instanceof AlternativeMatch)
+			if (vstack[ vstack.length - 3 ] instanceof RXBuild.Dom.AlternativeMatch)
 													{
 														rval = vstack[ vstack.length - 3 ];
 														vstack[ vstack.length - 3 ].AddAlternative(vstack[ vstack.length - 1 ]);
 													}
 													else
-														rval = new AlternativeMatch(vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]);
+														rval = new RXBuild.Dom.AlternativeMatch(vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]);
 													rval.AddTokens(vstack[ vstack.length - 2 ]);  
 	}
 	break;
@@ -950,62 +950,62 @@ switch( act )
 	break;
 	case 6:
 	{
-		 	rval = new RepeatedMatch(vstack[ vstack.length - 3 ], 0, -1, false); rval.AddTokens(vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
+		 	rval = new RXBuild.Dom.RepeatedMatch(vstack[ vstack.length - 3 ], 0, -1, false); rval.AddTokens(vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 7:
 	{
-		 	rval = new RepeatedMatch(vstack[ vstack.length - 3 ], 1, -1, false); rval.AddTokens(vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
+		 	rval = new RXBuild.Dom.RepeatedMatch(vstack[ vstack.length - 3 ], 1, -1, false); rval.AddTokens(vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 8:
 	{
-		 	rval = new RepeatedMatch(vstack[ vstack.length - 3 ], 0, 1, false); rval.AddTokens(vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
+		 	rval = new RXBuild.Dom.RepeatedMatch(vstack[ vstack.length - 3 ], 0, 1, false); rval.AddTokens(vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 9:
 	{
-		 	rval = new RepeatedMatch(vstack[ vstack.length - 5 ], parseInt(vstack[ vstack.length - 3 ].value), parseInt(vstack[ vstack.length - 3 ].value), false); rval.AddTokens(vstack[ vstack.length - 4 ], vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
+		 	rval = new RXBuild.Dom.RepeatedMatch(vstack[ vstack.length - 5 ], parseInt(vstack[ vstack.length - 3 ].value), parseInt(vstack[ vstack.length - 3 ].value), false); rval.AddTokens(vstack[ vstack.length - 4 ], vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 10:
 	{
-		 	rval = new RepeatedMatch(vstack[ vstack.length - 6 ], parseInt(vstack[ vstack.length - 4 ].value), -1, false); rval.AddTokens(vstack[ vstack.length - 5 ], vstack[ vstack.length - 4 ], vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
+		 	rval = new RXBuild.Dom.RepeatedMatch(vstack[ vstack.length - 6 ], parseInt(vstack[ vstack.length - 4 ].value), -1, false); rval.AddTokens(vstack[ vstack.length - 5 ], vstack[ vstack.length - 4 ], vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 11:
 	{
-		 	rval = new RepeatedMatch(vstack[ vstack.length - 7 ], parseInt(vstack[ vstack.length - 5 ].value), parseInt(vstack[ vstack.length - 3 ].value), false); rval.AddTokens(vstack[ vstack.length - 6 ], vstack[ vstack.length - 5 ], vstack[ vstack.length - 4 ], vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
+		 	rval = new RXBuild.Dom.RepeatedMatch(vstack[ vstack.length - 7 ], parseInt(vstack[ vstack.length - 5 ].value), parseInt(vstack[ vstack.length - 3 ].value), false); rval.AddTokens(vstack[ vstack.length - 6 ], vstack[ vstack.length - 5 ], vstack[ vstack.length - 4 ], vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 12:
 	{
-		 	rval = new RepeatedMatch(vstack[ vstack.length - 2 ], 0, -1, true); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+		 	rval = new RXBuild.Dom.RepeatedMatch(vstack[ vstack.length - 2 ], 0, -1, true); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 13:
 	{
-		 	rval = new RepeatedMatch(vstack[ vstack.length - 2 ], 1, -1, true); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+		 	rval = new RXBuild.Dom.RepeatedMatch(vstack[ vstack.length - 2 ], 1, -1, true); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 14:
 	{
-		 	rval = new RepeatedMatch(vstack[ vstack.length - 2 ], 0, 1, true); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+		 	rval = new RXBuild.Dom.RepeatedMatch(vstack[ vstack.length - 2 ], 0, 1, true); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 15:
 	{
-		 	rval = new RepeatedMatch(vstack[ vstack.length - 4 ], parseInt(vstack[ vstack.length - 2 ].value), parseInt(vstack[ vstack.length - 2 ].value), true);  rval.AddTokens(vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
+		 	rval = new RXBuild.Dom.RepeatedMatch(vstack[ vstack.length - 4 ], parseInt(vstack[ vstack.length - 2 ].value), parseInt(vstack[ vstack.length - 2 ].value), true);  rval.AddTokens(vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 16:
 	{
-		 	rval = new RepeatedMatch(vstack[ vstack.length - 5 ], parseInt(vstack[ vstack.length - 3 ].value), -1, true); rval.AddTokens(vstack[ vstack.length - 4 ], vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
+		 	rval = new RXBuild.Dom.RepeatedMatch(vstack[ vstack.length - 5 ], parseInt(vstack[ vstack.length - 3 ].value), -1, true); rval.AddTokens(vstack[ vstack.length - 4 ], vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 17:
 	{
-		 	rval = new RepeatedMatch(vstack[ vstack.length - 6 ], parseInt(vstack[ vstack.length - 4 ].value), parseInt(vstack[ vstack.length - 2 ].value), true); rval.AddTokens(vstack[ vstack.length - 5 ], vstack[ vstack.length - 4 ], vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
+		 	rval = new RXBuild.Dom.RepeatedMatch(vstack[ vstack.length - 6 ], parseInt(vstack[ vstack.length - 4 ].value), parseInt(vstack[ vstack.length - 2 ].value), true); rval.AddTokens(vstack[ vstack.length - 5 ], vstack[ vstack.length - 4 ], vstack[ vstack.length - 3 ], vstack[ vstack.length - 2 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 18:
@@ -1025,22 +1025,22 @@ switch( act )
 	break;
 	case 21:
 	{
-			rval = new GroupMatch(vstack[ vstack.length - 2 ], "no_capture"); rval.AddTokens(vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]); 
+			rval = new RXBuild.Dom.GroupMatch(vstack[ vstack.length - 2 ], "no_capture"); rval.AddTokens(vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 22:
 	{
-			rval = new GroupMatch(vstack[ vstack.length - 2 ], "pos_la"); rval.AddTokens(vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]); 
+			rval = new RXBuild.Dom.GroupMatch(vstack[ vstack.length - 2 ], "pos_la"); rval.AddTokens(vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 23:
 	{
-			rval = new GroupMatch(vstack[ vstack.length - 2 ], "neg_la"); rval.AddTokens(vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]); 
+			rval = new RXBuild.Dom.GroupMatch(vstack[ vstack.length - 2 ], "neg_la"); rval.AddTokens(vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 24:
 	{
-			rval = new GroupMatch(vstack[ vstack.length - 2 ], "capture"); rval.AddTokens(vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]); 
+			rval = new RXBuild.Dom.GroupMatch(vstack[ vstack.length - 2 ], "capture"); rval.AddTokens(vstack[ vstack.length - 3 ], vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 25:
@@ -1351,7 +1351,7 @@ switch( act )
 			__regex_parse_result = __regex_parse_result.Flatten();
 	        __regex_parse_result = __regex_parse_result.RunForAll(function(current_ids) {
 				this.id = current_ids[0]++;
-				if (this instanceof GroupMatch && this.captured)
+				if (this instanceof RXBuild.Dom.GroupMatch && this.captured)
 					this.groupIndex = current_ids[1]++;
 				return this;
 				}, idArray);

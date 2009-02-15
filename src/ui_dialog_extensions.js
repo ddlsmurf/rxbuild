@@ -103,7 +103,7 @@ if (!RXBuild.UI.Dialogs)
 		this.dialog.header.innerHTML = headerHTML;
 		this.textBox.value = defaultText;
 		if (callback && callbackContext)
-			callback = createDelegate(callbackContext, callback);
+			callback = RXBuild.Utils.createDelegate(callbackContext, callback);
 		this._oPendingCallback = callback;
 		if (callback)
 			this.textBox.removeAttribute("readonly");

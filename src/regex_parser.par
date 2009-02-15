@@ -57,13 +57,13 @@
 RegEx:			Expression						[*	%% = __regex_parse_result = %1; *]
 				;
 
-Expression:		Expression '|' Catenation		[*	if (%1 instanceof AlternativeMatch)
+Expression:		Expression '|' Catenation		[*	if (%1 instanceof RXBuild.Dom.AlternativeMatch)
 													{
 														%% = %1;
 														%1.AddAlternative(%3);
 													}
 													else
-														%% = new AlternativeMatch(%1, %3);
+														%% = new RXBuild.Dom.AlternativeMatch(%1, %3);
 													%%.AddTokens(%2);  *]
 				| Catenation
 				;
@@ -72,27 +72,27 @@ Catenation:		Catenation Factor				[*	%1.AppendAtEnd(%2); %% = %1; *]
 				| Factor
 				;
 				
-Factor:			Term '*' '?'						[* 	%% = new RepeatedMatch(%1, 0, -1, false); %%.AddTokens(%2, %3); *]
-				| Term '+' '?'						[* 	%% = new RepeatedMatch(%1, 1, -1, false); %%.AddTokens(%2, %3); *]
-				| Term '?' '?'						[* 	%% = new RepeatedMatch(%1, 0, 1, false); %%.AddTokens(%2, %3); *]
-				| Term '{' INT '}' '?'				[* 	%% = new RepeatedMatch(%1, parseInt(%3.value), parseInt(%3.value), false); %%.AddTokens(%2, %3, %4, %5); *]
-				| Term '{' INT ',' '}' '?'			[* 	%% = new RepeatedMatch(%1, parseInt(%3.value), -1, false); %%.AddTokens(%2, %3, %4, %5, %6); *]
-				| Term '{' INT ',' INT '}' '?'		[* 	%% = new RepeatedMatch(%1, parseInt(%3.value), parseInt(%5.value), false); %%.AddTokens(%2, %3, %4, %5, %6, %7); *]
-				| Term '*'							[* 	%% = new RepeatedMatch(%1, 0, -1, true); %%.AddTokens(%2); *]
-				| Term '+'							[* 	%% = new RepeatedMatch(%1, 1, -1, true); %%.AddTokens(%2); *]
-				| Term '?'							[* 	%% = new RepeatedMatch(%1, 0, 1, true); %%.AddTokens(%2); *]
-				| Term '{' INT '}'					[* 	%% = new RepeatedMatch(%1, parseInt(%3.value), parseInt(%3.value), true);  %%.AddTokens(%2, %3, %4); *]
-				| Term '{' INT ',' '}'				[* 	%% = new RepeatedMatch(%1, parseInt(%3.value), -1, true); %%.AddTokens(%2, %3, %4, %5); *]
-				| Term '{' INT ',' INT '}'			[* 	%% = new RepeatedMatch(%1, parseInt(%3.value), parseInt(%5.value), true); %%.AddTokens(%2, %3, %4, %5, %6); *]
+Factor:			Term '*' '?'						[* 	%% = new RXBuild.Dom.RepeatedMatch(%1, 0, -1, false); %%.AddTokens(%2, %3); *]
+				| Term '+' '?'						[* 	%% = new RXBuild.Dom.RepeatedMatch(%1, 1, -1, false); %%.AddTokens(%2, %3); *]
+				| Term '?' '?'						[* 	%% = new RXBuild.Dom.RepeatedMatch(%1, 0, 1, false); %%.AddTokens(%2, %3); *]
+				| Term '{' INT '}' '?'				[* 	%% = new RXBuild.Dom.RepeatedMatch(%1, parseInt(%3.value), parseInt(%3.value), false); %%.AddTokens(%2, %3, %4, %5); *]
+				| Term '{' INT ',' '}' '?'			[* 	%% = new RXBuild.Dom.RepeatedMatch(%1, parseInt(%3.value), -1, false); %%.AddTokens(%2, %3, %4, %5, %6); *]
+				| Term '{' INT ',' INT '}' '?'		[* 	%% = new RXBuild.Dom.RepeatedMatch(%1, parseInt(%3.value), parseInt(%5.value), false); %%.AddTokens(%2, %3, %4, %5, %6, %7); *]
+				| Term '*'							[* 	%% = new RXBuild.Dom.RepeatedMatch(%1, 0, -1, true); %%.AddTokens(%2); *]
+				| Term '+'							[* 	%% = new RXBuild.Dom.RepeatedMatch(%1, 1, -1, true); %%.AddTokens(%2); *]
+				| Term '?'							[* 	%% = new RXBuild.Dom.RepeatedMatch(%1, 0, 1, true); %%.AddTokens(%2); *]
+				| Term '{' INT '}'					[* 	%% = new RXBuild.Dom.RepeatedMatch(%1, parseInt(%3.value), parseInt(%3.value), true);  %%.AddTokens(%2, %3, %4); *]
+				| Term '{' INT ',' '}'				[* 	%% = new RXBuild.Dom.RepeatedMatch(%1, parseInt(%3.value), -1, true); %%.AddTokens(%2, %3, %4, %5); *]
+				| Term '{' INT ',' INT '}'			[* 	%% = new RXBuild.Dom.RepeatedMatch(%1, parseInt(%3.value), parseInt(%5.value), true); %%.AddTokens(%2, %3, %4, %5, %6); *]
 				| Term
 				;
 
 Term:			Character
 				| CharacterSet
-				| NON_CAPTURING_OPEN_GROUP Expression ')'			[*	%% = new GroupMatch(%2, "no_capture"); %%.AddTokens(%1, %3); *]
-				| POS_LOOKAHEAD_OPEN_GROUP Expression ')'			[*	%% = new GroupMatch(%2, "pos_la"); %%.AddTokens(%1, %3); *]
-				| NEG_LOOKAHEAD_OPEN_GROUP Expression ')'			[*	%% = new GroupMatch(%2, "neg_la"); %%.AddTokens(%1, %3); *]
-				| '(' Expression ')'								[*	%% = new GroupMatch(%2, "capture"); %%.AddTokens(%1, %3); *]
+				| NON_CAPTURING_OPEN_GROUP Expression ')'			[*	%% = new RXBuild.Dom.GroupMatch(%2, "no_capture"); %%.AddTokens(%1, %3); *]
+				| POS_LOOKAHEAD_OPEN_GROUP Expression ')'			[*	%% = new RXBuild.Dom.GroupMatch(%2, "pos_la"); %%.AddTokens(%1, %3); *]
+				| NEG_LOOKAHEAD_OPEN_GROUP Expression ')'			[*	%% = new RXBuild.Dom.GroupMatch(%2, "neg_la"); %%.AddTokens(%1, %3); *]
+				| '(' Expression ')'								[*	%% = new RXBuild.Dom.GroupMatch(%2, "capture"); %%.AddTokens(%1, %3); *]
 				| Positional
 				;
 
@@ -228,7 +228,7 @@ Character:		ASCII_HEX_CODE			[*	%% = new LiteralMatcher(%1.value); %%.AddTokens(
 			__regex_parse_result = __regex_parse_result.Flatten();
 	        __regex_parse_result = __regex_parse_result.RunForAll(function(current_ids) {
 				this.id = current_ids[0]++;
-				if (this instanceof GroupMatch && this.captured)
+				if (this instanceof RXBuild.Dom.GroupMatch && this.captured)
 					this.groupIndex = current_ids[1]++;
 				return this;
 				}, idArray);

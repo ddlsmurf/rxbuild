@@ -64,7 +64,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 			oAnim.animate();
 		}
 		if (typeof(autohideTimeout) != "undefined")
-			this._oAutoHide.setPendingEvent(createDelegate(this, function() { this.hide(); }), autohideTimeout);
+			this._oAutoHide.setPendingEvent(RXBuild.Utils.createDelegate(this, function() { this.hide(); }), autohideTimeout);
 	};
 	/** Hides this status from view
 	*/
@@ -75,7 +75,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 			var oAnim = new YAHOO.util.Anim(this.div, {
 				opacity: {to: 0}
 			}, 1, YAHOO.util.Easing.easeOut);
-			oAnim.onComplete.subscribe(createDelegate(this, function() {this.div.style.display = "none";})); 
+			oAnim.onComplete.subscribe(RXBuild.Utils.createDelegate(this, function() {this.div.style.display = "none";})); 
 			oAnim.animate();		
 		} catch (e) {
 			this.div.style.display = "none";

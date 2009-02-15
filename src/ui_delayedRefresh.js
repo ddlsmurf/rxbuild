@@ -80,7 +80,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		this.stop();
 		if (bShouldInvalidate && this.invalidateCallback) this.invalidateCallback();
 		this.nextTimeout = iNextTimeout;
-		this.pendingEvent = window.setTimeout(createDelegate(this,
+		this.pendingEvent = window.setTimeout(RXBuild.Utils.createDelegate(this,
 			function() {
 				if (this.nextTimeout > iNextTimeout)
 					return;

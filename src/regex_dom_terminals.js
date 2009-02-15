@@ -16,11 +16,11 @@
     along with RXBuild.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-LiteralMatcher.prototype = new Node;
+LiteralMatcher.prototype = new RXBuild.Dom.Node;
 LiteralMatcher.prototype.constructor = LiteralMatcher;
 function LiteralMatcher(textToMatch)
 {
-	Node.call(this);
+	RXBuild.Dom.Node.call(this);
 	this.texttomatch = textToMatch;	
 }
 LiteralMatcher.prototype.Flatten = function() {
@@ -30,7 +30,7 @@ LiteralMatcher.prototype.Flatten = function() {
 		this.AddTokens(this.next.tokens);
 		this.next = this.next.next;
 	}
-	return Node.prototype.Flatten.call(this);
+	return RXBuild.Dom.Node.prototype.Flatten.call(this);
 }
 LiteralMatcher.prototype.GetDescription = function()
 {
@@ -40,11 +40,11 @@ LiteralMatcher.prototype.GetHtml = function() {
 	return "Matches <code>" + this.texttomatch.escapeToBackslashes().escapeHTML() + "</code>";
 };
 
-PositionalMatch.prototype = new Node;
+PositionalMatch.prototype = new RXBuild.Dom.Node;
 PositionalMatch.prototype.constructor = PositionalMatch;
 function PositionalMatch(positionalChar, multiline)
 {
-	Node.call(this);
+	RXBuild.Dom.Node.call(this);
 	this.posChar = positionalChar;
 	if (multiline) this.multiline = multiline;
 }
@@ -60,14 +60,14 @@ PositionalMatch.prototype.GetHtml = function() {
 		return "At a word boundary";
 	if (this.posChar == "\\B")
 		return "Not at a word boundary";
-	Node.prototype.GetHtml.call(this);
+	RXBuild.Dom.Node.prototype.GetHtml.call(this);
 };
 
-CharacterRangeMatch.prototype = new Node;
+CharacterRangeMatch.prototype = new RXBuild.Dom.Node;
 CharacterRangeMatch.prototype.constructor = CharacterRangeMatch;
 function CharacterRangeMatch(reversed)
 {
-	Node.call(this);
+	RXBuild.Dom.Node.call(this);
 	this.ranges = new Array();
 	this.pending = new Array();
 	this.reversed = reversed;
@@ -152,7 +152,7 @@ CharacterRangeMatch.prototype.Flatten = function() {
 		this.AddChars(null);
 		this.pending = null;
 	}
-	return Node.prototype.Flatten.call(this);
+	return RXBuild.Dom.Node.prototype.Flatten.call(this);
 }
 
 CharacterRangeMatch.prototype.GetDescription = function() {
@@ -172,11 +172,11 @@ CharacterRangeMatch.prototype.GetHtml = function() {
 	return this.asString;
 };
 
-BackTrackOrEscapeTempMatch.prototype = new Node;
+BackTrackOrEscapeTempMatch.prototype = new RXBuild.Dom.Node;
 BackTrackOrEscapeTempMatch.prototype.constructor = BackTrackOrEscapeTempMatch;
 function BackTrackOrEscapeTempMatch(number)
 {
-	Node.call(this);
+	RXBuild.Dom.Node.call(this);
 	this.number = number;
 }
 BackTrackOrEscapeTempMatch.prototype.GetDescription = function() {

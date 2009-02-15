@@ -865,8 +865,8 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		this.onRegExpInvalidated = new YAHOO.util.CustomEvent("onRegExpInvalidated");
 		this.onRegExpApplyChanges = new YAHOO.util.CustomEvent("onRegExpUpdate");
 		this.changedEventTime = new RXBuild.UI.DelayedRefresh(300,
-			createDelegate(this, function() { this.onRegExpApplyChanges.fire(this.getRX()); }),
-			createDelegate(this, function() { this.onRegExpInvalidated.fire(this); }),
+			RXBuild.Utils.createDelegate(this, function() { this.onRegExpApplyChanges.fire(this.getRX()); }),
+			RXBuild.Utils.createDelegate(this, function() { this.onRegExpInvalidated.fire(this); }),
 			0.1);
 	}
 	RXBuild.UI.RXEditor.prototype.constructor = RXBuild.UI.RXEditor;
@@ -967,7 +967,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 				return oRes;
 			}
 			function buildSimpleInserterMenuItem(scope, title, value) {
-				var oSetter = createDelegate(scope,
+				var oSetter = RXBuild.Utils.createDelegate(scope,
 					function(s, f) {
 						if (typeof(s) == "string")
 							this.insertIntoRegexp(s);
@@ -996,7 +996,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 																		 "namespace\nstring", "Insert",
 							function(text) {
 								text = text.normaliseNewLines();
-								text = RX.Utils.buildRegexpFromTokens(text.split("\n"), c);
+								text = RXBuild.Utils.buildRegexpFromTokens(text.split("\n"), c);
 								f(text);
 							});
 				}
@@ -1042,7 +1042,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 			}
 			function buildGeneratorMenu(scope, prefix) {
 				function buildSimpleGeneratorMenuItem(scope, text, fn) {
-					var oDelegate = createDelegate(scope, function(f) {
+					var oDelegate = RXBuild.Utils.createDelegate(scope, function(f) {
 							RXBuild.UI.dlg.show(text, f.call(this.getRX()));
 						});
 					return {text: text,
@@ -1070,12 +1070,12 @@ if (!RXBuild.UI) RXBuild.UI = {};
 			this.chkMultiline = document.getElementById(sPrefix + "chkMultiline");
 			this.chkGlobal = document.getElementById(sPrefix + "chkGlobal");
 
-			var oUpdateButton = createDelegate(this, this.updateOptionsButtonLabel);
+			var oUpdateButton = RXBuild.Utils.createDelegate(this, this.updateOptionsButtonLabel);
 			YAHOO.util.Event.addListener(this.chkCaseInsensitive, "change", oUpdateButton);
 			YAHOO.util.Event.addListener(this.chkMultiline, "change", oUpdateButton);
 			YAHOO.util.Event.addListener(this.chkGlobal, "change", oUpdateButton);
 
-			var oPosChanged = createDelegate(this, function() {this.textBoxChanged(); this.textBoxPosChanged(); });
+			var oPosChanged = RXBuild.Utils.createDelegate(this, function() {this.textBoxChanged(); this.textBoxPosChanged(); });
 			YAHOO.util.Event.addListener(this.textBox, "change", oPosChanged);
 			YAHOO.util.Event.addListener(this.textBox, "click", oPosChanged);
 			YAHOO.util.Event.addListener(this.textBox, "keyup", oPosChanged);
@@ -1139,7 +1139,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		this.rx.onRegExpInvalidated.subscribe(invalidateTree);
 		this.rx.onRegExpApplyChanges.subscribe(testRegEx);
 		
-		var oRelayout = createDelegate(this, function() {
+		var oRelayout = RXBuild.Utils.createDelegate(this, function() {
 			var iItemHeight = Math.round(YAHOO.util.Dom.getViewportHeight() / 3);
 			var oTopLayoutUnit = this.layout.getUnitByPosition("top");
 			var oBottomLayoutUnit = this.layout.getUnitByPosition("bottom");
@@ -1150,7 +1150,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		});
 		this.layout.addListener("resize", oRelayout);
 
-		var oCenterResize = createDelegate(this.rx, this.rx.textBoxPosChanged);
+		var oCenterResize = RXBuild.Utils.createDelegate(this.rx, this.rx.textBoxPosChanged);
 		this.layout.addListener("resize", oCenterResize);
 		oCenterLayoutUnit.addListener("leftChange", oCenterResize);
 		oCenterLayoutUnit.addListener("topChange", oCenterResize);
