@@ -701,7 +701,6 @@
 <script language="JavaScript">
 
 var tabView = new YAHOO.widget.TabView('refPanelBody');
-var tabViewLeft = new YAHOO.widget.TabView('divLeftContainer', {autofillheight: "body"});
 var lastChange = Date().UTC;
 var isMatchPending = false;
 
@@ -730,8 +729,6 @@ function showNodeDetails(node) {
 		return;
 	}
 	var oText = document.getElementById("txtSample");
-	if (oText == null)
-	  return;
 	oText = oText.value.substr(node.data[0], node.data[1]);
 	RXBuild.UI.dlg.show("Match details", oText);
 }
@@ -818,12 +815,6 @@ function clickedOnNode(node) {
 	return false;
 }
 
-function runOrAbortTestRegEx() {
-	if (Date().UTC - lastChange < 600)
-		return;
-	lastChange = Date().UTC;
-	testRegEx();
-}
 function invalidateTree() {
 	try {
 	tree.removeChildren(tree.getRoot());
@@ -831,27 +822,9 @@ function invalidateTree() {
 	tree.draw();
 	} catch(e) {alert(e);}
 }
-function delayedTestRegEx() {
-	if (!isMatchPending)
-	{
-	  	isMatchPending = true;
-		invalidateTree();
-	  	isMatchPending = true;
-	}
-	lastChange = Date().UTC;
-	setTimeout("runOrAbortTestRegEx()", 600);
-}
-
-function regexChanged() {
-	var oRegExpControl = document.getElementById("txtRegEx");
-	if (oRegExpControl == null) return;
-	if (oRegExpControl.value == regexbackup) return;
-	delayedTestRegEx();
-}
 
 YAHOO.util.Event.addListener("lnkShowQuickRef", "click", oPanel.show, oPanel, true);
 YAHOO.util.Event.addListener("btnSearch", "click", testRegEx);
-YAHOO.util.Event.addListener("txtSample", "keyup", delayedTestRegEx);
 
 tree.subscribe("labelClick", clickedOnNode);
 
@@ -1130,14 +1103,24 @@ if (!RXBuild.UI) RXBuild.UI = {};
             ]
         	});
        	this.layout.render();
+		var oCenterLayoutUnit = this.layout.getUnitByPosition("center");
+		var oLeftLayoutUnit = this.layout.getUnitByPosition("left");
 
 		this.status = new RXBuild.UI.Status("divGeneralStatus");
+		
 		this.dlg = new RXBuild.UI.Dialogs.TextAreaDialog("divGeneralDialog");
-		var oCenterLayoutUnit = this.layout.getUnitByPosition("center");
+		
 		this.rx = new RXBuild.UI.RXEditor("contTxtRegEx", oCenterLayoutUnit.header.getElementsByTagName("H2")[0], "txtRegEx");
 		this.rx.initUI();
 		this.rx.onRegExpInvalidated.subscribe(invalidateTree);
 		this.rx.onRegExpApplyChanges.subscribe(testRegEx);
+		
+		
+		this.tabViewLeft = new YAHOO.widget.TabView('divLeftContainer', {autofillheight: "body"});
+		
+		YAHOO.util.Event.addListener("txtSample", "keyup", RXBuild.Utils.createDelegate(this.rx, function() { this.changedEventTime.reset(); }));
+		
+		/* Resizing code */
 		
 		var oRelayout = RXBuild.Utils.createDelegate(this, function() {
 			var iItemHeight = Math.round(YAHOO.util.Dom.getViewportHeight() / 3);
@@ -1155,13 +1138,28 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		oCenterLayoutUnit.addListener("leftChange", oCenterResize);
 		oCenterLayoutUnit.addListener("topChange", oCenterResize);
 		oCenterLayoutUnit.addListener("widthChange", oCenterResize);
+				
+		var oLeftResize = RXBuild.Utils.createDelegate(this, function() {
+			var oTabs = this.tabViewLeft.get("tabs");
+			var iTotalHeight = this.layout.getUnitByPosition("left").get("height");
+			iTotalHeight -= 86 + this.tabViewLeft.get("activeTab").get('element').offsetTop;
+			for (var i = oTabs.length - 1; i >= 0; i--){
+				var oItem = oTabs[i].get("contentEl");
+				oItem.style.height = iTotalHeight;
+			};
+		});
+		this.layout.addListener("resize", oLeftResize);
+		oLeftLayoutUnit.addListener("leftChange", oLeftResize);
+		oLeftLayoutUnit.addListener("topChange", oLeftResize);
+		oLeftLayoutUnit.addListener("widthChange", oLeftResize);
+		oLeftLayoutUnit.addListener("heightChange", oLeftResize);
+		oLeftResize();
 	}
 
 
     YAHOO.util.Event.onDOMReady(function() {	
 		try {
 			RXBuild.UI.initUI();
-			//delayedTestRegEx();
 		}catch(e) { alert(e);}
        });
 

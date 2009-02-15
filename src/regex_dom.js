@@ -16,10 +16,9 @@
     along with RXBuild.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/*
-** This code supports the JS/CC grammar (jscc_regex.par) for regexps to build a DOM
-** whose classes are defined here. They are all overloads of the root RXBuild.Dom.Node class,
-** this file also includes some simple extensions the JavaScript standard string object.
+/**	@fileOverview This file holds all non-terminal matchers in a parsed regular expression DOM
+	@requires utils.js
+	@requires regex_dom_node.js
 */
 
 if (!RXBuild) var RXBuild = {};
@@ -33,7 +32,7 @@ RXBuild.Dom.RepeatedMatch = function (subMatch, numMin, numMax, greedy)
 	this.maxMatches = numMax;
 	this.subMatch = subMatch;
 	this.isGreedy = greedy;
-}
+};
 RXBuild.Dom.RepeatedMatch.prototype = new RXBuild.Dom.Node;
 RXBuild.Dom.RepeatedMatch.prototype.constructor = RXBuild.Dom.RepeatedMatch;
 RXBuild.Dom.RepeatedMatch.prototype.GetDescription = function() {
@@ -60,12 +59,12 @@ RXBuild.Dom.RepeatedMatch.prototype.RunOnMe = function(func,param) {
 	if (this.subMatch)
 		this.subMatch = this.subMatch.RunForAll(func,param);
 	return oResult;
-}
+};
 RXBuild.Dom.RepeatedMatch.prototype.Flatten = function() {
 	RXBuild.Dom.Node.prototype.Flatten.call(this);
 	this.subMatch = this.subMatch.Flatten();
 	return this;
-}
+};
 
 RXBuild.Dom.AlternativeMatch = function ()
 {
@@ -74,13 +73,13 @@ RXBuild.Dom.AlternativeMatch = function ()
 	for (var i=0; i < arguments.length; i++) {
 		this.alternatives.push(arguments[i]);
 	};
-}
+};
 RXBuild.Dom.AlternativeMatch.prototype = new RXBuild.Dom.Node;
 RXBuild.Dom.AlternativeMatch.prototype.constructor = RXBuild.Dom.AlternativeMatch;
 
 RXBuild.Dom.AlternativeMatch.prototype.AddAlternative = function(alt) {
 	this.alternatives.push(alt);
-}
+};
 RXBuild.Dom.AlternativeMatch.prototype.Flatten = function() {
 	RXBuild.Dom.Node.prototype.Flatten.call(this);
 	for (var i=0; i < this.alternatives.length; i++) {
@@ -94,13 +93,13 @@ RXBuild.Dom.AlternativeMatch.prototype.Flatten = function() {
 		return oChild;
 	}
 	return this;
-}
+};
 RXBuild.Dom.AlternativeMatch.prototype.GetDescription = function() {
 	if (this.alternatives.length == 1)
 		return this.alternatives[0].GetDescription();
 	var sResult = "[Either ";
 	for (var i=0; i < this.alternatives.length; i++) {
-		if (i == 0) sResult += " or "
+		if (i == 0) sResult += " or ";
 		sResult += this.alternatives[i].GetChainDescription();
 	};
 	return sResult + "]";
@@ -110,7 +109,7 @@ RXBuild.Dom.AlternativeMatch.prototype.RunOnMe = function(func,param) {
 	for (var i=0; i < this.alternatives.length; i++)
 		this.alternatives[i] = this.alternatives[i].RunForAll(func,param);
 	return oResult;
-}
+};
 RXBuild.Dom.AlternativeMatch.prototype.GetHtml = function() {
 	var sResult = "";
 	for (var i=0; i < this.alternatives.length; i++) {
@@ -127,7 +126,7 @@ RXBuild.Dom.GroupMatch = function (childMatch, groupType)
 	this.groupName = "";
 	this.captured = groupType == "capture";
 	this.groupType = groupType;
-}
+};
 RXBuild.Dom.GroupMatch.prototype = new RXBuild.Dom.Node;
 RXBuild.Dom.GroupMatch.prototype.constructor = RXBuild.Dom.GroupMatch;
 
@@ -139,13 +138,13 @@ RXBuild.Dom.GroupMatch.prototype.RunOnMe = function(func,param) {
 	if (this.subMatch)
 		this.subMatch = this.subMatch.RunForAll(func,param);
 	return oResult;
-}
+};
 
 RXBuild.Dom.GroupMatch.prototype.Flatten = function() {
 	if (this.subMatch)
 		this.subMatch = this.subMatch.Flatten();
 	return RXBuild.Dom.Node.prototype.Flatten.call(this);
-}
+};
 RXBuild.Dom.GroupMatch.prototype.GetHtml = function() {
 	var sSubMatches = ":<br>" + this.subMatch.GetChainHtml();
 	if (!this.captured) {

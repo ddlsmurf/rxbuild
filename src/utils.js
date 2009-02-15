@@ -322,6 +322,11 @@ RXBuild.Utils.getObjectDesc = function(o, skip, includeFunctions, i) {
 	return sResult;
 	};
 
+/** Builds an optimised regular expression to parse a list of tokens.
+	@param {String[]} tokens An array of tokens to match
+	@param {Boolean} noncapturing If set to true, generated groups are non-capturing (ie: <em>(?:)</em>)
+	@return {String} The regular expression that would match those tokens
+*/
 RXBuild.Utils.buildRegexpFromTokens = function (tokens, noncapturing) {
 	var root = [];
 	function addNode(parent, str) { //Very dumb implementation of a suffix tree (but its home made =)
@@ -356,7 +361,7 @@ RXBuild.Utils.buildRegexpFromTokens = function (tokens, noncapturing) {
 					if (sSuffix.length == 0)
 						oNewChild.terminal = true;
 					else
-						addNode(oNewChild.children, sSuffix)
+						addNode(oNewChild.children, sSuffix);
 					return;
 				}
 			}
@@ -373,7 +378,7 @@ RXBuild.Utils.buildRegexpFromTokens = function (tokens, noncapturing) {
 				buildRegExp(parent[i].children, res, noncapturing);
 				res.push(")");
 			} else {
-				if (!parent[i].terminal) alert("RXBuild.Dom.Node is not terminal and has no children: '" + parent[i].s + "'");
+				if (!parent[i].terminal) alert("ASSERT: (This should never happen) Node is not terminal and has no children: '" + parent[i].s + "'");
 				res.push(parent[i].s.escapeRegexp());
 			}
 			if (parent[i].children && parent[i].terminal) {
@@ -393,5 +398,5 @@ RXBuild.Utils.buildRegexpFromTokens = function (tokens, noncapturing) {
 		addNode(root, tokens[j]);
 	var oRes = [];
 	buildRegExp(root, oRes, noncapturing);
-	return oRes.join("");
-}
+	return "\\b" + oRes.join("") + "\\b";
+};

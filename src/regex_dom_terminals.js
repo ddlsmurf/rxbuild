@@ -16,6 +16,15 @@
     along with RXBuild.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**	@fileOverview This file holds all terminal matchers in a parsed regular expression DOM
+	@requires utils.js
+	@requires regex_dom_node.js
+*/
+
+if (!RXBuild) var RXBuild = {};
+if (!RXBuild.Dom)
+	RXBuild.Dom = {};
+
 LiteralMatcher.prototype = new RXBuild.Dom.Node;
 LiteralMatcher.prototype.constructor = LiteralMatcher;
 function LiteralMatcher(textToMatch)

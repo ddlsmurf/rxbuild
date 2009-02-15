@@ -28,7 +28,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 
 	/** 
 		Creates a new instance of RXBuild.UI.DelayedRefresh
-		@class The RXBuild.UI.DelayedRefresh Holds a triggerable and cancelable delayed event object.
+		@class The RXBuild.UI.DelayedRefresh Holds a triggerable and cancelable delayed event object which adjusts its frequency.
 		@property {Number} defaultDelay The delay with which to raise the delegate if none is specified
 		@constructor
 		@param {Number} defaultDelay The default delay to use when none is specified.
@@ -50,14 +50,22 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		this.invalidateCallback = invalidateCallback;
 	}
 	RXBuild.UI.DelayedRefresh.prototype.constructor = RXBuild.UI.DelayedRefresh;
+	/** Cancel the pending trigger
+		@return {Boolean} True if there was an event pending to cancel
+	*/
 	RXBuild.UI.DelayedRefresh.prototype.stop = function() {
 		this.nextTimeout = 0;
 		if (this.pendingEvent)
 			{
 				window.clearTimeout(this.pendingEvent);
 				this.pendingEvent = null;
+				return true;
 			}
+		return false;
 	}
+	/** Calls the delegate and updates the timer frequency
+		@private
+	*/
 	RXBuild.UI.DelayedRefresh.prototype.__runDelegate = function() {
 		this.pendingEvent = null;
 		var iStart = new Date();
@@ -72,6 +80,9 @@ if (!RXBuild.UI) RXBuild.UI = {};
 			if (this.defaultDelay < 10) this.defaultDelay = 10;
 		}
 	}
+	/** Restarts the pending event, cancelling any pending events
+		@param {Number} timeout The timeout can override the internally maintained timeout
+	*/
 	RXBuild.UI.DelayedRefresh.prototype.reset = function(timeout) {
 		if (typeof timeout == "undefined")
 			timeout = this.defaultDelay;

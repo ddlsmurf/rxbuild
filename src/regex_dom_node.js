@@ -16,8 +16,16 @@
     along with RXBuild.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/**	@fileOverview This file defines the base class used when parsing the regexp into a tree
+	@requires utils.js
+*/
+
 if (!RXBuild) var RXBuild = {};
-if (!RXBuild.Dom) RXBuild.Dom = {};
+if (!RXBuild.Dom)
+	/* Holds objects that represent a parsed regular expression in memory
+	@namespace RXBuild.Dom
+	*/
+	RXBuild.Dom = {};
 
 RXBuild.Dom.Node = function ()
 {
@@ -79,15 +87,15 @@ RXBuild.Dom.Node.prototype.GetTokenHighlightJS = function() {
 		sResult += (i>0 ? ",[" : "[") + this.tokens[i].offset + "," + this.tokens[i].value.length + "]";
 	return sResult;
 };
-function IsCharInTokenList(c, tokenlist) {
-	if (tokenlist == null) return true;
-	for (var i=0; i < tokenlist.length; i++) {
-		if (c >= tokenlist[i][0] && c < (tokenlist[i][0] + tokenlist[i][1]))
-			return true;
-	}
-	return false;
-}
 function NodeRegExTokenHighlight(tokenlist) {
+	function IsCharInTokenList(c, tokenlist) {
+		if (tokenlist == null) return true;
+		for (var i=0; i < tokenlist.length; i++) {
+			if (c >= tokenlist[i][0] && c < (tokenlist[i][0] + tokenlist[i][1]))
+				return true;
+		}
+		return false;
+	}
 	var i = 0;
 	var oObj;
 	while ((oObj = document.getElementById("rxchr_" + i++)) != null) {

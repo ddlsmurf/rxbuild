@@ -66,7 +66,9 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		else
 			throw oResult;
 	};
-	
+	/** Generates and returns an equivalent JavaScript code
+		@return {String} The code that would run this javascript.
+	*/
 	RXBuild.UI.RX.prototype.getJSCode = function()
 	{
 		var sResult = "var oRegExp = new RegExp(" + this.pattern.escapeJS() + ", \"" + this.options.str + "\");\n";
@@ -77,7 +79,10 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		return sResult;
 	};
 	RXBuild.UI.RX.prototype.CodeBuilders.push(["JavaScript", RXBuild.UI.RX.prototype.getJSCode]);
-
+	
+	/** Generates and returns an equivalent C# code
+		@return {String} The code that would run this javascript.
+	*/
 	RXBuild.UI.RX.prototype.getCSCode = function()
 	{
 		var sResult = "System.Text.RegularExpressions.Regex oRegExp = new System.Text.RegularExpressions.Regex(" + this.pattern.escapeCS() + ", ";
@@ -94,7 +99,10 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		return sResult;
 	};
 	RXBuild.UI.RX.prototype.CodeBuilders.push(["C#", RXBuild.UI.RX.prototype.getCSCode]);
-
+	
+	/** Generates and returns an equivalent Perl code
+		@return {String} The code that would run this javascript.
+	*/
 	RXBuild.UI.RX.prototype.getPerlCode = function() {
 		var sRegExStart = "";
 		var sRegex = this.pattern.normaliseNewLines();
@@ -116,6 +124,9 @@ if (!RXBuild.UI) RXBuild.UI = {};
 	};
 	RXBuild.UI.RX.prototype.CodeBuilders.push(["Perl", RXBuild.UI.RX.prototype.getPerlCode]);
 	
+	/** Generates and returns an equivalent Bash/Grep code
+		@return {String} The code that would run this javascript.
+	*/
 	RXBuild.UI.RX.prototype.getBashGrepCode = function () {
 		var sRes = "grep -E -o ";
 		var sOptions = "";
