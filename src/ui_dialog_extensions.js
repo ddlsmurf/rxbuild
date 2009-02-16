@@ -88,7 +88,7 @@ if (!RXBuild.UI.Dialogs)
 		this._btnOk = oButtons[0];
 		this._btnCancel = oButtons[1];
 		this._oPendingCallback = null;
-	}
+	};
 	RXBuild.UI.Dialogs.TextAreaDialog.prototype.constructor = RXBuild.UI.Dialogs.TextAreaDialog;
 	RXBuild.UI.Dialogs.TextAreaDialog.prototype._buttonPressed = function(buttonId) {
 		var oTemp = this._oPendingCallback;
@@ -99,7 +99,7 @@ if (!RXBuild.UI.Dialogs)
 		}
 	};
 	RXBuild.UI.Dialogs.TextAreaDialog.prototype.show = function(headerHTML, defaultText, verbs, callback, callbackContext) {
-		if (this._oPendingCallback != null) throw "There is already a dialog expecting a response being shown."
+		if (this._oPendingCallback != null) throw "There is already a dialog expecting a response being shown.";
 		this.dialog.header.innerHTML = headerHTML;
 		this.textBox.value = defaultText;
 		if (callback && callbackContext)

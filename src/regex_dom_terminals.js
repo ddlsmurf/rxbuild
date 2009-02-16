@@ -25,42 +25,42 @@ if (!RXBuild) var RXBuild = {};
 if (!RXBuild.Dom)
 	RXBuild.Dom = {};
 
-LiteralMatcher.prototype = new RXBuild.Dom.Node;
-LiteralMatcher.prototype.constructor = LiteralMatcher;
-function LiteralMatcher(textToMatch)
+RXBuild.Dom.LiteralMatcher = function (textToMatch)
 {
 	RXBuild.Dom.Node.call(this);
 	this.texttomatch = textToMatch;	
-}
-LiteralMatcher.prototype.Flatten = function() {
-	while (this.next && (this.next instanceof LiteralMatcher))
+};
+RXBuild.Dom.LiteralMatcher.prototype = new RXBuild.Dom.Node;
+RXBuild.Dom.LiteralMatcher.prototype.constructor = RXBuild.Dom.LiteralMatcher;
+RXBuild.Dom.LiteralMatcher.prototype.Flatten = function() {
+	while (this.next && (this.next instanceof RXBuild.Dom.LiteralMatcher))
 	{
 		this.texttomatch += this.next.texttomatch;
 		this.AddTokens(this.next.tokens);
 		this.next = this.next.next;
 	}
 	return RXBuild.Dom.Node.prototype.Flatten.call(this);
-}
-LiteralMatcher.prototype.GetDescription = function()
+};
+RXBuild.Dom.LiteralMatcher.prototype.GetDescription = function()
 {
 	return "[LitMatch '" + this.texttomatch + "']";
-}
-LiteralMatcher.prototype.GetHtml = function() {
+};
+RXBuild.Dom.LiteralMatcher.prototype.GetHtml = function() {
 	return "Matches <code>" + this.texttomatch.escapeToBackslashes().escapeHTML() + "</code>";
 };
 
-PositionalMatch.prototype = new RXBuild.Dom.Node;
-PositionalMatch.prototype.constructor = PositionalMatch;
-function PositionalMatch(positionalChar, multiline)
+RXBuild.Dom.PositionalMatch = function (positionalChar, multiline)
 {
 	RXBuild.Dom.Node.call(this);
 	this.posChar = positionalChar;
 	if (multiline) this.multiline = multiline;
-}
-PositionalMatch.prototype.GetDescription = function() {
+};
+RXBuild.Dom.PositionalMatch.prototype = new RXBuild.Dom.Node;
+RXBuild.Dom.PositionalMatch.prototype.constructor = RXBuild.Dom.PositionalMatch;
+RXBuild.Dom.PositionalMatch.prototype.GetDescription = function() {
 	return "[Positional " + this.posChar + "]";
 };
-PositionalMatch.prototype.GetHtml = function() {
+RXBuild.Dom.PositionalMatch.prototype.GetHtml = function() {
 	if (this.posChar == "^")
 		return "At the beginning of the string" + (this.multiline ? " (or line)" : "");
 	if (this.posChar == "$")
@@ -72,9 +72,7 @@ PositionalMatch.prototype.GetHtml = function() {
 	RXBuild.Dom.Node.prototype.GetHtml.call(this);
 };
 
-CharacterRangeMatch.prototype = new RXBuild.Dom.Node;
-CharacterRangeMatch.prototype.constructor = CharacterRangeMatch;
-function CharacterRangeMatch(reversed)
+RXBuild.Dom.CharacterRangeMatch = function (reversed)
 {
 	RXBuild.Dom.Node.call(this);
 	this.ranges = new Array();
@@ -83,8 +81,10 @@ function CharacterRangeMatch(reversed)
 	this.include = "";
 	this.exclude = "";
 	this.asString = "";
-}
-CharacterRangeMatch.prototype.AddChar = function(text) {
+};
+RXBuild.Dom.CharacterRangeMatch.prototype = new RXBuild.Dom.Node;
+RXBuild.Dom.CharacterRangeMatch.prototype.constructor = RXBuild.Dom.CharacterRangeMatch;
+RXBuild.Dom.CharacterRangeMatch.prototype.AddChar = function(text) {
 	if (this.reversed)
 		this.exclude += text;
 	else
@@ -95,9 +95,9 @@ CharacterRangeMatch.prototype.AddChar = function(text) {
 		(this.asString != "" ? ", or " : "")) +
 	"<code>" + text.escapeHTML().escapeToBackslashes() + "</code>" + 
 	(this.reversed ? ")" : "");
-}
-CharacterRangeMatch.prototype.AddChars = function(chars) {
-	if (chars != null && chars instanceof LiteralMatcher)
+};
+RXBuild.Dom.CharacterRangeMatch.prototype.AddChars = function(chars) {
+	if (chars != null && chars instanceof RXBuild.Dom.LiteralMatcher)
 	{
 		this.AddTokens(chars.tokens);
 		chars = chars.texttomatch;
@@ -119,8 +119,8 @@ CharacterRangeMatch.prototype.AddChars = function(chars) {
 		this.AddChar(this.pending.pop());
 	if (chars != null)
 		this.pending.push(chars);
-}
-CharacterRangeMatch.prototype.AddClass = function(chars) {
+};
+RXBuild.Dom.CharacterRangeMatch.prototype.AddClass = function(chars) {
 	if (!chars || chars.length == 0) throw "Invalid char class \'" + chars + "\'";
 	var bReversed = chars.charAt(0) == "^";
 	if (bReversed) chars = chars.substr(1);
@@ -135,11 +135,11 @@ CharacterRangeMatch.prototype.AddClass = function(chars) {
 	
 	if (bReversed) this.reversed = !this.reversed;
 	this.pending = oPending;
-}
-CharacterRangeMatch.prototype.AddRange = function(start_range, stop_range, reverseRange) {
-	if (start_range instanceof LiteralMatcher)
+};
+RXBuild.Dom.CharacterRangeMatch.prototype.AddRange = function(start_range, stop_range, reverseRange) {
+	if (start_range instanceof RXBuild.Dom.LiteralMatcher)
 		start_range = start_range.texttomatch;
-	if (stop_range instanceof LiteralMatcher)
+	if (stop_range instanceof RXBuild.Dom.LiteralMatcher)
 		stop_range = stop_range.texttomatch;
 	if (this.reversed) reverseRange = !reverseRange;
 	this.ranges.push({
@@ -154,25 +154,25 @@ CharacterRangeMatch.prototype.AddRange = function(start_range, stop_range, rever
 		"<code>" + start_range.escapeHTML().escapeToBackslashes() + "</code>" +
 		" to " +
 		"<code>" + stop_range.escapeHTML().escapeToBackslashes() + "</code>" + (reverseRange ? ")" : "");
-}
-CharacterRangeMatch.prototype.Flatten = function() {
+};
+RXBuild.Dom.CharacterRangeMatch.prototype.Flatten = function() {
 	if (this.pending != null)
 	{
 		this.AddChars(null);
 		this.pending = null;
 	}
 	return RXBuild.Dom.Node.prototype.Flatten.call(this);
-}
+};
 
-CharacterRangeMatch.prototype.GetDescription = function() {
+RXBuild.Dom.CharacterRangeMatch.prototype.GetDescription = function() {
 	if (this.asString == "")
 		if (this.reversed)
 			return "[Match any single character]";
 		else
 			return "[Never match anything]";
-	return "[CharacterRangeMatch " + this.asString + (this.reversed ? "(reversed)" : "") + "]";
+	return "[RXBuild.Dom.CharacterRangeMatch " + this.asString + (this.reversed ? "(reversed)" : "") + "]";
 };
-CharacterRangeMatch.prototype.GetHtml = function() {
+RXBuild.Dom.CharacterRangeMatch.prototype.GetHtml = function() {
 	if (this.asString == "")
 		if (this.reversed)
 			return "Match any single character";
@@ -181,16 +181,16 @@ CharacterRangeMatch.prototype.GetHtml = function() {
 	return this.asString;
 };
 
-BackTrackOrEscapeTempMatch.prototype = new RXBuild.Dom.Node;
-BackTrackOrEscapeTempMatch.prototype.constructor = BackTrackOrEscapeTempMatch;
-function BackTrackOrEscapeTempMatch(number)
+RXBuild.Dom.BackTrackOrEscapeTempMatch = function (number)
 {
 	RXBuild.Dom.Node.call(this);
 	this.number = number;
-}
-BackTrackOrEscapeTempMatch.prototype.GetDescription = function() {
-	return "[BackTrackOrEscapeTempMatch " + this.number + "]";
 };
-BackTrackOrEscapeTempMatch.prototype.GetHtml = function() {
+RXBuild.Dom.BackTrackOrEscapeTempMatch.prototype = new RXBuild.Dom.Node;
+RXBuild.Dom.BackTrackOrEscapeTempMatch.prototype.constructor = RXBuild.Dom.BackTrackOrEscapeTempMatch;
+RXBuild.Dom.BackTrackOrEscapeTempMatch.prototype.GetDescription = function() {
+	return "[RXBuild.Dom.BackTrackOrEscapeTempMatch " + this.number + "]";
+};
+RXBuild.Dom.BackTrackOrEscapeTempMatch.prototype.GetHtml = function() {
 		return "Matches group " + this.number;
 };

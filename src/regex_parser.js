@@ -1067,17 +1067,17 @@ switch( act )
 	break;
 	case 26:
 	{
-		  rval = new PositionalMatch(vstack[ vstack.length - 1 ].value, this.options.m); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+		  rval = new RXBuild.Dom.PositionalMatch(vstack[ vstack.length - 1 ].value, this.options.m); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 27:
 	{
-		  rval = new PositionalMatch(vstack[ vstack.length - 1 ].value, this.options.m); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+		  rval = new RXBuild.Dom.PositionalMatch(vstack[ vstack.length - 1 ].value, this.options.m); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 28:
 	{
-		  rval = new PositionalMatch(vstack[ vstack.length - 1 ].value); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+		  rval = new RXBuild.Dom.PositionalMatch(vstack[ vstack.length - 1 ].value); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 29:
@@ -1087,12 +1087,12 @@ switch( act )
 	break;
 	case 30:
 	{
-			rval = new CharacterRangeMatch(true); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+			rval = new RXBuild.Dom.CharacterRangeMatch(true); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 31:
 	{
-		  rval = new CharacterRangeMatch(false); rval.AddClass(vstack[ vstack.length - 1 ].value); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+		  rval = new RXBuild.Dom.CharacterRangeMatch(false); rval.AddClass(vstack[ vstack.length - 1 ].value); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 32:
@@ -1187,42 +1187,42 @@ switch( act )
 	break;
 	case 50:
 	{
-			rval = new CharacterRangeMatch(false); 
+			rval = new RXBuild.Dom.CharacterRangeMatch(false); 
 	}
 	break;
 	case 51:
 	{
-			rval = new LiteralMatcher(vstack[ vstack.length - 1 ].value); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+			rval = new RXBuild.Dom.LiteralMatcher(vstack[ vstack.length - 1 ].value); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 52:
 	{
-			rval = new LiteralMatcher(vstack[ vstack.length - 1 ].value); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+			rval = new RXBuild.Dom.LiteralMatcher(vstack[ vstack.length - 1 ].value); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 53:
 	{
-			rval = new LiteralMatcher(vstack[ vstack.length - 1 ].value); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+			rval = new RXBuild.Dom.LiteralMatcher(vstack[ vstack.length - 1 ].value); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 54:
 	{
-			rval = new LiteralMatcher(vstack[ vstack.length - 1 ].value.substr(1, 1)); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+			rval = new RXBuild.Dom.LiteralMatcher(vstack[ vstack.length - 1 ].value.substr(1, 1)); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 55:
 	{
-			rval = new BackTrackOrEscapeTempMatch(vstack[ vstack.length - 1 ].value.substr(1)); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+			rval = new RXBuild.Dom.BackTrackOrEscapeTempMatch(vstack[ vstack.length - 1 ].value.substr(1)); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 56:
 	{
-			rval = new LiteralMatcher(vstack[ vstack.length - 1 ].value); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+			rval = new RXBuild.Dom.LiteralMatcher(vstack[ vstack.length - 1 ].value); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 57:
 	{
-			rval = new LiteralMatcher(vstack[ vstack.length - 1 ].value); rval.AddTokens(vstack[ vstack.length - 1 ]); 
+			rval = new RXBuild.Dom.LiteralMatcher(vstack[ vstack.length - 1 ].value); rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 }
@@ -1373,10 +1373,10 @@ switch( act )
 				return this;
 				}, idArray);
 	        __regex_parse_result = __regex_parse_result.RunForAll(function(max_group_id) { 
-	            if (this instanceof BackTrackOrEscapeTempMatch) 
+	            if (this instanceof RXBuild.Dom.BackTrackOrEscapeTempMatch) 
 	                if (this.number >= max_group_id) 
 	                { 
-	                    var oEscapeMatcher = new LiteralMatcher(String.fromCharCode( this.number )); 
+	                    var oEscapeMatcher = new RXBuild.Dom.LiteralMatcher(String.fromCharCode( this.number )); 
 	                    oEscapeMatcher.next = this.next; 
 	                    oEscapeMatcher.id = this.id; 
 	                    return oEscapeMatcher; 
