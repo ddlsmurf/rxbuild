@@ -44,7 +44,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		document.body.appendChild(this.div);
 		this._oAutoHide = new RXBuild.UI.DelayedRefresh(5000);
 		this._isVisible = false;
-	}
+	};
 	RXBuild.UI.Status.prototype.constructor = RXBuild.UI.Status;
 	/** Displays the status in the top right
 		@param {String} text The text to display in the body

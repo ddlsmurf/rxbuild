@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Regular Expression test form</title>
+<title>RXBuilder - v0.00001</title>
 <!--
 		(c) Copyright 2009 Eric Doughty-Papassideris. All Rights Reserved.
 
@@ -21,7 +21,7 @@
 -->
 
 
-<!-- Yahoo hosting -->
+<!-- Yahoo hosting
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/reset-fonts-grids/reset-fonts-grids.css">  
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/base/base-min.css">  
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/assets/skins/sam/skin.css">    
@@ -37,25 +37,25 @@
 <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/layout/layout-beta-min.js"></script>  
 <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/tabview/tabview-min.js"></script>  
 <script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/treeview/treeview-min.js"></script>
-<!-- -->
+ -->
 
-<!-- local YUI hosting
-<link rel="stylesheet" type="text/css" href="./build/reset-fonts-grids/reset-fonts-grids.css">  
-<link rel="stylesheet" type="text/css" href="./build/base/base-min.css">  
-<link rel="stylesheet" type="text/css" href="./build/assets/skins/sam/skin.css">    
-<script type="text/javascript" src="./build/utilities/utilities.js"></script>  
-<script type="text/javascript" src="./build/element/element-beta-min.js"></script>
-<script type="text/javascript" src="./build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="./build/cookie/cookie-beta-min.js"></script>
-<script type="text/javascript" src="./build/button/button-min.js"></script>  
-<script type="text/javascript" src="./build/container/container-min.js"></script>  
-<script type="text/javascript" src="./build/menu/menu-min.js"></script>
-<script type="text/javascript" src="./build/resize/resize-beta-min.js"></script>  
-<script type="text/javascript" src="./build/selector/selector-beta-min.js"></script>  
-<script type="text/javascript" src="./build/layout/layout-beta-min.js"></script>  
-<script type="text/javascript" src="./build/tabview/tabview-min.js"></script>  
-<script type="text/javascript" src="./build/treeview/treeview-min.js"></script>
--->
+<!-- local YUI hosting -->
+<link rel="stylesheet" type="text/css" href="./external/yui/reset-fonts-grids/reset-fonts-grids.css">  
+<link rel="stylesheet" type="text/css" href="./external/yui/base/base-min.css">  
+<link rel="stylesheet" type="text/css" href="./external/yui/assets/skins/sam/skin.css">    
+<script type="text/javascript" src="./external/yui/utilities/utilities.js"></script>  
+<script type="text/javascript" src="./external/yui/element/element-beta-min.js"></script>
+<script type="text/javascript" src="./external/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="./external/yui/cookie/cookie-beta-min.js"></script>
+<script type="text/javascript" src="./external/yui/button/button-min.js"></script>  
+<script type="text/javascript" src="./external/yui/container/container-min.js"></script>  
+<script type="text/javascript" src="./external/yui/menu/menu-min.js"></script>
+<script type="text/javascript" src="./external/yui/resize/resize-beta-min.js"></script>  
+<script type="text/javascript" src="./external/yui/selector/selector-beta-min.js"></script>  
+<script type="text/javascript" src="./external/yui/layout/layout-beta-min.js"></script>  
+<script type="text/javascript" src="./external/yui/tabview/tabview-min.js"></script>  
+<script type="text/javascript" src="./external/yui/treeview/treeview-min.js"></script>
+<!-- -->
 <!--
 	Production code:
 	<script src="compressed.js" type="text/javascript" charset="utf-8"></script>
@@ -205,13 +205,6 @@
 	<br>
 </p>
 <div id="treeDiv1"></div>
-<div id="dialogPanel">
-	<div class="hd"></div>
-	<div class="bd">
-		<textarea class="screenWide lightBox" rows="20" cols="80" id="txtDialog">
-</textarea>
-	</div>
-</div>
 <div id="dialogHtmlPanel">
 	<div class="hd"></div>
 	<div class="bd">
@@ -701,13 +694,8 @@
 <script language="JavaScript">
 
 var tabView = new YAHOO.widget.TabView('refPanelBody');
-var lastChange = Date().UTC;
-var isMatchPending = false;
-
 var tree = new YAHOO.widget.TreeView("treeDiv1");
 var regexbackup = "";
-var oDlgPanel = new YAHOO.widget.Panel("dialogPanel", { width:"640px", visible:false, constraintoviewport:true, modal: true, effect:{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.25}, fixedcenter: true} );
-oDlgPanel.render();
 var oDlgHtmlPanel = new YAHOO.widget.Panel("dialogHtmlPanel", { width:"640px", visible:false, constraintoviewport:true, modal: true, effect:{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.25}, fixedcenter: true} );
 oDlgHtmlPanel.render();
 var oPanel = new YAHOO.widget.Panel("refPanel", { width:"640px", visible:false, constraintoviewport:false, effect:{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.25}, fixedcenter: true } );
@@ -733,15 +721,15 @@ function showNodeDetails(node) {
 	RXBuild.UI.dlg.show("Match details", oText);
 }
 
-function getAbbridged(s) {
-	if (s == null)
-		return "<null>";
-	if (s.length <= 123)
-		return s;
-	return s.substr(0, 120) + "...";
-}
-
 function testRegEx() {
+	function getAbbridged(s) {
+		if (s == null)
+			return "<null>";
+		if (s.length <= 123)
+			return s;
+		return s.substr(0, 120) + "...";
+	}
+
 	var oRegExpSpecs = RXBuild.UI.rx.getRX();
 	tree.removeChildren(tree.getRoot());
 	var oRegExpControl = document.getElementById("txtRegEx");
@@ -794,7 +782,6 @@ function testRegEx() {
 		{
 			new YAHOO.widget.TextNode("Error in this code " + err.message, tree.getRoot(), true);
 		}
-	isMatchPending = false;
 	tree.draw();
 }
 
@@ -841,19 +828,19 @@ if (!RXBuild.UI) RXBuild.UI = {};
 			RXBuild.Utils.createDelegate(this, function() { this.onRegExpApplyChanges.fire(this.getRX()); }),
 			RXBuild.Utils.createDelegate(this, function() { this.onRegExpInvalidated.fire(this); }),
 			0.1);
-	}
+	};
 	RXBuild.UI.RXEditor.prototype.constructor = RXBuild.UI.RXEditor;
 	RXBuild.UI.RXEditor.prototype.__raiseRegExpChanged = function() {
 		this.onRegExpChanged.fire(this);
 		this.changedEventTime.reset();
-	}
+	};
 	RXBuild.UI.RXEditor.prototype.getRX = function() {
 		return new RXBuild.UI.RX(this.textBox.value, this.chkGlobal.checked, this.chkCaseInsensitive.checked, this.chkMultiline.checked);
-	}
+	};
 	RXBuild.UI.RXEditor.prototype.updateOptionsButtonLabel = function() {
 		this.btnDisplayOptions.set("label", "Options (" + this.getRX().options.str + ")");
 		this.__raiseRegExpChanged();
-	}
+	};
 	RXBuild.UI.RXEditor.prototype.insertIntoRegexp = function(str) {
 		if (this.textBox == null) return;
 		var iPos = this.getCaretPosition();
@@ -883,13 +870,13 @@ if (!RXBuild.UI) RXBuild.UI = {};
 			iEnd = this.textBox.selectionEnd;
 		}
 		return [iCaretPos, iEnd];
-	}
+	};
 	RXBuild.UI.RXEditor.prototype.textBoxPosChanged = function () {
 		var iPos = this.getCaretPosition();
 		this.divCaretPosition.setBody("c:" + iPos[0] + (iPos[1] != iPos[0] ? "-" + iPos[1] : ""));
 		this.divCaretPosition.__ds_align();
 		this.divCaretPosition.height = this.header.offsetHeight + "px";
-	}
+	};
 	RXBuild.UI.RXEditor.prototype.explainRegexp = function () {
 		function makeHtmlCharsOfString(str) {
 			var sResult = "";
@@ -908,10 +895,10 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		}
 		var sRegexBlock = makeHtmlCharsOfString(oRegExp.pattern);
 		showHtmlDialog("Explanation of " + sRegexBlock, "<br>" + "<br>" + oCompiledRegExp);
-	}
+	};
 	RXBuild.UI.RXEditor.prototype.textBoxChanged = function () {
 		this.__raiseRegExpChanged();
-	}
+	};
 	RXBuild.UI.RXEditor.prototype.initUI = function() {
 		try {
 			function buildRegexpOptionsOverlay(prefix) {
@@ -979,7 +966,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 							submenu: {id: prefix + 'menuGroupInput', itemdata: [
 								buildSimpleInserterMenuItem(scope, "Escape text for litteral matching...", insertEscapedRegExp),
 								buildSimpleInserterMenuItem(scope, "Token list", function(s, f) { insertTokenList(s, f, true); }),
-								buildSimpleInserterMenuItem(scope, "Token list (capturing groups)", function(s, f) { insertTokenList(s, f, false); }),
+								buildSimpleInserterMenuItem(scope, "Token list (capturing groups)", function(s, f) { insertTokenList(s, f, false); })
 								]}
 						},
 						{
@@ -1090,7 +1077,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 			
 			this.updateOptionsButtonLabel();
 		}catch(e) { alert(e);}
-	}
+	};
 
 	RXBuild.UI.initUI = function() {
 		var iItemHeight = Math.round(YAHOO.util.Dom.getViewportHeight() / 3);
@@ -1154,7 +1141,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		oLeftLayoutUnit.addListener("widthChange", oLeftResize);
 		oLeftLayoutUnit.addListener("heightChange", oLeftResize);
 		oLeftResize();
-	}
+	};
 
 
     YAHOO.util.Event.onDOMReady(function() {	

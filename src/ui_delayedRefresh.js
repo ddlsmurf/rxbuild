@@ -48,7 +48,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		this.pendingEvent = null;
 		this.callBack = callBack;
 		this.invalidateCallback = invalidateCallback;
-	}
+	};
 	RXBuild.UI.DelayedRefresh.prototype.constructor = RXBuild.UI.DelayedRefresh;
 	/** Cancel the pending trigger
 		@return {Boolean} True if there was an event pending to cancel
@@ -62,7 +62,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 				return true;
 			}
 		return false;
-	}
+	};
 	/** Calls the delegate and updates the timer frequency
 		@private
 	*/
@@ -70,16 +70,16 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		this.pendingEvent = null;
 		var iStart = new Date();
 		try {
-		this.callBack();
+			this.callBack();
 		} catch (e) {
-			alert("Warning - CallBack raised an exception\n" + e);
+			window.alert("Warning - CallBack raised an exception\n" + e);
 		}
 		var iDuration = ((new Date()).getTime() - iStart) * 10;
 		if (this.adaptiveSpeed != 0){
 			this.defaultDelay = (1.0 - this.adaptiveSpeed) * this.defaultDelay + this.adaptiveSpeed * iDuration;
 			if (this.defaultDelay < 10) this.defaultDelay = 10;
 		}
-	}
+	};
 	/** Restarts the pending event, cancelling any pending events
 		@param {Number} timeout The timeout can override the internally maintained timeout
 	*/
@@ -97,7 +97,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 					return;
 				this.__runDelegate();
 			}), timeout);
-	}
+	};
 
 
 })();

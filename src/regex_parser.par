@@ -96,14 +96,14 @@ Term:			Character
 				| Positional
 				;
 
-Positional:     '$'								[*  %% = new PositionalMatch(%1.value, this.options.m); %%.AddTokens(%1); *] 
-				| '^'							[*  %% = new PositionalMatch(%1.value, this.options.m); %%.AddTokens(%1); *]
-				| WORD_BOUNDARY_CHAR			[*  %% = new PositionalMatch(%1.value); %%.AddTokens(%1); *]
+Positional:     '$'								[*  %% = new RXBuild.Dom.PositionalMatch(%1.value, this.options.m); %%.AddTokens(%1); *] 
+				| '^'							[*  %% = new RXBuild.Dom.PositionalMatch(%1.value, this.options.m); %%.AddTokens(%1); *]
+				| WORD_BOUNDARY_CHAR			[*  %% = new RXBuild.Dom.PositionalMatch(%1.value); %%.AddTokens(%1); *]
 				;
 
 CharacterSet:	'[' CharClass ']'				[*	%% = %2; %%.AddTokens(%1, %3); *]
-				| ANY_CHAR						[*	%% = new CharacterRangeMatch(true); %%.AddTokens(%1); *]
-				| CHARACTER_CLASS				[*  %% = new CharacterRangeMatch(false); %%.AddClass(%1.value); %%.AddTokens(%1); *]
+				| ANY_CHAR						[*	%% = new RXBuild.Dom.CharacterRangeMatch(true); %%.AddTokens(%1); *]
+				| CHARACTER_CLASS				[*  %% = new RXBuild.Dom.CharacterRangeMatch(false); %%.AddClass(%1.value); %%.AddTokens(%1); *]
 				;
 												
 CharClass:		CharClass Character					[*	%1.AddChars(%2); %% = %1; *]
@@ -124,17 +124,17 @@ CharClass:		CharClass Character					[*	%1.AddChars(%2); %% = %1; *]
 				| CharClass '('						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
 				| CharClass ')'						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
 				| CharClass WORD_BOUNDARY_CHAR		[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
-				|									[*	%% = new CharacterRangeMatch(false); *]
+				|									[*	%% = new RXBuild.Dom.CharacterRangeMatch(false); *]
 				;
 
 
-Character:		ASCII_HEX_CODE			[*	%% = new LiteralMatcher(%1.value); %%.AddTokens(%1); *]
-				| UNICODE_HEX_CODE		[*	%% = new LiteralMatcher(%1.value); %%.AddTokens(%1); *]
-				| SPECIAL_CHAR			[*	%% = new LiteralMatcher(%1.value); %%.AddTokens(%1); *]
-				| ESCAPED_CHAR			[*	%% = new LiteralMatcher(%1.value.substr(1, 1)); %%.AddTokens(%1); *]
-				| ESCAPED_NUM			[*	%% = new BackTrackOrEscapeTempMatch(%1.value.substr(1)); %%.AddTokens(%1); *]
-				| INT					[*	%% = new LiteralMatcher(%1.value); %%.AddTokens(%1); *]
-				| ANY					[*	%% = new LiteralMatcher(%1.value); %%.AddTokens(%1); *]
+Character:		ASCII_HEX_CODE			[*	%% = new RXBuild.Dom.LiteralMatcher(%1.value); %%.AddTokens(%1); *]
+				| UNICODE_HEX_CODE		[*	%% = new RXBuild.Dom.LiteralMatcher(%1.value); %%.AddTokens(%1); *]
+				| SPECIAL_CHAR			[*	%% = new RXBuild.Dom.LiteralMatcher(%1.value); %%.AddTokens(%1); *]
+				| ESCAPED_CHAR			[*	%% = new RXBuild.Dom.LiteralMatcher(%1.value.substr(1, 1)); %%.AddTokens(%1); *]
+				| ESCAPED_NUM			[*	%% = new RXBuild.Dom.BackTrackOrEscapeTempMatch(%1.value.substr(1)); %%.AddTokens(%1); *]
+				| INT					[*	%% = new RXBuild.Dom.LiteralMatcher(%1.value); %%.AddTokens(%1); *]
+				| ANY					[*	%% = new RXBuild.Dom.LiteralMatcher(%1.value); %%.AddTokens(%1); *]
 				;
 
 [*
@@ -233,10 +233,10 @@ Character:		ASCII_HEX_CODE			[*	%% = new LiteralMatcher(%1.value); %%.AddTokens(
 				return this;
 				}, idArray);
 	        __regex_parse_result = __regex_parse_result.RunForAll(function(max_group_id) { 
-	            if (this instanceof BackTrackOrEscapeTempMatch) 
+	            if (this instanceof RXBuild.Dom.BackTrackOrEscapeTempMatch) 
 	                if (this.number >= max_group_id) 
 	                { 
-	                    var oEscapeMatcher = new LiteralMatcher(String.fromCharCode( this.number )); 
+	                    var oEscapeMatcher = new RXBuild.Dom.LiteralMatcher(String.fromCharCode( this.number )); 
 	                    oEscapeMatcher.next = this.next; 
 	                    oEscapeMatcher.id = this.id; 
 	                    return oEscapeMatcher; 

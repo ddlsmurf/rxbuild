@@ -158,7 +158,8 @@ String.prototype.escapeRegexp = function () {
                 replace(/([.\$\^\{\[\|\(\)\]\}\*\+\?])/g,'\\$1')
         );
     };
-
+/** Returns a reference to itself. Used for compatible conversion to string of other object models.
+*/
 String.prototype.toString = function () {
         return this;
     };
@@ -242,8 +243,17 @@ String.prototype.parseURLKeyValues = function () {
 	};
 })();
 
-if (!RXBuild) var RXBuild = {};
-if (!RXBuild.Utils) RXBuild.Utils = {};
+if (!RXBuild)
+	/* RXBuild is the root namespace for containing all items relative to the RXBuild project.
+		@namespace RXBuild
+	*/
+	var RXBuild = {};
+if (!RXBuild.Utils)
+
+	/* RXBuild.Utils is a namespace to group utility functions written for the RXBuild project.
+		@namespace RXBuild.Utils
+	*/
+	RXBuild.Utils = {};
 
 /** Tries really hard to build a flat array with all parameters
 	If the first argument is an array, it will be the one to which the other items are added.
@@ -270,7 +280,7 @@ RXBuild.Utils.JoinArrays = function () {
 			if (oItem != null)
 				if (oItem instanceof Array)
 					for (var j=0; j < oItem.length; j++)
-						JoinArrays(oResult, oItem[j]);
+						RXBuild.Utils.JoinArrays(oResult, oItem[j]);
 				else
 					oResult.push(oItem);
 		}
@@ -316,7 +326,7 @@ RXBuild.Utils.getObjectDesc = function(o, skip, includeFunctions, i) {
 		if (o.hasOwnProperty(prop) &&
 			(includeFunctions || typeof(o[prop]) != "function") &&
 			(skip == null || !arrayHasString(skip, prop))) {
-			sResult += (bFirst ? "" : "\n" + i) + "-" + prop + ": " + getObjectDesc(o[prop], skip, includeFunctions, i + "  |");
+			sResult += (bFirst ? "" : "\n" + i) + "-" + prop + ": " + RXBuild.Utils.getObjectDesc(o[prop], skip, includeFunctions, i + "  |");
 			if (bFirst) bFirst = false;
 		}
 	return sResult;
@@ -378,7 +388,7 @@ RXBuild.Utils.buildRegexpFromTokens = function (tokens, noncapturing) {
 				buildRegExp(parent[i].children, res, noncapturing);
 				res.push(")");
 			} else {
-				if (!parent[i].terminal) alert("ASSERT: (This should never happen) Node is not terminal and has no children: '" + parent[i].s + "'");
+				if (!parent[i].terminal) throw ("ASSERT: (This should never happen) Node is not terminal and has no children: '" + parent[i].s + "'");
 				res.push(parent[i].s.escapeRegexp());
 			}
 			if (parent[i].children && parent[i].terminal) {

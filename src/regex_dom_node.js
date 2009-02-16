@@ -111,11 +111,7 @@ RXBuild.Dom.Node.prototype.GetChainHtml = function() {
 	var oItem = this;
 	while (oItem != null)
 	{
-		try {
 		sResult += oItem.GetHtmlOpenTag() + oItem.GetHtml() + "</li>";
-	} catch(err) {
-		alert("Error " + err + " on object id " + oItem.id);
-		}
 		oItem = oItem.next;
 	}
 	return sResult + "</ul>";
