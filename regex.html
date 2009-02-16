@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Regular Expression test form</title>
+<title>RXBuilder - v0.00001</title>
 <!--
 		(c) Copyright 2009 Eric Doughty-Papassideris. All Rights Reserved.
 
@@ -205,13 +205,6 @@
 	<br>
 </p>
 <div id="treeDiv1"></div>
-<div id="dialogPanel">
-	<div class="hd"></div>
-	<div class="bd">
-		<textarea class="screenWide lightBox" rows="20" cols="80" id="txtDialog">
-</textarea>
-	</div>
-</div>
 <div id="dialogHtmlPanel">
 	<div class="hd"></div>
 	<div class="bd">
@@ -701,13 +694,8 @@
 <script language="JavaScript">
 
 var tabView = new YAHOO.widget.TabView('refPanelBody');
-var lastChange = Date().UTC;
-var isMatchPending = false;
-
 var tree = new YAHOO.widget.TreeView("treeDiv1");
 var regexbackup = "";
-var oDlgPanel = new YAHOO.widget.Panel("dialogPanel", { width:"640px", visible:false, constraintoviewport:true, modal: true, effect:{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.25}, fixedcenter: true} );
-oDlgPanel.render();
 var oDlgHtmlPanel = new YAHOO.widget.Panel("dialogHtmlPanel", { width:"640px", visible:false, constraintoviewport:true, modal: true, effect:{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.25}, fixedcenter: true} );
 oDlgHtmlPanel.render();
 var oPanel = new YAHOO.widget.Panel("refPanel", { width:"640px", visible:false, constraintoviewport:false, effect:{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.25}, fixedcenter: true } );
@@ -733,15 +721,15 @@ function showNodeDetails(node) {
 	RXBuild.UI.dlg.show("Match details", oText);
 }
 
-function getAbbridged(s) {
-	if (s == null)
-		return "<null>";
-	if (s.length <= 123)
-		return s;
-	return s.substr(0, 120) + "...";
-}
-
 function testRegEx() {
+	function getAbbridged(s) {
+		if (s == null)
+			return "<null>";
+		if (s.length <= 123)
+			return s;
+		return s.substr(0, 120) + "...";
+	}
+
 	var oRegExpSpecs = RXBuild.UI.rx.getRX();
 	tree.removeChildren(tree.getRoot());
 	var oRegExpControl = document.getElementById("txtRegEx");
@@ -794,7 +782,6 @@ function testRegEx() {
 		{
 			new YAHOO.widget.TextNode("Error in this code " + err.message, tree.getRoot(), true);
 		}
-	isMatchPending = false;
 	tree.draw();
 }
 
