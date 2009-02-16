@@ -143,4 +143,23 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		return sRes;
 	};
 	RXBuild.UI.RX.prototype.CodeBuilders.push(["Bash and grep", RXBuild.UI.RX.prototype.getBashGrepCode]);
+
+	/** Generates and return an equivalent Ruby code
+	 *  @return {String} The cdo that would run this javascript.
+	 */
+	RXBuild.UI.RX.prototype.getRubyCode = function () {
+		var sRes = "";
+		var sOptions = this.options.str.replace('g', '');
+		var sRe = "/" + this.pattern.replace(/\\/g,'\\\\').replace(/\//g, '\\/') + '/' + sOptions;
+		if (this.options.g) {
+			sRes += 'while match_group = replace_me_with_the_input_text.match(' + sRe + ")\n";
+			sRes += "  # Your matches are in match_group[n]\n"
+			sRes += "end\n"
+		} else {
+			sRes += 'match_group = replace_me_with_the_input_text.match(' + sRe + ")\n";
+			sRes += "# Your match are in match_group[n]\n";
+		}
+		return sRes;
+	}
+	RXBuild.UI.RX.prototype.CodeBuilders.push(["Ruby", RXBuild.UI.RX.prototype.getRubyCode]);
 })();
