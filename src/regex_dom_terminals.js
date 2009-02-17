@@ -21,10 +21,19 @@
 	@requires regex_dom_node.js
 */
 
-if (!RXBuild) var RXBuild = {};
-if (!RXBuild.Dom)
-	RXBuild.Dom = {};
 
+if (!RXBuild)
+	/** @namespace The RXBuild namespace is the root namespace for all things RXBuild */
+	var RXBuild = { };
+if (!RXBuild.Dom)
+	/** @namespace The RXBuild.Dom namespace holds the classes that represent a parsed regular expression */
+	 RXBuild.Dom = {};
+/** @class The LiteralMatcher class matches the provided text literally
+	@property {String} texttomatch The text to look for in the input stream
+	@base RXBuild.Dom.Node
+	@constructor
+	@param {String} textToMatch The text to look for in the input stream
+*/
 RXBuild.Dom.LiteralMatcher = function (textToMatch)
 {
 	RXBuild.Dom.Node.call(this);
@@ -32,6 +41,11 @@ RXBuild.Dom.LiteralMatcher = function (textToMatch)
 };
 RXBuild.Dom.LiteralMatcher.prototype = new RXBuild.Dom.Node;
 RXBuild.Dom.LiteralMatcher.prototype.constructor = RXBuild.Dom.LiteralMatcher;
+
+/** Helper method allowing the DOM to transform itself by concatenating all consecutive literal matchers
+	@private
+	@return {RXBuild.Dom.Node} A reference to the node that should replace this instance
+*/
 RXBuild.Dom.LiteralMatcher.prototype.Flatten = function() {
 	while (this.next && (this.next instanceof RXBuild.Dom.LiteralMatcher))
 	{
@@ -41,14 +55,30 @@ RXBuild.Dom.LiteralMatcher.prototype.Flatten = function() {
 	}
 	return RXBuild.Dom.Node.prototype.Flatten.call(this);
 };
+
+/** Returns a human readable description of this match
+	@return {String} The description of this node in human readable format.
+*/
 RXBuild.Dom.LiteralMatcher.prototype.GetDescription = function()
 {
 	return "[LitMatch '" + this.texttomatch + "']";
 };
+
+/** Returns an HTML description of this match
+	@return {String} An HTML description of this match
+*/
 RXBuild.Dom.LiteralMatcher.prototype.GetHtml = function() {
 	return "Matches <code>" + this.texttomatch.escapeToBackslashes().escapeHTML() + "</code>";
 };
 
+/** @class The PositionalMatch class matches the specific positions (such as $, ^, \b and \B)
+@property {String} posChar The character representing the position to match
+@property {Boolean} multiline If set, the regexp was compiled in multiline
+@base RXBuild.Dom.Node
+@constructor
+@param {String} positionalChar The character representing the position to match
+@param {Boolean} multiline Whether the regexp was compiled in multiline
+*/
 RXBuild.Dom.PositionalMatch = function (positionalChar, multiline)
 {
 	RXBuild.Dom.Node.call(this);
@@ -57,9 +87,17 @@ RXBuild.Dom.PositionalMatch = function (positionalChar, multiline)
 };
 RXBuild.Dom.PositionalMatch.prototype = new RXBuild.Dom.Node;
 RXBuild.Dom.PositionalMatch.prototype.constructor = RXBuild.Dom.PositionalMatch;
+
+/** Returns a human readable description of this match
+	@return {String} The description of this node in human readable format.
+*/
 RXBuild.Dom.PositionalMatch.prototype.GetDescription = function() {
 	return "[Positional " + this.posChar + "]";
 };
+
+/** Returns an HTML description of this match
+	@return {String} An HTML description of this match
+*/
 RXBuild.Dom.PositionalMatch.prototype.GetHtml = function() {
 	if (this.posChar == "^")
 		return "At the beginning of the string" + (this.multiline ? " (or line)" : "");
@@ -72,6 +110,13 @@ RXBuild.Dom.PositionalMatch.prototype.GetHtml = function() {
 	RXBuild.Dom.Node.prototype.GetHtml.call(this);
 };
 
+/** @class The CharacterRangeMatch class matches a range of characters (eg: [a-z])
+@property {Boolean} reversed If set, the range match is negated
+@property {Array} ranges An array of objects representing acceptable ranges
+@base RXBuild.Dom.Node
+@constructor
+@param {Boolean} reversed If set, the range is negated
+*/
 RXBuild.Dom.CharacterRangeMatch = function (reversed)
 {
 	RXBuild.Dom.Node.call(this);
@@ -155,6 +200,11 @@ RXBuild.Dom.CharacterRangeMatch.prototype.AddRange = function(start_range, stop_
 		" to " +
 		"<code>" + stop_range.escapeHTML().escapeToBackslashes() + "</code>" + (reverseRange ? ")" : "");
 };
+
+/** Helper method allowing the DOM to transform itself. Used to flush pending characters.
+	@private
+	@return {RXBuild.Dom.Node} A reference to the node that should replace this instance
+*/
 RXBuild.Dom.CharacterRangeMatch.prototype.Flatten = function() {
 	if (this.pending != null)
 	{
@@ -164,6 +214,9 @@ RXBuild.Dom.CharacterRangeMatch.prototype.Flatten = function() {
 	return RXBuild.Dom.Node.prototype.Flatten.call(this);
 };
 
+/** Returns a human readable description of this match
+	@return {String} The description of this node in human readable format.
+*/
 RXBuild.Dom.CharacterRangeMatch.prototype.GetDescription = function() {
 	if (this.asString == "")
 		if (this.reversed)
@@ -172,6 +225,10 @@ RXBuild.Dom.CharacterRangeMatch.prototype.GetDescription = function() {
 			return "[Never match anything]";
 	return "[RXBuild.Dom.CharacterRangeMatch " + this.asString + (this.reversed ? "(reversed)" : "") + "]";
 };
+
+/** Returns an HTML description of this match
+	@return {String} An HTML description of this match
+*/
 RXBuild.Dom.CharacterRangeMatch.prototype.GetHtml = function() {
 	if (this.asString == "")
 		if (this.reversed)
@@ -181,6 +238,12 @@ RXBuild.Dom.CharacterRangeMatch.prototype.GetHtml = function() {
 	return this.asString;
 };
 
+/** @class The BackTrackOrEscapeTempMatch class matches previously referenced group
+@property {Number} number The index of the group to match
+@base RXBuild.Dom.Node
+@constructor
+@param {Number} number The index of the group to match
+*/
 RXBuild.Dom.BackTrackOrEscapeTempMatch = function (number)
 {
 	RXBuild.Dom.Node.call(this);
@@ -188,9 +251,17 @@ RXBuild.Dom.BackTrackOrEscapeTempMatch = function (number)
 };
 RXBuild.Dom.BackTrackOrEscapeTempMatch.prototype = new RXBuild.Dom.Node;
 RXBuild.Dom.BackTrackOrEscapeTempMatch.prototype.constructor = RXBuild.Dom.BackTrackOrEscapeTempMatch;
+
+/** Returns a human readable description of this match
+	@return {String} The description of this node in human readable format.
+*/
 RXBuild.Dom.BackTrackOrEscapeTempMatch.prototype.GetDescription = function() {
 	return "[RXBuild.Dom.BackTrackOrEscapeTempMatch " + this.number + "]";
 };
+
+/** Returns an HTML description of this match
+	@return {String} An HTML description of this match
+*/
 RXBuild.Dom.BackTrackOrEscapeTempMatch.prototype.GetHtml = function() {
 		return "Matches group " + this.number;
 };

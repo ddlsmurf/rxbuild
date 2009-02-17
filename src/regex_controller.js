@@ -22,11 +22,11 @@
 */
 
 if (!RXBuild)
-	/**
-		@namespace RXBuild
-	*/
+	/** @namespace The RXBuild namespace is the root namespace for all things RXBuild */
 	var RXBuild = { };
-if (!RXBuild.UI) RXBuild.UI = {};
+if (!RXBuild.UI)
+	/** @namespace The RXBuild.UI namespace is the root namespace for all things related to RXBuilds user interface */
+	 RXBuild.UI = {};
 
 (function() {
 

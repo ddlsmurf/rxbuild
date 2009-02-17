@@ -110,6 +110,17 @@ String.prototype.findCommonPrefix = function (s, startIndex) {
 };
 
 /**
+	Returns the number of identical characters in this string and the one in s
+	starting from the beginning using case insensitive .
+	@param {String} s The other string to compare to
+	@param {Number} startIndex Optional - The position from which to start
+	@return {Number} The number of common characters between the two strings
+*/
+String.prototype.findCommonPrefixCaseInsensitive = function (s, startIndex) {
+	return this.toLocaleLowerCase().findCommonPrefix(s.toLocaleLowerCase());
+};
+
+/**
 	Returns a version of the string with all leading and trailing whitespace removed
 	@type String
 
@@ -244,15 +255,10 @@ String.prototype.parseURLKeyValues = function () {
 })();
 
 if (!RXBuild)
-	/* RXBuild is the root namespace for containing all items relative to the RXBuild project.
-		@namespace RXBuild
-	*/
+	/** @namespace The RXBuild namespace is the root namespace for all things RXBuild */
 	var RXBuild = {};
 if (!RXBuild.Utils)
-
-	/* RXBuild.Utils is a namespace to group utility functions written for the RXBuild project.
-		@namespace RXBuild.Utils
-	*/
+	/** @namespace RXBuild.Utils is a namespace to group utility functions written for the RXBuild project. */
 	RXBuild.Utils = {};
 
 /** Tries really hard to build a flat array with all parameters
@@ -335,13 +341,14 @@ RXBuild.Utils.getObjectDesc = function(o, skip, includeFunctions, i) {
 /** Builds an optimised regular expression to parse a list of tokens.
 	@param {String[]} tokens An array of tokens to match
 	@param {Boolean} noncapturing If set to true, generated groups are non-capturing (ie: <em>(?:)</em>)
+	@param {Boolean} caseinsensitive If set to true, tokens are considered case insensitive
 	@return {String} The regular expression that would match those tokens
 */
-RXBuild.Utils.buildRegexpFromTokens = function (tokens, noncapturing) {
+RXBuild.Utils.buildRegexpFromTokens = function (tokens, noncapturing, caseinsensitive) {
 	var root = [];
-	function addNode(parent, str) { //Very dumb implementation of a suffix tree (but its home made =)
+	function addNode(parent, str) { //Very dumb implementation of a suffix tree (but its home made - so dont you mention no fancy log(n) mumbo =)
 		for (var i = 0; i < parent.length; i++) {
-			var iCommon = str.findCommonPrefix(parent[i].s);
+			var iCommon = caseinsensitive ? str.findCommonPrefixCaseInsensitive(parent[i].s) : str.findCommonPrefix(parent[i].s);
 			if (iCommon == str.length) {
 				// Found my terminal node
 				parent[i].terminal = true;

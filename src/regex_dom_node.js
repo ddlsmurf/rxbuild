@@ -20,13 +20,19 @@
 	@requires utils.js
 */
 
-if (!RXBuild) var RXBuild = {};
-if (!RXBuild.Dom)
-	/* Holds objects that represent a parsed regular expression in memory
-	@namespace RXBuild.Dom
-	*/
-	RXBuild.Dom = {};
 
+if (!RXBuild)
+	/** @namespace The RXBuild namespace is the root namespace for all things RXBuild */
+	var RXBuild = { };
+if (!RXBuild.Dom)
+	/** @namespace The RXBuild.Dom namespace holds the classes that represent a parsed regular expression */
+	 RXBuild.Dom = {};
+
+/** @class Abstract base class for all matching nodes in the regexps DOM tree
+	@property {RXBuild.Dom.Node} next The node to match following the current instance
+	@property {Number} id A unique (in the regexp) numeric ID for this item
+	@property {regex_parser.TokenInfo[]} tokens An array of tokens from the input stream that created this instance
+*/
 RXBuild.Dom.Node = function ()
 {
 	this.next = null;
@@ -35,8 +41,18 @@ RXBuild.Dom.Node = function ()
 	this.tokens = new Array();
 };
 
+/** @private
+Executes this match	
+*/
 RXBuild.Dom.Node.prototype.Match = function() {return false;};
+
+/** Returns a human readable description of this match
+	@return {String} The description of this node in human readable format.
+*/
 RXBuild.Dom.Node.prototype.GetDescription = function() {return "-RXBuild.Dom.Node-";};
+/** Adds all tokens passed in all arguments to the tokens property of this instance
+	@param {regex_parser.TokenInfo} ... Tokens to include in this instance
+*/
 RXBuild.Dom.Node.prototype.AddTokens = function() {
 	for (var i = 0; i < arguments.length; i++)
 		{
@@ -48,6 +64,10 @@ RXBuild.Dom.Node.prototype.AddTokens = function() {
 				this.tokens.push(obj);
 		}
 };
+
+/** Returns a human readable description of this match and its following matches
+	@return {String} The description of this node and the following in human readable format.
+*/
 RXBuild.Dom.Node.prototype.GetChainDescription = function() {
 	var sResult = "";
 	var oItem = this;
@@ -59,35 +79,55 @@ RXBuild.Dom.Node.prototype.GetChainDescription = function() {
 	}
 	return sResult;
 };
-RXBuild.Dom.Node.prototype.GetLast = function(newLast) {
+/** Finds and returns the last item in the chain starting from the current instance
+	@return {RXBuild.Dom.Node} The last node in this nodes siblings
+*/
+RXBuild.Dom.Node.prototype.GetLast = function() {
 	var oItem = this;
 	while (oItem.next != null)
 		oItem = oItem.next;
 	return oItem;
 };
-RXBuild.Dom.Node.prototype.Flatten = function(newLast) {
+/** Helper method allowing the DOM to transform itself
+	@private
+	@return {RXBuild.Dom.Node} A reference to the node that should replace this instance
+*/
+RXBuild.Dom.Node.prototype.Flatten = function() {
 	if (this.next) this.next = this.next.Flatten();
 	return this;
 };
+/** Adds the provided RXBuild.Dom.Node to the end of this items sibling chain
+	@param {RXBuild.Dom.Node} newLast The node to append.
+*/
 RXBuild.Dom.Node.prototype.AppendAtEnd = function(newLast) {
 	var oItem = this.GetLast();
 	oItem.next = newLast;
 };
+/** Copies base information from the provided node into the current instance
+	@private
+*/
 RXBuild.Dom.Node.prototype.CopyFrom = function(prevNode) {
 	this.next = prevNode.next; 
 	this.id = prevNode.id;
 	this.tokens = prevNode.tokens;
 };
+
+/** Returns an HTML description of this match (Must be overriden - this returns a fat error)
+	@return {String} An HTML description of this match
+*/
 RXBuild.Dom.Node.prototype.GetHtml = function() {
 	return "<h1>Error - RXBuild.Dom.Node.GetHtml sifted through on " + RXBuild.Utils.getObjectDesc(this) + "</h1>";
 };
+
+/** Used to display this nodes HTML in an interactive way to the user - to be rewritten */
 RXBuild.Dom.Node.prototype.GetTokenHighlightJS = function() {
 	var sResult = "";
 	for (var i = 0; i < this.tokens.length; i++)
 		sResult += (i>0 ? ",[" : "[") + this.tokens[i].offset + "," + this.tokens[i].value.length + "]";
 	return sResult;
 };
-function NodeRegExTokenHighlight(tokenlist) {
+/** Used to display this nodes HTML in an interactive way to the user - to be rewritten */
+RXBuild.Dom.Node.NodeRegExTokenHighlight = function(tokenlist) {
 	function IsCharInTokenList(c, tokenlist) {
 		if (tokenlist == null) return true;
 		for (var i=0; i < tokenlist.length; i++) {
@@ -103,9 +143,11 @@ function NodeRegExTokenHighlight(tokenlist) {
 	}
 	window.event.stopPropagation();
 }
+/** Used to display this nodes HTML in an interactive way to the user - to be rewritten */
 RXBuild.Dom.Node.prototype.GetHtmlOpenTag = function() {
-	return "<li onmouseover=\"NodeRegExTokenHighlight([" + this.GetTokenHighlightJS() + "]);\" onmouseout=\"NodeRegExTokenHighlight(null);\">" + (this.id != null ? "<span class=\"rx_id\">" + this.id + ")</span> " : "");
+	return "<li onmouseover=\"RXBuild.Dom.Node.NodeRegExTokenHighlight([" + this.GetTokenHighlightJS() + "]);\" onmouseout=\"RXBuild.Dom.Node.NodeRegExTokenHighlight(null);\">" + (this.id != null ? "<span class=\"rx_id\">" + this.id + ")</span> " : "");
 };
+/** Used to display this nodes HTML in an interactive way to the user - to be rewritten */
 RXBuild.Dom.Node.prototype.GetChainHtml = function() {
 	var sResult = "<ul>";
 	var oItem = this;
@@ -116,9 +158,19 @@ RXBuild.Dom.Node.prototype.GetChainHtml = function() {
 	}
 	return sResult + "</ul>";
 };
+/** Visits this node with the provided visitor
+	@param {Function} func The function to call with each node as first parameter
+	@param {object} param The second parameter to func
+	@return {object} Whatever func last returned
+*/
 RXBuild.Dom.Node.prototype.RunOnMe = function(func,param) {
 	return func.call(this,param);
 };
+/** Calls RunOnMe on each node in this instances chain
+@param {Function} func The function to call with each node as first parameter
+@param {object} param The second parameter to func
+@return {object} Whatever func returned for this instance
+*/
 RXBuild.Dom.Node.prototype.RunForAll = function(func,param) {
 	var oResult = this.RunOnMe(func,param);
 	if (this.next != null)
