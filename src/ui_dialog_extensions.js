@@ -19,12 +19,16 @@
 /** @fileOverview This file defines YUI dialog extensions
 	@requires utils.js
 */
-if (!RXBuild) var RXBuild = {};
-if (!RXBuild.UI) RXBuild.UI = {};
+if (!RXBuild)
+	/** @namespace The RXBuild namespace is the root namespace for all things RXBuild */
+	var RXBuild = { };
+if (!RXBuild.UI)
+	/** @namespace The RXBuild.UI namespace is the root namespace for all things related to RXBuilds user interface */
+	 RXBuild.UI = {};
+
 if (!RXBuild.UI.Dialogs)
 	/**
-		@namespace RXBuild.UI.Dialogs
-		Holds various dialog utility functions.
+		@namespace RXBuild.UI.Dialogs - Holds a simple versatile input/output dialog manager.
 	*/
 	RXBuild.UI.Dialogs = { };
 
@@ -90,6 +94,9 @@ if (!RXBuild.UI.Dialogs)
 		this._oPendingCallback = null;
 	};
 	RXBuild.UI.Dialogs.TextAreaDialog.prototype.constructor = RXBuild.UI.Dialogs.TextAreaDialog;
+	/** Performs the appropriate action when a button is pressed
+		@private
+	*/
 	RXBuild.UI.Dialogs.TextAreaDialog.prototype._buttonPressed = function(buttonId) {
 		var oTemp = this._oPendingCallback;
 		this._oPendingCallback = null;
@@ -98,6 +105,13 @@ if (!RXBuild.UI.Dialogs)
 			oTemp(this.textBox.value);
 		}
 	};
+	/** Displays modally the dialog box with the provided header, text and buttons.
+		@param {String} headerHTML HTML content to display in the header of the dialog
+		@param {String} defaultText The main content to display in the dialogs body initially
+		@param {String[]|String} verbs Optional. An array of labels to put on the OK and Cancel buttons (respectively)
+		@param {Function} callback Optional. The method to call when the user validates the dialog.
+		@param {object} callbackContext Optional. The object to scope before calling callback
+	*/
 	RXBuild.UI.Dialogs.TextAreaDialog.prototype.show = function(headerHTML, defaultText, verbs, callback, callbackContext) {
 		if (this._oPendingCallback != null) throw "There is already a dialog expecting a response being shown.";
 		this.dialog.header.innerHTML = headerHTML;
