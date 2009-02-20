@@ -836,7 +836,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 		this.changedEventTime.reset();
 	};
 	RXBuild.UI.RXEditor.prototype.getRX = function() {
-		return new RXBuild.UI.RX(this.textBox.value, this.chkGlobal.checked, this.chkCaseInsensitive.checked, this.chkMultiline.checked);
+		return new RXBuild.RegExp(this.textBox.value, this.chkGlobal.checked, this.chkCaseInsensitive.checked, this.chkMultiline.checked);
 	};
 	RXBuild.UI.RXEditor.prototype.updateOptionsButtonLabel = function() {
 		this.btnDisplayOptions.set("label", "Options (" + this.getRX().options.str + ")");
@@ -1013,8 +1013,8 @@ if (!RXBuild.UI) RXBuild.UI = {};
 						}};
 				}
 				var oRes = [];
-				for (var i=0; i < RXBuild.UI.RX.prototype.CodeBuilders.length; i++) {
-					var oGenerator = RXBuild.UI.RX.prototype.CodeBuilders[i];
+				for (var i=0; i < RXBuild.RegExp.prototype.CodeBuilders.length; i++) {
+					var oGenerator = RXBuild.RegExp.prototype.CodeBuilders[i];
 					oRes.push(buildSimpleGeneratorMenuItem(scope, oGenerator[0], oGenerator[1]));
 				};
 				return oRes;
