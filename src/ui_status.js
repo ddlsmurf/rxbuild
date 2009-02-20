@@ -19,7 +19,8 @@
 /**	@fileOverview Holds the status display control
 	@requires utils.js
 */
-
+/*jsl:define YAHOO
+*/
 if (!RXBuild)
 	/** @namespace The RXBuild namespace is the root namespace for all things RXBuild */
 	var RXBuild = { };
@@ -33,10 +34,11 @@ if (!RXBuild.UI)
 		@class The RXBuild.UI.Status controls an always-on-top div that shows a tasks status
 		@constructor
 		@param {String} divName The name of the div to use in the end
+		@param {String} className Optional. A CSS class name to apply to the container DIV. 
 	*/
-	RXBuild.UI.Status = function (divName) {
+	RXBuild.UI.Status = function (divName, className) {
 		this.div = document.createElement("DIV");
-		this.div.setAttribute("class", "");
+		this.div.setAttribute("class", (typeof (className) == "String" ? className : ""));
 		this.div.setAttribute("id", divName);
 		this.div.setAttribute("style", "position: absolute; top: 0px; z-index: 5; padding: 5px; margin: 5px; right: 30px; " +
 			"border: 1px solid white;");
