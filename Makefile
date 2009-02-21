@@ -34,6 +34,7 @@ SRC = \
 	$(SRC_PATH)/regex_controller.js \
 	$(SRC_PATH)/regex_engine.js \
 	$(SRC_PATH)/ui_regex_viewer.js \
+	$(SRC_PATH)/ui_regex_editor.js \
 	$(RES_PARSERS)
 
 OUT =  compressed.js
