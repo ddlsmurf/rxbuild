@@ -32,7 +32,7 @@ if (!RXBuild)
 		@class The RXBuild.RegExp class holds a regular expression as input by the user, and connects with the various operations
 		@property {String} pattern Gets the regular expression as input by the user
 		@property {Options} options Gets the options selected by the user. This object has the properties <strong>g</strong>, <strong>m</strong> and
-		 							<strong>i</strong> set to {@link} true if the corresponding option is active. There is also a <strong>str</strong> property
+		 							<strong>i</strong> set to true if the corresponding option is active. There is also a <strong>str</strong> property
 									with the options as a string (eg.: &quot;gi&quot;).
 		@constructor
 		@param {String} pattern The regular expression as set by the user
