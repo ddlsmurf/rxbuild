@@ -70,6 +70,8 @@
 	<script src="src/ui_status.js" type="text/javascript" charset="utf-8"></script>
 	<script src="src/regex_parser.js" type="text/javascript" charset="utf-8"></script>
 	<script src="src/regex_controller.js" type="text/javascript" charset="utf-8"></script>
+	<script src="src/regex_engine.js" type="text/javascript" charset="utf-8"></script>
+	<script src="src/ui_regex_viewer.js" type="text/javascript" charset="utf-8"></script>
 
  <STYLE type="text/css">
 		
@@ -85,6 +87,9 @@
    .regExText { font: bolder 2em Monaco, courrier, monospace; }
    .innerTable { font-size: 8pt; border: solid gray 1px; }
    .button { border: 3px dotted black; padding: 5px; margin: 5px;  background: skyblue;}
+	.rxbuild_regextester { color: #777; }
+	.rxbuild_regexmatch { color: black; border: 1px solid #CDAD00; opacity: .8; background: #FFD700; padding: 2; }
+	.rxbuild_regexerror { color: black; opacity: .8; background: red; padding: 2; }
    h2 { margin: 0; }
    body {
 			margin:0;
@@ -695,13 +700,10 @@
 <script language="JavaScript">
 
 var tabView = new YAHOO.widget.TabView('refPanelBody');
-var tree = new YAHOO.widget.TreeView("treeDiv1");
-var regexbackup = "";
 var oDlgHtmlPanel = new YAHOO.widget.Panel("dialogHtmlPanel", { width:"640px", visible:false, constraintoviewport:true, modal: true, effect:{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.25}, fixedcenter: true} );
 oDlgHtmlPanel.render();
 var oPanel = new YAHOO.widget.Panel("refPanel", { width:"640px", visible:false, constraintoviewport:false, effect:{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.25}, fixedcenter: true } );
 oPanel.render();
-
 
 function showHtmlDialog(title, s) {
 	var txt = document.getElementById("txtHtmlDialog");
@@ -711,117 +713,16 @@ function showHtmlDialog(title, s) {
 	txt.innerHTML = title;
 	oDlgHtmlPanel.show();
 }
-function showNodeDetails(node) {
-	if ((typeof node.data) == "string")
-	{
-		RXBuild.UI.dlg.show("Match details", node.data);
-		return;
-	}
-	var oText = document.getElementById("txtSample");
-	oText = oText.value.substr(node.data[0], node.data[1]);
-	RXBuild.UI.dlg.show("Match details", oText);
-}
-
-function testRegEx() {
-	function getAbbridged(s) {
-		if (s == null)
-			return "<null>";
-		if (s.length <= 123)
-			return s;
-		return s.substr(0, 120) + "...";
-	}
-
-	var oRegExpSpecs = RXBuild.UI.rx.getRX();
-	tree.removeChildren(tree.getRoot());
-	var oRegExpControl = document.getElementById("txtRegEx");
-	var oRegExp = oRegExpControl;
-	var oText = document.getElementById("txtSample");
-	if (oRegExpControl == null || oText == null)
-	{
-		alert("Couldnt find controls.");
-		return false;
-	}
-
-	regexbackup = oRegExpControl.value;
-	oText = oText.value;
-	try
-	{
-		oRegExp = new RegExp(oRegExp.value, oRegExpSpecs.options.str);
-	}
-	catch(err)
-	{
-		oRegExp = null;
-		new YAHOO.widget.TextNode("Error in regexp pattern. " + err.message, tree.getRoot(), true);
-		YAHOO.util.Dom.setStyle(oRegExpControl, "background", "#fdd");
-	}
-	if (oRegExp != null)
-		try {
-		  	var oMatches;
-		  	var i = 0;
-	  	
-		  	while (i < 100 && (oMatches = oRegExp.exec(oText)) != null)
-		  	{
-		  		i++;
-		  		var sAbb = getAbbridged(oMatches[0]).escapeHTML();
-				var tmpNode = new YAHOO.widget.TextNode("Match #" + i + " \"" + sAbb + "\"", tree.getRoot(), oMatches.length > 1);
-				tmpNode.data = new Array( oMatches.index, oMatches[0].length);
-				if (sAbb != oMatches[0] && oMatches.length != 1)
-						(new YAHOO.widget.TextNode("<em>View full match</em>", tmpNode, false)).data = tmpNode.data;
-				for (var iSubMatch = 1; iSubMatch < oMatches.length; iSubMatch++)
-					(new YAHOO.widget.TextNode("#" + iSubMatch + ": \'" + getAbbridged(oMatches[iSubMatch]).escapeHTML() + "\'", tmpNode, false)).data = oMatches[iSubMatch];
-				if (!oRegExpSpecs.options.g) break;
-		  	}
-		  	if (i == 0)
-			  	new YAHOO.widget.HTMLNode("<strong>&lt;No Matches&gt;</strong>", tree.getRoot(), true, true);
-		  	else if (i == 100)
-			  	new YAHOO.widget.HTMLNode("<strong>Stopped matching at 100 !!<strong/>", tree.getRoot(), true, true);
-
-				var oItem = document.getElementById("txtRegEx");
-				YAHOO.util.Dom.setStyle(oItem, "background", "");
-		}
-		catch(err)
-		{
-			new YAHOO.widget.TextNode("Error in this code " + err.message, tree.getRoot(), true);
-		}
-	tree.draw();
-}
-
-function clickedOnNode(node) {
-	if ((typeof node.data) == "object")
-	{
-		var oText = document.getElementById("txtSample");
-		oText.selectionStart = node.data[0];
-		oText.selectionEnd = node.data[0] + node.data[1];
-		oText.focus();
-		if (!node.hasChildren(false))
-			showNodeDetails(node);
-		else
-			node.toggle();
-	}
-	else
-		showNodeDetails(node);
-	return false;
-}
-
-function invalidateTree() {
-	try {
-	tree.removeChildren(tree.getRoot());
-  	new YAHOO.widget.TextNode("About to perform match...", tree.getRoot(), true);
-	tree.draw();
-	} catch(e) {alert(e);}
-}
 
 YAHOO.util.Event.addListener("lnkShowQuickRef", "click", oPanel.show, oPanel, true);
-YAHOO.util.Event.addListener("btnSearch", "click", testRegEx);
-
-tree.subscribe("labelClick", clickedOnNode);
 
 if (!RXBuild) var RXBuild = {};
 if (!RXBuild.UI) RXBuild.UI = {};
-	RXBuild.UI.RXEditor = function(containerDiv, headerDiv, textBox) {
+	RXBuild.UI.RXEditor = function(containerDiv, headerDiv, patternTextBox, inputTextBox) {
 		this.container = typeof(containerDiv) == "string" ? document.getElementById(containerDiv) : containerDiv;
 		this.header = typeof(headerDiv) == "string" ? document.getElementById(headerDiv) : headerDiv;
-		this.textBox = typeof(textBox) == "string" ? document.getElementById(textBox) : textBox;
+		this.textBox = typeof(patternTextBox) == "string" ? document.getElementById(patternTextBox) : patternTextBox;
+		this.sampleInputTextBox = typeof(inputTextBox) == "string" ? document.getElementById(inputTextBox) : inputTextBox;
 		this.onRegExpChanged = new YAHOO.util.CustomEvent("onRegExpChanged");
 		this.onRegExpInvalidated = new YAHOO.util.CustomEvent("onRegExpInvalidated");
 		this.onRegExpApplyChanges = new YAHOO.util.CustomEvent("onRegExpUpdate");
@@ -829,14 +730,33 @@ if (!RXBuild.UI) RXBuild.UI = {};
 			RXBuild.Utils.createDelegate(this, function() { this.onRegExpApplyChanges.fire(this.getRX()); }),
 			RXBuild.Utils.createDelegate(this, function() { this.onRegExpInvalidated.fire(this); }),
 			0.1);
+		YAHOO.util.Event.addListener(this.sampleInputTextBox, "keyup", RXBuild.Utils.createDelegate(this, function() {
+			this.__raiseRegExpChanged();
+		}));
+		
 	};
 	RXBuild.UI.RXEditor.prototype.constructor = RXBuild.UI.RXEditor;
 	RXBuild.UI.RXEditor.prototype.__raiseRegExpChanged = function() {
+		if (this.__previousRegexp) {
+			var oRX = this.getRX();
+			oRX.sampleInput = this.getInput();
+			if (this.__previousRegexp.options.str == oRX.options.str &&
+				this.__previousRegexp.pattern == oRX.pattern &&
+				this.__previousRegexp.sampleInput == oRX.sampleInput)
+				return; // Abort refresh.
+			this.__previousRegexp = oRX;
+		} else {
+			this.__previousRegexp = this.getRX();
+			this.__previousRegexp.sampleInput = this.getInput();
+		}
 		this.onRegExpChanged.fire(this);
 		this.changedEventTime.reset();
 	};
 	RXBuild.UI.RXEditor.prototype.getRX = function() {
 		return new RXBuild.RegExp(this.textBox.value, this.chkGlobal.checked, this.chkCaseInsensitive.checked, this.chkMultiline.checked);
+	};
+	RXBuild.UI.RXEditor.prototype.getInput = function() {
+		return this.sampleInputTextBox.value;
 	};
 	RXBuild.UI.RXEditor.prototype.updateOptionsButtonLabel = function() {
 		this.btnDisplayOptions.set("label", "Options (" + this.getRX().options.str + ")");
@@ -963,7 +883,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 				}
 				return [
 						{
-							text: "Input...",
+							text: "Generate...",
 							submenu: {id: prefix + 'menuGroupInput', itemdata: [
 								buildSimpleInserterMenuItem(scope, "Escape text for litteral matching...", insertEscapedRegExp),
 								buildSimpleInserterMenuItem(scope, "Token list", function(s, f) { insertTokenList(s, f, true); }),
@@ -1036,7 +956,7 @@ if (!RXBuild.UI) RXBuild.UI = {};
 			YAHOO.util.Event.addListener(this.chkMultiline, "change", oUpdateButton);
 			YAHOO.util.Event.addListener(this.chkGlobal, "change", oUpdateButton);
 
-			var oPosChanged = RXBuild.Utils.createDelegate(this, function() {this.textBoxChanged(); this.textBoxPosChanged(); });
+			var oPosChanged = RXBuild.Utils.createDelegate(this, function() {this.textBoxPosChanged(); this.textBoxChanged();});
 			YAHOO.util.Event.addListener(this.textBox, "change", oPosChanged);
 			YAHOO.util.Event.addListener(this.textBox, "click", oPosChanged);
 			YAHOO.util.Event.addListener(this.textBox, "keyup", oPosChanged);
@@ -1093,21 +1013,21 @@ if (!RXBuild.UI) RXBuild.UI = {};
        	this.layout.render();
 		var oCenterLayoutUnit = this.layout.getUnitByPosition("center");
 		var oLeftLayoutUnit = this.layout.getUnitByPosition("left");
+		var oBottomLayoutUnit = this.layout.getUnitByPosition("bottom");
 
 		this.status = new RXBuild.UI.Status("divGeneralStatus");
 		
 		this.dlg = new RXBuild.UI.Dialogs.TextAreaDialog("divGeneralDialog");
 		
-		this.rx = new RXBuild.UI.RXEditor("contTxtRegEx", oCenterLayoutUnit.header.getElementsByTagName("H2")[0], "txtRegEx");
-		this.rx.initUI();
-		this.rx.onRegExpInvalidated.subscribe(invalidateTree);
-		this.rx.onRegExpApplyChanges.subscribe(testRegEx);
-		
+		this.rx = new RXBuild.UI.RXEditor("contTxtRegEx", oCenterLayoutUnit.header.getElementsByTagName("H2")[0], "txtRegEx", "txtSample");
 		
 		this.tabViewLeft = new YAHOO.widget.TabView('divLeftContainer', {autofillheight: "body"});
 		
-		YAHOO.util.Event.addListener("txtSample", "keyup", RXBuild.Utils.createDelegate(this.rx, function() { this.changedEventTime.reset(); }));
+		this.rx.initUI();
 		
+		this.resultViewer = new RXBuild.UI.RegexViewer(document.getElementById('treeDiv1'), 'TreeContainerThingie',
+													   oBottomLayoutUnit.header.getElementsByTagName("H2")[0], this.rx);
+
 		/* Resizing code */
 		
 		var oRelayout = RXBuild.Utils.createDelegate(this, function() {
