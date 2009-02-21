@@ -101,13 +101,19 @@ if (!RXBuild.UI.Dialogs)
 		var oTemp = this._oPendingCallback;
 		this._oPendingCallback = null;
 		this.dialog.hide();
+		var oContent = this._oContentChild;
+		if (this._oContentChild) {
+			this._oContentChild = null;
+			this.dialog.setBody(this.textBox);
+		}
+		if (!oContent) oContent = this.textBox.value;
 		if (buttonId == "ok" && oTemp) {
-			oTemp(this.textBox.value);
+			oTemp(oContent);
 		}
 	};
 	/** Displays modally the dialog box with the provided header, text and buttons.
 		@param {String} headerHTML HTML content to display in the header of the dialog
-		@param {String} defaultText The main content to display in the dialogs body initially
+		@param {String|HTMLElement} defaultText The main content to display in the dialogs body initially
 		@param {String[]|String} verbs Optional. An array of labels to put on the OK and Cancel buttons (respectively)
 		@param {Function} callback Optional. The method to call when the user validates the dialog.
 		@param {object} callbackContext Optional. The object to scope before calling callback
@@ -115,14 +121,26 @@ if (!RXBuild.UI.Dialogs)
 	RXBuild.UI.Dialogs.TextAreaDialog.prototype.show = function(headerHTML, defaultText, verbs, callback, callbackContext) {
 		if (this._oPendingCallback != null) throw "There is already a dialog expecting a response being shown.";
 		this.dialog.header.innerHTML = headerHTML;
-		this.textBox.value = defaultText;
+		if (typeof(defaultText) == "String") {
+			this.textBox.value = defaultText;
+		} else {
+			this._oContentChild = defaultText;
+			this.dialog.setBody(this._oContentChild);
+		}
 		if (callback && callbackContext)
 			callback = RXBuild.Utils.createDelegate(callbackContext, callback);
 		this._oPendingCallback = callback;
-		if (callback)
-			this.textBox.removeAttribute("readonly");
-		else	
-			this.textBox.setAttribute("readonly", "true");
+		if (typeof(defaultText) == "String") {
+			if (callback) {
+				this.textBox.removeAttribute("readonly");
+				YAHOO.util.Event.removeListener(this.textBox, "click");
+			} else {
+				this.textBox.setAttribute("readonly", "true");
+				YAHOO.util.Event.addListener(this.textBox, "click", RXBuild.Utils.createDelegate(this, function() {
+					if (this.textBox.select) this.textBox.select();
+				}));
+			}
+		}
 		var sV1 = "Ok";
 		var sV2 = callback ? "Cancel" : "Close";
 		if (verbs && verbs.length == 0)
@@ -146,7 +164,7 @@ if (!RXBuild.UI.Dialogs)
 		this.dialog.show();
 		this.textBox.focus();
 		if (!callback)
-			this.textBox.selectAll();
+			this.textBox.focus();
 	};
 
 })();
