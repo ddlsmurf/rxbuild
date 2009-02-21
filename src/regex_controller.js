@@ -120,7 +120,7 @@ if (!RXBuild)
 		else
 			sRegex = sRegex.replace(/\\/g,'\\\\').replace(/\//g,'\\/');
 		return sRegExStart + "while ($ReplaceMeWithTheInputText =~ m/" + sRegex + "/" + this.options.str +") {\n" +
-			"# matches are in $1, $2... position in pos $ReplaceMeWithTheInputText\n# but please! Consider learning a real language\n}"; 
+			"# matches are in $1, $2... position in pos $ReplaceMeWithTheInputText\n}"; 
 	};
 	RXBuild.RegExp.prototype.CodeBuilders.push(["Perl", RXBuild.RegExp.prototype.getPerlCode]);
 	
