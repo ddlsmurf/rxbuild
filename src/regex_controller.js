@@ -24,9 +24,6 @@
 if (!RXBuild)
 	/** @namespace The RXBuild namespace is the root namespace for all things RXBuild */
 	var RXBuild = { };
-if (!RXBuild.UI)
-	/** @namespace The RXBuild.UI namespace is the root namespace for all things related to RXBuilds user interface */
-	 RXBuild.UI = {};
 
 (function() {
 
@@ -35,7 +32,7 @@ if (!RXBuild.UI)
 		@class The RXBuild.RegExp class holds a regular expression as input by the user, and connects with the various operations
 		@property {String} pattern Gets the regular expression as input by the user
 		@property {Options} options Gets the options selected by the user. This object has the properties <strong>g</strong>, <strong>m</strong> and
-		 							<strong>i</strong> set to true if the corresponding option is active. There is also a <strong>str</strong> property
+		 							<strong>i</strong> set to {@link} true if the corresponding option is active. There is also a <strong>str</strong> property
 									with the options as a string (eg.: &quot;gi&quot;).
 		@constructor
 		@param {String} pattern The regular expression as set by the user
@@ -52,6 +49,9 @@ if (!RXBuild.UI)
 		this.options.str = (i ? "i" : "") + (g ? "g" : "") + (m ? "m" : "");
 	};
 	RXBuild.RegExp.prototype.constructor = RXBuild.RegExp;
+	
+	/** @field {Array} Index of builder functions. It is an array of builder, each being an array of 2 items, the english name, and the function.
+	*/
 	RXBuild.RegExp.prototype.CodeBuilders = [];
 
 	/** Compiles the regexp using the custom parser, and returns the expressions DOM, or throws a string with errors encountered during parse
@@ -67,7 +67,7 @@ if (!RXBuild.UI)
 			throw oResult;
 	};
 	/** Generates and returns an equivalent JavaScript code
-		@return {String} The code that would run this javascript.
+		@return {String} A snippet of JavaScript code that would run this regular expression.
 	*/
 	RXBuild.RegExp.prototype.getJSCode = function()
 	{
@@ -81,7 +81,7 @@ if (!RXBuild.UI)
 	RXBuild.RegExp.prototype.CodeBuilders.push(["JavaScript", RXBuild.RegExp.prototype.getJSCode]);
 	
 	/** Generates and returns an equivalent C# code
-		@return {String} The code that would run this javascript.
+		@return {String} A snippet of C# code that would run this regular expression.
 	*/
 	RXBuild.RegExp.prototype.getCSCode = function()
 	{
@@ -101,7 +101,7 @@ if (!RXBuild.UI)
 	RXBuild.RegExp.prototype.CodeBuilders.push(["C#", RXBuild.RegExp.prototype.getCSCode]);
 	
 	/** Generates and returns an equivalent Perl code
-		@return {String} The code that would run this javascript.
+		@return {String} A snippet of Perl code that would run this regular expression.
 	*/
 	RXBuild.RegExp.prototype.getPerlCode = function() {
 		var sRegExStart = "";
@@ -125,7 +125,7 @@ if (!RXBuild.UI)
 	RXBuild.RegExp.prototype.CodeBuilders.push(["Perl", RXBuild.RegExp.prototype.getPerlCode]);
 	
 	/** Generates and returns an equivalent Bash/Grep code
-		@return {String} The code that would run this javascript.
+		@return {String} A snippet of Bash/Grep code that would run this regular expression.
 	*/
 	RXBuild.RegExp.prototype.getBashGrepCode = function () {
 		var sRes = "grep -E -o ";
@@ -145,7 +145,7 @@ if (!RXBuild.UI)
 	RXBuild.RegExp.prototype.CodeBuilders.push(["Bash and grep", RXBuild.RegExp.prototype.getBashGrepCode]);
 
 	/** Generates and return an equivalent Ruby code
-	 *  @return {String} The cdo that would run this javascript.
+	 *  @return {String} A snippet of ruby code that would run this regular expression.
 	 */
 	RXBuild.RegExp.prototype.getRubyCode = function () {
 		var sRes = "";
@@ -153,13 +153,13 @@ if (!RXBuild.UI)
 		var sRe = "/" + this.pattern.replace(/\\/g,'\\\\').replace(/\//g, '\\/') + '/' + sOptions;
 		if (this.options.g) {
 			sRes += 'while match_group = replace_me_with_the_input_text.match(' + sRe + ")\n";
-			sRes += "  # Your matches are in match_group[n]\n"
-			sRes += "end\n"
+			sRes += "  # Your matches are in match_group[n]\n";
+			sRes += "end\n";
 		} else {
 			sRes += 'match_group = replace_me_with_the_input_text.match(' + sRe + ")\n";
 			sRes += "# Your match are in match_group[n]\n";
 		}
 		return sRes;
-	}
+	};
 	RXBuild.RegExp.prototype.CodeBuilders.push(["Ruby", RXBuild.RegExp.prototype.getRubyCode]);
 })();
