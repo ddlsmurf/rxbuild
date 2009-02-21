@@ -115,7 +115,6 @@ if (!RXBuild.UI)
 	RXBuild.UI.Dialog.prototype.show = function(headerHTML, defaultText, verbs, callback, callbackContext) {
 		if (this._oPendingCallback != null) throw "There is already a dialog expecting a response being shown.";
 		this.dialog.header.innerHTML = headerHTML;
-		alert(typeof(defaultText));
 		if (typeof(defaultText) == "string") {
 			this.dialog.setBody(this.textBox);
 			this.textBox.value = defaultText;
