@@ -3,6 +3,9 @@
 
 /**	@fileOverview Contains the main editor controller
 	@requires utils.js
+	@requires regex_dom.js
+	@requires regex_parser.js
+	@requires ui_dialog_extensions.js
 */
 if (!RXBuild)
 	/** @namespace The RXBuild namespace is the root namespace for all things RXBuild */

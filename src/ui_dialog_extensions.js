@@ -26,17 +26,11 @@ if (!RXBuild.UI)
 	/** @namespace The RXBuild.UI namespace is the root namespace for all things related to RXBuilds user interface */
 	 RXBuild.UI = {};
 
-if (!RXBuild.UI.Dialogs)
-	/**
-		@namespace RXBuild.UI.Dialogs - Holds a simple versatile input/output dialog manager.
-	*/
-	RXBuild.UI.Dialogs = { };
-
 (function() {
 
 	/** 
 		Creates a new instance of TextAreaDialog
-		@class The TextAreaDialog displays a YUI dialog with a text area as main content, and configurable verbs
+		@class The RXBuild.UI.Dialog displays a YUI dialog with a text area or provided HTMLElement as main content, and configurable verbs
 		@property {String} divName The name of the div element that this item provided to YUI
 		@property {YAHOO.widget.Dialog} dialog The YUI dialog - used internally.
 		@property {YAHOO.widget.Button} _btnOk The YUI ok button - used internally.
@@ -45,7 +39,7 @@ if (!RXBuild.UI.Dialogs)
 		@constructor
 		@param {String} divName The name of the div element that this item will provide to YUI
 	*/
-	RXBuild.UI.Dialogs.TextAreaDialog = function (divName) {
+	RXBuild.UI.Dialog = function (divName) {
 		this.divName = divName;
 		this.dialog = new YAHOO.widget.Dialog(divName, 
 			{
@@ -54,7 +48,7 @@ if (!RXBuild.UI.Dialogs)
 				constraintoviewport:true,
 				effect:{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.25},
 				fixedcenter: true,
-				hideaftersubmit: true,
+				hideaftersubmit: true, 
 				postmethod: "manual",
 				modal: true,
 				close: false,
@@ -93,11 +87,11 @@ if (!RXBuild.UI.Dialogs)
 		this._btnCancel = oButtons[1];
 		this._oPendingCallback = null;
 	};
-	RXBuild.UI.Dialogs.TextAreaDialog.prototype.constructor = RXBuild.UI.Dialogs.TextAreaDialog;
+	RXBuild.UI.Dialog.prototype.constructor = RXBuild.UI.Dialog;
 	/** Performs the appropriate action when a button is pressed
 		@private
 	*/
-	RXBuild.UI.Dialogs.TextAreaDialog.prototype._buttonPressed = function(buttonId) {
+	RXBuild.UI.Dialog.prototype._buttonPressed = function(buttonId) {
 		var oTemp = this._oPendingCallback;
 		this._oPendingCallback = null;
 		this.dialog.hide();
@@ -118,10 +112,12 @@ if (!RXBuild.UI.Dialogs)
 		@param {Function} callback Optional. The method to call when the user validates the dialog.
 		@param {object} callbackContext Optional. The object to scope before calling callback
 	*/
-	RXBuild.UI.Dialogs.TextAreaDialog.prototype.show = function(headerHTML, defaultText, verbs, callback, callbackContext) {
+	RXBuild.UI.Dialog.prototype.show = function(headerHTML, defaultText, verbs, callback, callbackContext) {
 		if (this._oPendingCallback != null) throw "There is already a dialog expecting a response being shown.";
 		this.dialog.header.innerHTML = headerHTML;
-		if (typeof(defaultText) == "String") {
+		alert(typeof(defaultText));
+		if (typeof(defaultText) == "string") {
+			this.dialog.setBody(this.textBox);
 			this.textBox.value = defaultText;
 		} else {
 			this._oContentChild = defaultText;
@@ -130,7 +126,7 @@ if (!RXBuild.UI.Dialogs)
 		if (callback && callbackContext)
 			callback = RXBuild.Utils.createDelegate(callbackContext, callback);
 		this._oPendingCallback = callback;
-		if (typeof(defaultText) == "String") {
+		if (typeof(defaultText) == "string") {
 			if (callback) {
 				this.textBox.removeAttribute("readonly");
 				YAHOO.util.Event.removeListener(this.textBox, "click");

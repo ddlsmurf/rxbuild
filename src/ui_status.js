@@ -38,7 +38,7 @@ if (!RXBuild.UI)
 	*/
 	RXBuild.UI.Status = function (divName, className) {
 		this.div = document.createElement("DIV");
-		this.div.setAttribute("class", (typeof (className) == "String" ? className : ""));
+		this.div.setAttribute("class", (typeof (className) == "string" ? className : ""));
 		this.div.setAttribute("id", divName);
 		this.div.setAttribute("style", "position: absolute; top: 0px; z-index: 5; padding: 5px; margin: 5px; right: 30px; " +
 			"border: 1px solid white;");
