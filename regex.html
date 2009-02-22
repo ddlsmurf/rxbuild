@@ -1,4 +1,6 @@
-<html>
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>RXBuilder - v0.00001</title>
 <!--
@@ -22,7 +24,7 @@
 
 
 <!-- Yahoo hosting - update with externals target of Makefile -->
-<link rel="stylesheet" type="text/css" href="./external/yui/yui.css">
+<link rel="stylesheet" type="text/css" href="./external/yui/yui.css"></link>
 <script type="text/javascript" src="./external/yui/yui.js"></script>
 
 <!--
@@ -46,7 +48,7 @@
 	<script src="src/ui_regex_viewer_matcher_tree.js" type="text/javascript" charset="utf-8"></script>
 	<script src="src/ui_quick_reference_viewer.js" type="text/javascript" charset="utf-8"></script>
 
- <STYLE type="text/css">
+ <style type="text/css">
 	.lightBox { border: none; padding: 0px; margin: 0px 0; }
 	.htmlDialog {text-align:left; overflow: scroll; height: 300px;}
 	.innerTable td:first-child,
@@ -78,7 +80,7 @@
 	#toolBar H2 { margin: 10px 4px 2px 2px; padding: 0; }
 	#toolBar UL { list-style-type: none; margin-top: 2px; margin-bottom: 10px; padding: 0; }
 	ul {margin-top: 0; margin-bottom: 0;}
- </STYLE>
+ </style>
 </head>
 
 <body class=" yui-skin-sam">
@@ -120,15 +122,12 @@
 	</ul>
 </div>
 <div id="contTxtRegEx" class="screenWide lightBox" style="height: 100%;">
-	<textarea type="text" class="screenWide lightBox regExText" id="txtRegEx" style="height: 100%;">
+	<textarea class="screenWide lightBox regExText" id="txtRegEx" style="height: 100%;" rows="1" cols="1">
 \b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b</textarea>
 </div>
-<p>
-	<br>
-</p>
 <div id="treeDiv1"></div>
 
-<script language="JavaScript">
+<script type="text/javascript">
 	RXBuild.UI.initUI = function() {
 		var iItemHeight = Math.round(YAHOO.util.Dom.getViewportHeight() / 3);
         this.layout = new YAHOO.widget.Layout({
