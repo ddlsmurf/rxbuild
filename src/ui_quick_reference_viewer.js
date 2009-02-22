@@ -19,9 +19,6 @@
 	@requires utils.js
 */
 
-/**	@fileOverview Contains the main editor controller
-	@requires utils.js
-*/
 if (!RXBuild)
 	/** @namespace The RXBuild namespace is the root namespace for all things RXBuild */
 	var RXBuild = { };

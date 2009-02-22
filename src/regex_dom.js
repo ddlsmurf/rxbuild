@@ -59,8 +59,8 @@ RXBuild.Dom.RepeatedMatch.prototype.GetDescription = function() {
 /** Returns an HTML description of this match
 	@return {String} An HTML description of this match
 */
-RXBuild.Dom.RepeatedMatch.prototype.GetHtml = function() {
-	var sSubMatches = (this.isGreedy ? ": (greedy)" : ": (non greedy)") + "<br>" + this.subMatch.GetChainHtml();
+RXBuild.Dom.RepeatedMatch.prototype.GetHtml = function(excludeChildren) {
+	var sSubMatches = (this.isGreedy ? ": (greedy)" : ": (non greedy)") + (!excludeChildren ? "<br>" + this.subMatch.GetChainHtml() : "");
 	if (this.minMatches == 0 && this.maxMatches == 1)
 		return "At most once" + sSubMatches;
 	if (this.minMatches == 1 && this.maxMatches == -1)
@@ -96,6 +96,16 @@ RXBuild.Dom.RepeatedMatch.prototype.Flatten = function() {
 	RXBuild.Dom.Node.prototype.Flatten.call(this);
 	this.subMatch = this.subMatch.Flatten();
 	return this;
+};
+/** Recursively visits this node
+	@param {RXBuild.Dom.NodeVisitor} visitor The visitor currently exploring the DOM
+	@return {Boolean} The last result of the visitors calls.
+*/
+RXBuild.Dom.RepeatedMatch.prototype.Accept = function(visitor) {
+	if (visitor.visitEnter(this)) {
+		this.subMatch.StartVisit(visitor);
+	}
+	return visitor.visitLeave(this);
 };
 
 /** @class The AlternativeMatch class matches exactly one of its children
@@ -167,12 +177,26 @@ RXBuild.Dom.AlternativeMatch.prototype.RunOnMe = function(func,param) {
 /** Returns an HTML description of this match
 	@return {String} An HTML description of this match
 */
-RXBuild.Dom.AlternativeMatch.prototype.GetHtml = function() {
+RXBuild.Dom.AlternativeMatch.prototype.GetHtml = function(excludeChildren) {
+	if (excludeChildren) return "One of these";
 	var sResult = "";
 	for (var i=0; i < this.alternatives.length; i++) {
 		sResult += "" + (i==0?"Either":"</li>" + this.GetHtmlOpenTag() + "or") + this.alternatives[i].GetChainHtml();
 	};
 	return sResult;
+};
+
+/** Recursively visits this node
+	@param {RXBuild.Dom.NodeVisitor} visitor The visitor currently exploring the DOM
+	@return {Boolean} The last result of the visitors calls.
+*/
+RXBuild.Dom.AlternativeMatch.prototype.Accept = function(visitor) {
+	if (visitor.visitEnter(this)) {
+		for (var i=0; i < this.alternatives.length; i++) {
+			this.alternatives[i].StartVisit(visitor);
+		}
+	}
+	return visitor.visitLeave(this);
 };
 
 /** @class The GroupMatch class matches a child match and stores the match
@@ -233,8 +257,8 @@ RXBuild.Dom.GroupMatch.prototype.Flatten = function() {
 /** Returns an HTML description of this match
 	@return {String} An HTML description of this match
 */
-RXBuild.Dom.GroupMatch.prototype.GetHtml = function() {
-	var sSubMatches = ":<br>" + this.subMatch.GetChainHtml();
+RXBuild.Dom.GroupMatch.prototype.GetHtml = function(excludeChildren) {
+	var sSubMatches = excludeChildren ? "" : (":<br>" + this.subMatch.GetChainHtml());
 	if (!this.captured) {
 		if (this.groupType == "no_capture")
 			return "Non captured group" + sSubMatches;
@@ -246,4 +270,15 @@ RXBuild.Dom.GroupMatch.prototype.GetHtml = function() {
 	if (this.groupName != "")
 		return "Capture group named \'<span class=\"code\">" + this.groupName.escapeHTML() + "</span>\' (number " + this.groupIndex + ")" + sSubMatches;
 	return "Capture group number " + this.groupIndex + sSubMatches;
+};
+
+/** Recursively visits this node
+	@param {RXBuild.Dom.NodeVisitor} visitor The visitor currently exploring the DOM
+	@return {Boolean} The last result of the visitors calls.
+*/
+RXBuild.Dom.GroupMatch.prototype.Accept = function(visitor) {
+	if (visitor.visitEnter(this)) {
+		this.subMatch.StartVisit(visitor);
+	}
+	return visitor.visitLeave(this);
 };

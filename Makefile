@@ -36,9 +36,12 @@ SRC = \
 	$(SRC_PATH)/ui_regex_viewer.js \
 	$(SRC_PATH)/ui_regex_editor.js \
 	$(SRC_PATH)/ui_quick_reference_viewer.js \
+	$(SRC_PATH)/ui_regex_viewer_explain_tree.js \
+	$(SRC_PATH)/ui_regex_viewer_matcher_inline.js \
+	$(SRC_PATH)/ui_regex_viewer_matcher_tree.js \
 	$(RES_PARSERS)
 
-OUT =  compressed.js
+OUT = rxbuild.js
 
 %.js: %.par
 	-@echo Building grammar $< into $@
@@ -46,11 +49,20 @@ OUT =  compressed.js
 
 $(OUT): $(SRC)
 	-@echo Compressing JS to $@
-	-cat $(SRC) | $(YUICOMPRESSOR) --type js > $@
- 
+	-(cat js-copyright-notice.js && cat $(SRC) external/yui/yui.js | $(YUICOMPRESSOR) --type js) > $@
+
+#Configure dependencies @ http://developer.yahoo.com/yui/articles/hosting/?animation&base&button&connection&container&containercore&dom&dragdrop&element&event&fonts&get&grids&layout&menu&reset&reset-fonts&reset-fonts-grids&resize&selector&stylesheet&tabview&treeview&utilities&yahoo&yahoo-dom-event&yuiloader&yuiloader-dom-event&MIN
+external-yui:
+	-@mkdir -p ./external/yui
+	-@wget -O external/yui/yui.css "http://yui.yahooapis.com/combo?2.7.0/build/reset-fonts-grids/reset-fonts-grids.css&2.7.0/build/base/base-min.css&2.7.0/build/assets/skins/sam/skin.css"
+	-@wget -O external/yui/yui.js "http://yui.yahooapis.com/combo?2.7.0/build/utilities/utilities.js&2.7.0/build/container/container-min.js&2.7.0/build/menu/menu-min.js&2.7.0/build/button/button-min.js&2.7.0/build/resize/resize-min.js&2.7.0/build/selector/selector-min.js&2.7.0/build/layout/layout-min.js&2.7.0/build/stylesheet/stylesheet-min.js&2.7.0/build/tabview/tabview-min.js&2.7.0/build/treeview/treeview-min.js"
+
+externals: external-yui
+	
+
 min: $(OUT)
 	-@echo "  Was:"
-	-@wc -c $(SRC)
+	-@wc -c $(SRC) external/yui/yui.js
 	-@echo "  Is now:"
 	-@wc -c $(OUT)
 	-@echo "  Geeky chest thumping complete."

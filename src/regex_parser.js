@@ -1182,7 +1182,7 @@ switch( act )
 	break;
 	case 49:
 	{
-			vstack[ vstack.length - 2 ].AddChars(vstack[ vstack.length - 1 ].value); rval = vstack[ vstack.length - 2 ]; rval.AddTokens(vstack[ vstack.length - 1 ]); 
+			vstack[ vstack.length - 2 ].AddChars(vstack[ vstack.length - 1 ].value == "\\b" ? "\b" : vstack[ vstack.length - 1 ].value); rval = vstack[ vstack.length - 2 ]; rval.AddTokens(vstack[ vstack.length - 1 ]); 
 	}
 	break;
 	case 50:
@@ -1324,7 +1324,7 @@ switch( act )
 	/** @private */
 	regex_parser.prototype.converterWORD_BOUNDARY_CHAR = function(input) {
 		if (input == "\\b")
-			return "\b";
+			return "\\b";
 		return input;
 	};
 	/** @private */

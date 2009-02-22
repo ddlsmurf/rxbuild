@@ -103,7 +103,7 @@ RXBuild.Dom.PositionalMatch.prototype.GetHtml = function() {
 		return "At the beginning of the string" + (this.multiline ? " (or line)" : "");
 	if (this.posChar == "$")
 		return "At the end of the string" + (this.multiline ? " (or line)" : "");
-	if (this.posChar == "\b")
+	if (this.posChar == "\\b")
 		return "At a word boundary";
 	if (this.posChar == "\\B")
 		return "Not at a word boundary";

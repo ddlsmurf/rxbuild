@@ -123,7 +123,7 @@ CharClass:		CharClass Character					[*	%1.AddChars(%2); %% = %1; *]
 				| CharClass ','						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
 				| CharClass '('						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
 				| CharClass ')'						[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
-				| CharClass WORD_BOUNDARY_CHAR		[*	%1.AddChars(%2.value); %% = %1; %%.AddTokens(%2); *]
+				| CharClass WORD_BOUNDARY_CHAR		[*	%1.AddChars(%2.value == "\\b" ? "\b" : %2.value); %% = %1; %%.AddTokens(%2); *]
 				|									[*	%% = new RXBuild.Dom.CharacterRangeMatch(false); *]
 				;
 
@@ -184,7 +184,7 @@ Character:		ASCII_HEX_CODE			[*	%% = new RXBuild.Dom.LiteralMatcher(%1.value); %
 	/** @private */
 	##PREFIX##.prototype.converterWORD_BOUNDARY_CHAR = function(input) {
 		if (input == "\\b")
-			return "\b";
+			return "\\b";
 		return input;
 	};
 	/** @private */
