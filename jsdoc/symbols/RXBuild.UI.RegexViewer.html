@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - RXBuild.Dom.GroupMatch</title>
+		<title>JsDoc Reference - RXBuild.UI.RegexViewer</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -260,25 +260,23 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class RXBuild.Dom.GroupMatch
+				Class RXBuild.UI.RegexViewer
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
-				<br />Extends
-					<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>.<br />
 				
 			
-				The GroupMatch class matches a child match and stores the match
+				The RegexViewer holds selectable, self-updating views of the regular expression
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Sites_rxbuild_src_regex_dom.js.html">regex_dom.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Sites_rxbuild_src_ui_regex_viewer.js.html">ui_regex_viewer.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class RXBuild.Dom.GroupMatch.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class RXBuild.UI.RegexViewer.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -291,9 +289,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#constructor">RXBuild.Dom.GroupMatch</a></b>(childMatch, groupType)
+								<b><a href="../symbols/RXBuild.UI.RegexViewer.html#constructor">RXBuild.UI.RegexViewer</a></b>(container, id, className, editor, viewers)
 							</div>
-							<div class="description"></div>
+							<div class="description">Creates a new instance of RegexViewer</div>
 						</td>
 					</tr>
 				</tbody>
@@ -304,7 +302,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class RXBuild.Dom.GroupMatch.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class RXBuild.UI.RegexViewer.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -318,39 +316,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#groupIndex">groupIndex</a></b>
+								<b><a href="../symbols/RXBuild.UI.RegexViewer.html#container">container</a></b>
 								</div>
-								<div class="description">The index of the group in the regular expression</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#groupName">groupName</a></b>
-								</div>
-								<div class="description">The name of the group if it is a named capture</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#groupType">groupType</a></b>
-								</div>
-								<div class="description">The type of group this represents.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#subMatch">subMatch</a></b>
-								</div>
-								<div class="description">The actual match required by this group</div>
+								<div class="description">The DOM element that will be the happy new parent of this control</div>
 							</td>
 						</tr>
 					
@@ -359,17 +327,13 @@ ul.inheritsList
 				
 				
 				
-				<dl class="inheritsList">
-				<dt>Fields borrowed from class <a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>: </dt><dd><a href="../symbols/RXBuild.Dom.Node.html#id">id</a>, <a href="../symbols/RXBuild.Dom.Node.html#next">next</a>, <a href="../symbols/RXBuild.Dom.Node.html#tokens">tokens</a></dd>
-				</dl>
-				
 			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class RXBuild.Dom.GroupMatch.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class RXBuild.UI.RegexViewer.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -382,36 +346,36 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#Accept">Accept</a></b>(visitor)
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.RegexViewer.html#autoRefresh">autoRefresh</a></b>()
 								</div>
-								<div class="description">Recursively visits this node</div>
+								<div class="description">Refreshes the view only if auto-refresh is active</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#GetDescription">GetDescription</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.RegexViewer.html#invalidate">invalidate</a></b>(regexp, inputText)
 								</div>
-								<div class="description">Returns a human readable description of this match</div>
+								<div class="description">Notifies the user that the display is no longer uptodate with the regular expression</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#GetHtml">GetHtml</a></b>(excludeChildren)
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.RegexViewer.html#setCurrentView">setCurrentView</a></b>(viewIndex)
 								</div>
-								<div class="description">Returns an HTML description of this match</div>
+								<div class="description">Sets the currently active viewer to the one with the specified index</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#RunOnMe">RunOnMe</a></b>(func, param)
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.RegexViewer.html#update">update</a></b>()
 								</div>
-								<div class="description">Visits this node and its children with the provided visitor</div>
+								<div class="description">Runs the provided regular expression and updates the results view accordingly</div>
 							</td>
 						</tr>
 					
@@ -419,10 +383,6 @@ ul.inheritsList
 				</table>
 				
 				
-				
-				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>: </dt><dd><a href="../symbols/RXBuild.Dom.Node.html#AddTokens">AddTokens</a>, <a href="../symbols/RXBuild.Dom.Node.html#AppendAtEnd">AppendAtEnd</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetChainDescription">GetChainDescription</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetChainHtml">GetChainHtml</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetHtmlOpenTag">GetHtmlOpenTag</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetLast">GetLast</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetTokenHighlightJS">GetTokenHighlightJS</a>, <a href="../symbols/RXBuild.Dom.Node.html#.NodeRegExTokenHighlight">NodeRegExTokenHighlight</a>, <a href="../symbols/RXBuild.Dom.Node.html#RunForAll">RunForAll</a>, <a href="../symbols/RXBuild.Dom.Node.html#StartVisit">StartVisit</a></dd>
-				</dl>
 				
 			
 
@@ -434,11 +394,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>RXBuild.Dom.GroupMatch</b>(childMatch, groupType)
+						<b>RXBuild.UI.RegexViewer</b>(container, id, className, editor, viewers)
 				</div>
 				
 				<div class="description">
-					
+					Creates a new instance of RegexViewer
 					
 				</div>
 				
@@ -450,16 +410,34 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>}</span>  <b>childMatch</b>
+								<span class="light fixedFont">{HTMLElement}</span>  <b>container</b>
 								
 							</dt>
-								<dd>The actual match required by this group</dd>
+								<dd>The DOM element that should be the new parent of the tester control.</dd>
 						
 							<dt>
-								<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span>  <b>groupType</b>
+								<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span>  <b>id</b>
 								
 							</dt>
-								<dd>The type of group this represents.</dd>
+								<dd>A unique name for this controls dom element</dd>
+						
+							<dt>
+								<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span>  <b>className</b>
+								
+							</dt>
+								<dd>Optional. A CSS class name to apply to the container DIV.</dd>
+						
+							<dt>
+								 <b>editor</b>
+								
+							</dt>
+								<dd></dd>
+						
+							<dt>
+								 <b>viewers</b>
+								
+							</dt>
+								<dd></dd>
 						
 						</dl>
 					
@@ -479,85 +457,15 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name="groupIndex"> </a>
+					<a name="container"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Number}</span>
-					<b>groupIndex</b>
+					<span class="light">{HTMLElement}</span>
+					<b>container</b>
 					
 					</div>
 					<div class="description">
-						The index of the group in the regular expression
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="groupName"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>groupName</b>
-					
-					</div>
-					<div class="description">
-						The name of the group if it is a named capture
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="groupType"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>groupType</b>
-					
-					</div>
-					<div class="description">
-						The type of group this represents. Possible values are:<br />
-	&quot;capture&quot; - Normal captured group<br />
-	&quot;no_capture&quot; - Non captured group<br />
-	&quot;pos_la&quot; - Positive lookahead group<br />
-	&quot;neg_la&quot; - Negative lookahead group<br />
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="subMatch"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>}</span>
-					<b>subMatch</b>
-					
-					</div>
-					<div class="description">
-						The actual match required by this group
+						The DOM element that will be the happy new parent of this control
 						
 						
 					</div>
@@ -579,15 +487,40 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="Accept"> </a>
+					<a name="autoRefresh"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Boolean}</span>
-					<b>Accept</b>(visitor)
+					
+					<b>autoRefresh</b>()
 					
 					</div>
 					<div class="description">
-						Recursively visits this node
+						Refreshes the view only if auto-refresh is active
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="invalidate"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>invalidate</b>(regexp, inputText)
+					
+					</div>
+					<div class="description">
+						Notifies the user that the display is no longer uptodate with the regular expression
 						
 						
 					</div>
@@ -599,82 +532,13 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{<a href="../symbols/RXBuild.Dom.NodeVisitor.html#constructor">RXBuild.Dom.NodeVisitor</a>}</span> <b>visitor</b>
+									<b>regexp</b>
 									
 								</dt>
-								<dd>The visitor currently exploring the DOM</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Boolean}</span> The last result of the visitors calls.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="GetDescription"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>GetDescription</b>()
-					
-					</div>
-					<div class="description">
-						Returns a human readable description of this match
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> The description of this node in human readable format.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="GetHtml"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>GetHtml</b>(excludeChildren)
-					
-					</div>
-					<div class="description">
-						Returns an HTML description of this match
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
+								<dd></dd>
 							
 								<dt>
-									<b>excludeChildren</b>
+									<b>inputText</b>
 									
 								</dt>
 								<dd></dd>
@@ -685,27 +549,20 @@ ul.inheritsList
 						
 						
 						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> An HTML description of this match</dd>
-							
-							</dl>
-						
 						
 						
 
 					<hr />
 				
-					<a name="RunOnMe"> </a>
+					<a name="setCurrentView"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{object}</span>
-					<b>RunOnMe</b>(func, param)
+					
+					<b>setCurrentView</b>(viewIndex)
 					
 					</div>
 					<div class="description">
-						Visits this node and its children with the provided visitor
+						Sets the currently active viewer to the one with the specified index
 						
 						
 					</div>
@@ -717,16 +574,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{Function}</span> <b>func</b>
+									<span class="light fixedFont">{Number}</span> <b>viewIndex</b>
 									
 								</dt>
-								<dd>The function to call with each node as first parameter</dd>
-							
-								<dt>
-									<span class="light fixedFont">{object}</span> <b>param</b>
-									
-								</dt>
-								<dd>The second parameter to func</dd>
+								<dd>The index in this instances viewers property of the view to display</dd>
 							
 							</dl>
 						
@@ -734,12 +585,30 @@ ul.inheritsList
 						
 						
 						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{object}</span> Whatever func when called on the current instance</dd>
-							
-							</dl>
+						
+						
+
+					<hr />
+				
+					<a name="update"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>update</b>()
+					
+					</div>
+					<div class="description">
+						Runs the provided regular expression and updates the results view accordingly
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
 						
 						
 						
@@ -754,7 +623,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Sun Feb 22 2009 20:44:20 GMT+0100 (CET)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Sun Feb 22 2009 20:44:22 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

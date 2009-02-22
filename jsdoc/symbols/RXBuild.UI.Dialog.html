@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - RXBuild.Dom.GroupMatch</title>
+		<title>JsDoc Reference - RXBuild.UI.Dialog</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -260,25 +260,23 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class RXBuild.Dom.GroupMatch
+				Class RXBuild.UI.Dialog
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
-				<br />Extends
-					<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>.<br />
 				
 			
-				The GroupMatch class matches a child match and stores the match
+				The RXBuild.UI.Dialog displays a YUI dialog with a text area or provided HTMLElement as main content, and configurable verbs
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Sites_rxbuild_src_regex_dom.js.html">regex_dom.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Sites_rxbuild_src_ui_dialog_extensions.js.html">ui_dialog_extensions.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class RXBuild.Dom.GroupMatch.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class RXBuild.UI.Dialog.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -291,9 +289,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#constructor">RXBuild.Dom.GroupMatch</a></b>(childMatch, groupType)
+								<b><a href="../symbols/RXBuild.UI.Dialog.html#constructor">RXBuild.UI.Dialog</a></b>(divName)
 							</div>
-							<div class="description"></div>
+							<div class="description">Creates a new instance of TextAreaDialog</div>
 						</td>
 					</tr>
 				</tbody>
@@ -304,7 +302,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class RXBuild.Dom.GroupMatch.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class RXBuild.UI.Dialog.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -318,9 +316,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#groupIndex">groupIndex</a></b>
+								<b><a href="../symbols/RXBuild.UI.Dialog.html#_btnCancel">_btnCancel</a></b>
 								</div>
-								<div class="description">The index of the group in the regular expression</div>
+								<div class="description">The YUI close/cancel button - used internally.</div>
 							</td>
 						</tr>
 					
@@ -328,9 +326,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#groupName">groupName</a></b>
+								<b><a href="../symbols/RXBuild.UI.Dialog.html#_btnOk">_btnOk</a></b>
 								</div>
-								<div class="description">The name of the group if it is a named capture</div>
+								<div class="description">The YUI ok button - used internally.</div>
 							</td>
 						</tr>
 					
@@ -338,9 +336,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#groupType">groupType</a></b>
+								<b><a href="../symbols/RXBuild.UI.Dialog.html#dialog">dialog</a></b>
 								</div>
-								<div class="description">The type of group this represents.</div>
+								<div class="description">The YUI dialog - used internally.</div>
 							</td>
 						</tr>
 					
@@ -348,9 +346,19 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#subMatch">subMatch</a></b>
+								<b><a href="../symbols/RXBuild.UI.Dialog.html#divName">divName</a></b>
 								</div>
-								<div class="description">The actual match required by this group</div>
+								<div class="description">The name of the div element that this item provided to YUI</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/RXBuild.UI.Dialog.html#textBox">textBox</a></b>
+								</div>
+								<div class="description">The dynamically create text area - used internally.</div>
 							</td>
 						</tr>
 					
@@ -359,17 +367,13 @@ ul.inheritsList
 				
 				
 				
-				<dl class="inheritsList">
-				<dt>Fields borrowed from class <a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>: </dt><dd><a href="../symbols/RXBuild.Dom.Node.html#id">id</a>, <a href="../symbols/RXBuild.Dom.Node.html#next">next</a>, <a href="../symbols/RXBuild.Dom.Node.html#tokens">tokens</a></dd>
-				</dl>
-				
 			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class RXBuild.Dom.GroupMatch.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class RXBuild.UI.Dialog.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -382,36 +386,9 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#Accept">Accept</a></b>(visitor)
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.Dialog.html#show">show</a></b>(headerHTML, defaultText, verbs, callback, callbackContext)
 								</div>
-								<div class="description">Recursively visits this node</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#GetDescription">GetDescription</a></b>()
-								</div>
-								<div class="description">Returns a human readable description of this match</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#GetHtml">GetHtml</a></b>(excludeChildren)
-								</div>
-								<div class="description">Returns an HTML description of this match</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#RunOnMe">RunOnMe</a></b>(func, param)
-								</div>
-								<div class="description">Visits this node and its children with the provided visitor</div>
+								<div class="description">Displays modally the dialog box with the provided header, text and buttons.</div>
 							</td>
 						</tr>
 					
@@ -419,10 +396,6 @@ ul.inheritsList
 				</table>
 				
 				
-				
-				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>: </dt><dd><a href="../symbols/RXBuild.Dom.Node.html#AddTokens">AddTokens</a>, <a href="../symbols/RXBuild.Dom.Node.html#AppendAtEnd">AppendAtEnd</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetChainDescription">GetChainDescription</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetChainHtml">GetChainHtml</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetHtmlOpenTag">GetHtmlOpenTag</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetLast">GetLast</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetTokenHighlightJS">GetTokenHighlightJS</a>, <a href="../symbols/RXBuild.Dom.Node.html#.NodeRegExTokenHighlight">NodeRegExTokenHighlight</a>, <a href="../symbols/RXBuild.Dom.Node.html#RunForAll">RunForAll</a>, <a href="../symbols/RXBuild.Dom.Node.html#StartVisit">StartVisit</a></dd>
-				</dl>
 				
 			
 
@@ -434,11 +407,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>RXBuild.Dom.GroupMatch</b>(childMatch, groupType)
+						<b>RXBuild.UI.Dialog</b>(divName)
 				</div>
 				
 				<div class="description">
-					
+					Creates a new instance of TextAreaDialog
 					
 				</div>
 				
@@ -450,16 +423,10 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>}</span>  <b>childMatch</b>
+								<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span>  <b>divName</b>
 								
 							</dt>
-								<dd>The actual match required by this group</dd>
-						
-							<dt>
-								<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span>  <b>groupType</b>
-								
-							</dt>
-								<dd>The type of group this represents.</dd>
+								<dd>The name of the div element that this item will provide to YUI</dd>
 						
 						</dl>
 					
@@ -479,15 +446,15 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name="groupIndex"> </a>
+					<a name="_btnCancel"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Number}</span>
-					<b>groupIndex</b>
+					<span class="light">{YAHOO.widget.Button}</span>
+					<b>_btnCancel</b>
 					
 					</div>
 					<div class="description">
-						The index of the group in the regular expression
+						The YUI close/cancel button - used internally.
 						
 						
 					</div>
@@ -501,15 +468,59 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="groupName"> </a>
+					<a name="_btnOk"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{YAHOO.widget.Button}</span>
+					<b>_btnOk</b>
+					
+					</div>
+					<div class="description">
+						The YUI ok button - used internally.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="dialog"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{YAHOO.widget.Dialog}</span>
+					<b>dialog</b>
+					
+					</div>
+					<div class="description">
+						The YUI dialog - used internally.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="divName"> </a>
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>groupName</b>
+					<b>divName</b>
 					
 					</div>
 					<div class="description">
-						The name of the group if it is a named capture
+						The name of the div element that this item provided to YUI
 						
 						
 					</div>
@@ -523,41 +534,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="groupType"> </a>
+					<a name="textBox"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>groupType</b>
+					<span class="light">{HTMLTextArea}</span>
+					<b>textBox</b>
 					
 					</div>
 					<div class="description">
-						The type of group this represents. Possible values are:<br />
-	&quot;capture&quot; - Normal captured group<br />
-	&quot;no_capture&quot; - Non captured group<br />
-	&quot;pos_la&quot; - Positive lookahead group<br />
-	&quot;neg_la&quot; - Negative lookahead group<br />
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="subMatch"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>}</span>
-					<b>subMatch</b>
-					
-					</div>
-					<div class="description">
-						The actual match required by this group
+						The dynamically create text area - used internally.
 						
 						
 					</div>
@@ -579,15 +564,15 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="Accept"> </a>
+					<a name="show"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Boolean}</span>
-					<b>Accept</b>(visitor)
+					
+					<b>show</b>(headerHTML, defaultText, verbs, callback, callbackContext)
 					
 					</div>
 					<div class="description">
-						Recursively visits this node
+						Displays modally the dialog box with the provided header, text and buttons.
 						
 						
 					</div>
@@ -599,147 +584,40 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{<a href="../symbols/RXBuild.Dom.NodeVisitor.html#constructor">RXBuild.Dom.NodeVisitor</a>}</span> <b>visitor</b>
+									<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> <b>headerHTML</b>
 									
 								</dt>
-								<dd>The visitor currently exploring the DOM</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Boolean}</span> The last result of the visitors calls.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="GetDescription"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>GetDescription</b>()
-					
-					</div>
-					<div class="description">
-						Returns a human readable description of this match
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> The description of this node in human readable format.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="GetHtml"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>GetHtml</b>(excludeChildren)
-					
-					</div>
-					<div class="description">
-						Returns an HTML description of this match
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
+								<dd>HTML content to display in the header of the dialog</dd>
 							
 								<dt>
-									<b>excludeChildren</b>
+									<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>|HTMLElement}</span> <b>defaultText</b>
 									
 								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> An HTML description of this match</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="RunOnMe"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{object}</span>
-					<b>RunOnMe</b>(func, param)
-					
-					</div>
-					<div class="description">
-						Visits this node and its children with the provided visitor
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
+								<dd>The main content to display in the dialogs body initially</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function}</span> <b>func</b>
+									<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>[]|String}</span> <b>verbs</b>
 									
 								</dt>
-								<dd>The function to call with each node as first parameter</dd>
+								<dd>Optional. An array of labels to put on the OK and Cancel buttons (respectively)</dd>
 							
 								<dt>
-									<span class="light fixedFont">{object}</span> <b>param</b>
+									<span class="light fixedFont">{Function}</span> <b>callback</b>
 									
 								</dt>
-								<dd>The second parameter to func</dd>
+								<dd>Optional. The method to call when the user validates the dialog.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{object}</span> <b>callbackContext</b>
+									
+								</dt>
+								<dd>Optional. The object to scope before calling callback</dd>
 							
 							</dl>
 						
 						
 						
 						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{object}</span> Whatever func when called on the current instance</dd>
-							
-							</dl>
 						
 						
 						
@@ -754,7 +632,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Sun Feb 22 2009 20:44:20 GMT+0100 (CET)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Sun Feb 22 2009 20:44:21 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

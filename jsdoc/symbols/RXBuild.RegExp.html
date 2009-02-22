@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - RXBuild.Dom.GroupMatch</title>
+		<title>JsDoc Reference - RXBuild.RegExp</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -260,25 +260,23 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class RXBuild.Dom.GroupMatch
+				Class RXBuild.RegExp
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
-				<br />Extends
-					<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>.<br />
 				
 			
-				The GroupMatch class matches a child match and stores the match
+				The RXBuild.RegExp class holds a regular expression as input by the user, and connects with the various operations
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Sites_rxbuild_src_regex_dom.js.html">regex_dom.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Sites_rxbuild_src_regex_controller.js.html">regex_controller.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class RXBuild.Dom.GroupMatch.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class RXBuild.RegExp.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -291,9 +289,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#constructor">RXBuild.Dom.GroupMatch</a></b>(childMatch, groupType)
+								<b><a href="../symbols/RXBuild.RegExp.html#constructor">RXBuild.RegExp</a></b>(pattern, g, i, m)
 							</div>
-							<div class="description"></div>
+							<div class="description">Creates a new instance of RXBuild.RegExp</div>
 						</td>
 					</tr>
 				</tbody>
@@ -304,7 +302,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class RXBuild.Dom.GroupMatch.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class RXBuild.RegExp.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -318,9 +316,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#groupIndex">groupIndex</a></b>
+								<b><a href="../symbols/RXBuild.RegExp.html#CodeBuilders">CodeBuilders</a></b>
 								</div>
-								<div class="description">The index of the group in the regular expression</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -328,9 +326,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#groupName">groupName</a></b>
+								<b><a href="../symbols/RXBuild.RegExp.html#options">options</a></b>
 								</div>
-								<div class="description">The name of the group if it is a named capture</div>
+								<div class="description">Gets the options selected by the user.</div>
 							</td>
 						</tr>
 					
@@ -338,19 +336,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#groupType">groupType</a></b>
+								<b><a href="../symbols/RXBuild.RegExp.html#pattern">pattern</a></b>
 								</div>
-								<div class="description">The type of group this represents.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#subMatch">subMatch</a></b>
-								</div>
-								<div class="description">The actual match required by this group</div>
+								<div class="description">Gets the regular expression as input by the user</div>
 							</td>
 						</tr>
 					
@@ -359,17 +347,13 @@ ul.inheritsList
 				
 				
 				
-				<dl class="inheritsList">
-				<dt>Fields borrowed from class <a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>: </dt><dd><a href="../symbols/RXBuild.Dom.Node.html#id">id</a>, <a href="../symbols/RXBuild.Dom.Node.html#next">next</a>, <a href="../symbols/RXBuild.Dom.Node.html#tokens">tokens</a></dd>
-				</dl>
-				
 			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class RXBuild.Dom.GroupMatch.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class RXBuild.RegExp.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -382,36 +366,54 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#Accept">Accept</a></b>(visitor)
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.RegExp.html#compile">compile</a></b>()
 								</div>
-								<div class="description">Recursively visits this node</div>
+								<div class="description">Compiles the regexp using the custom parser, and returns the expressions DOM, or throws a string with errors encountered during parse</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#GetDescription">GetDescription</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.RegExp.html#getBashGrepCode">getBashGrepCode</a></b>()
 								</div>
-								<div class="description">Returns a human readable description of this match</div>
+								<div class="description">Generates and returns an equivalent Bash/Grep code</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#GetHtml">GetHtml</a></b>(excludeChildren)
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.RegExp.html#getCSCode">getCSCode</a></b>()
 								</div>
-								<div class="description">Returns an HTML description of this match</div>
+								<div class="description">Generates and returns an equivalent C# code</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#RunOnMe">RunOnMe</a></b>(func, param)
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.RegExp.html#getJSCode">getJSCode</a></b>()
 								</div>
-								<div class="description">Visits this node and its children with the provided visitor</div>
+								<div class="description">Generates and returns an equivalent JavaScript code</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.RegExp.html#getPerlCode">getPerlCode</a></b>()
+								</div>
+								<div class="description">Generates and returns an equivalent Perl code</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.RegExp.html#getRubyCode">getRubyCode</a></b>()
+								</div>
+								<div class="description">Generates and return an equivalent Ruby code</div>
 							</td>
 						</tr>
 					
@@ -419,10 +421,6 @@ ul.inheritsList
 				</table>
 				
 				
-				
-				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>: </dt><dd><a href="../symbols/RXBuild.Dom.Node.html#AddTokens">AddTokens</a>, <a href="../symbols/RXBuild.Dom.Node.html#AppendAtEnd">AppendAtEnd</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetChainDescription">GetChainDescription</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetChainHtml">GetChainHtml</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetHtmlOpenTag">GetHtmlOpenTag</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetLast">GetLast</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetTokenHighlightJS">GetTokenHighlightJS</a>, <a href="../symbols/RXBuild.Dom.Node.html#.NodeRegExTokenHighlight">NodeRegExTokenHighlight</a>, <a href="../symbols/RXBuild.Dom.Node.html#RunForAll">RunForAll</a>, <a href="../symbols/RXBuild.Dom.Node.html#StartVisit">StartVisit</a></dd>
-				</dl>
 				
 			
 
@@ -434,11 +432,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>RXBuild.Dom.GroupMatch</b>(childMatch, groupType)
+						<b>RXBuild.RegExp</b>(pattern, g, i, m)
 				</div>
 				
 				<div class="description">
-					
+					Creates a new instance of RXBuild.RegExp
 					
 				</div>
 				
@@ -450,16 +448,28 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>}</span>  <b>childMatch</b>
+								<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span>  <b>pattern</b>
 								
 							</dt>
-								<dd>The actual match required by this group</dd>
+								<dd>The regular expression as set by the user</dd>
 						
 							<dt>
-								<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span>  <b>groupType</b>
+								<span class="light fixedFont">{Boolean}</span>  <b>g</b>
 								
 							</dt>
-								<dd>The type of group this represents.</dd>
+								<dd>True if the pattern is global</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Boolean}</span>  <b>i</b>
+								
+							</dt>
+								<dd>True if the pattern is case insensitive</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Boolean}</span>  <b>m</b>
+								
+							</dt>
+								<dd>True if the pattern is in multiline mode</dd>
 						
 						</dl>
 					
@@ -479,15 +489,15 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name="groupIndex"> </a>
+					<a name="CodeBuilders"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Number}</span>
-					<b>groupIndex</b>
+					
+					<b>CodeBuilders</b>
 					
 					</div>
 					<div class="description">
-						The index of the group in the regular expression
+						
 						
 						
 					</div>
@@ -501,63 +511,39 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="groupName"> </a>
+					<a name="options"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Options}</span>
+					<b>options</b>
+					
+					</div>
+					<div class="description">
+						Gets the options selected by the user. This object has the properties <strong>g</strong>, <strong>m</strong> and
+		 							<strong>i</strong> set to true if the corresponding option is active. There is also a <strong>str</strong> property
+									with the options as a string (eg.: &quot;gi&quot;).
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="pattern"> </a>
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>groupName</b>
+					<b>pattern</b>
 					
 					</div>
 					<div class="description">
-						The name of the group if it is a named capture
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="groupType"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>groupType</b>
-					
-					</div>
-					<div class="description">
-						The type of group this represents. Possible values are:<br />
-	&quot;capture&quot; - Normal captured group<br />
-	&quot;no_capture&quot; - Non captured group<br />
-	&quot;pos_la&quot; - Positive lookahead group<br />
-	&quot;neg_la&quot; - Negative lookahead group<br />
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="subMatch"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>}</span>
-					<b>subMatch</b>
-					
-					</div>
-					<div class="description">
-						The actual match required by this group
+						Gets the regular expression as input by the user
 						
 						
 					</div>
@@ -579,32 +565,21 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="Accept"> </a>
+					<a name="compile"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Boolean}</span>
-					<b>Accept</b>(visitor)
+					<span class="light">{Matcher}</span>
+					<b>compile</b>()
 					
 					</div>
 					<div class="description">
-						Recursively visits this node
+						Compiles the regexp using the custom parser, and returns the expressions DOM, or throws a string with errors encountered during parse
 						
 						
 					</div>
 					
 					
 					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{<a href="../symbols/RXBuild.Dom.NodeVisitor.html#constructor">RXBuild.Dom.NodeVisitor</a>}</span> <b>visitor</b>
-									
-								</dt>
-								<dd>The visitor currently exploring the DOM</dd>
-							
-							</dl>
 						
 						
 						
@@ -613,7 +588,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{Boolean}</span> The last result of the visitors calls.</dd>
+								<dd><span class="light fixedFont">{Matcher}</span> The root compiled matcher if the pattern was valid</dd>
 							
 							</dl>
 						
@@ -622,15 +597,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="GetDescription"> </a>
+					<a name="getBashGrepCode"> </a>
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>GetDescription</b>()
+					<b>getBashGrepCode</b>()
 					
 					</div>
 					<div class="description">
-						Returns a human readable description of this match
+						Generates and returns an equivalent Bash/Grep code
 						
 						
 					</div>
@@ -645,7 +620,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> The description of this node in human readable format.</dd>
+								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> A snippet of Bash/Grep code that would run this regular expression.</dd>
 							
 							</dl>
 						
@@ -654,32 +629,21 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="GetHtml"> </a>
+					<a name="getCSCode"> </a>
 					<div class="fixedFont">
 					
 					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>GetHtml</b>(excludeChildren)
+					<b>getCSCode</b>()
 					
 					</div>
 					<div class="description">
-						Returns an HTML description of this match
+						Generates and returns an equivalent C# code
 						
 						
 					</div>
 					
 					
 					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>excludeChildren</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
 						
 						
 						
@@ -688,7 +652,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> An HTML description of this match</dd>
+								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> A snippet of C# code that would run this regular expression.</dd>
 							
 							</dl>
 						
@@ -697,38 +661,21 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="RunOnMe"> </a>
+					<a name="getJSCode"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{object}</span>
-					<b>RunOnMe</b>(func, param)
+					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
+					<b>getJSCode</b>()
 					
 					</div>
 					<div class="description">
-						Visits this node and its children with the provided visitor
+						Generates and returns an equivalent JavaScript code
 						
 						
 					</div>
 					
 					
 					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Function}</span> <b>func</b>
-									
-								</dt>
-								<dd>The function to call with each node as first parameter</dd>
-							
-								<dt>
-									<span class="light fixedFont">{object}</span> <b>param</b>
-									
-								</dt>
-								<dd>The second parameter to func</dd>
-							
-							</dl>
 						
 						
 						
@@ -737,7 +684,71 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{object}</span> Whatever func when called on the current instance</dd>
+								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> A snippet of JavaScript code that would run this regular expression.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getPerlCode"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
+					<b>getPerlCode</b>()
+					
+					</div>
+					<div class="description">
+						Generates and returns an equivalent Perl code
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> A snippet of Perl code that would run this regular expression.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getRubyCode"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
+					<b>getRubyCode</b>()
+					
+					</div>
+					<div class="description">
+						Generates and return an equivalent Ruby code
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> A snippet of ruby code that would run this regular expression.</dd>
 							
 							</dl>
 						
@@ -754,7 +765,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Sun Feb 22 2009 20:44:20 GMT+0100 (CET)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Sun Feb 22 2009 20:44:21 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - RXBuild.Dom.GroupMatch</title>
+		<title>JsDoc Reference - RXBuild.UI.HtmlResultTreeViewer</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -260,25 +260,25 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class RXBuild.Dom.GroupMatch
+				Class RXBuild.UI.HtmlResultTreeViewer
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				<br />Extends
-					<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>.<br />
+					<a href="../symbols/RXBuild.Engine.ResultListener.html#constructor">RXBuild.Engine.ResultListener</a>.<br />
 				
 			
-				The GroupMatch class matches a child match and stores the match
+				The RXBuild.UI.HtmlResultTreeViewer displays the results of matching a regular expression inline with the text
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Sites_rxbuild_src_regex_dom.js.html">regex_dom.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Sites_rxbuild_src_ui_regex_viewer_matcher_tree.js.html">ui_regex_viewer_matcher_tree.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class RXBuild.Dom.GroupMatch.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class RXBuild.UI.HtmlResultTreeViewer.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -291,9 +291,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#constructor">RXBuild.Dom.GroupMatch</a></b>(childMatch, groupType)
+								<b><a href="../symbols/RXBuild.UI.HtmlResultTreeViewer.html#constructor">RXBuild.UI.HtmlResultTreeViewer</a></b>(container, id)
 							</div>
-							<div class="description"></div>
+							<div class="description">Creates a new instance of RXBuild.UI.HtmlResultTreeViewer (which inherits RXBuild.Engine.ResultListener)</div>
 						</td>
 					</tr>
 				</tbody>
@@ -304,7 +304,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class RXBuild.Dom.GroupMatch.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class RXBuild.UI.HtmlResultTreeViewer.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -318,39 +318,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#groupIndex">groupIndex</a></b>
+								<b><a href="../symbols/RXBuild.UI.HtmlResultTreeViewer.html#container">container</a></b>
 								</div>
-								<div class="description">The index of the group in the regular expression</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#groupName">groupName</a></b>
-								</div>
-								<div class="description">The name of the group if it is a named capture</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#groupType">groupType</a></b>
-								</div>
-								<div class="description">The type of group this represents.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.GroupMatch.html#subMatch">subMatch</a></b>
-								</div>
-								<div class="description">The actual match required by this group</div>
+								<div class="description">The DOM element that holds the results for display</div>
 							</td>
 						</tr>
 					
@@ -360,7 +330,7 @@ ul.inheritsList
 				
 				
 				<dl class="inheritsList">
-				<dt>Fields borrowed from class <a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>: </dt><dd><a href="../symbols/RXBuild.Dom.Node.html#id">id</a>, <a href="../symbols/RXBuild.Dom.Node.html#next">next</a>, <a href="../symbols/RXBuild.Dom.Node.html#tokens">tokens</a></dd>
+				
 				</dl>
 				
 			
@@ -369,7 +339,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class RXBuild.Dom.GroupMatch.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class RXBuild.UI.HtmlResultTreeViewer.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -382,36 +352,45 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#Accept">Accept</a></b>(visitor)
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.HtmlResultTreeViewer.html#clickedOnNode">clickedOnNode</a></b>(node)
 								</div>
-								<div class="description">Recursively visits this node</div>
+								<div class="description">Event handler for the yahoo tree labelClick event</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#GetDescription">GetDescription</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.HtmlResultTreeViewer.html#finished">finished</a></b>(regexp, inputText, matchCount, error)
 								</div>
-								<div class="description">Returns a human readable description of this match</div>
+								<div class="description">Called when matching is over.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#GetHtml">GetHtml</a></b>(excludeChildren)
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.HtmlResultTreeViewer.html#foundMatch">foundMatch</a></b>(regexp, inputText, matchIndex, matchItem)
 								</div>
-								<div class="description">Returns an HTML description of this match</div>
+								<div class="description">Called once for each match.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.GroupMatch.html#RunOnMe">RunOnMe</a></b>(func, param)
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.HtmlResultTreeViewer.html#startMatch">startMatch</a></b>(regexp, inputText)
 								</div>
-								<div class="description">Visits this node and its children with the provided visitor</div>
+								<div class="description">Called when a new match session has started</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.HtmlResultTreeViewer.html#updateRegExp">updateRegExp</a></b>(regex, input)
+								</div>
+								<div class="description">Updates the view to reflect the provided regular expression and input</div>
 							</td>
 						</tr>
 					
@@ -421,7 +400,7 @@ ul.inheritsList
 				
 				
 				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>: </dt><dd><a href="../symbols/RXBuild.Dom.Node.html#AddTokens">AddTokens</a>, <a href="../symbols/RXBuild.Dom.Node.html#AppendAtEnd">AppendAtEnd</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetChainDescription">GetChainDescription</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetChainHtml">GetChainHtml</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetHtmlOpenTag">GetHtmlOpenTag</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetLast">GetLast</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetTokenHighlightJS">GetTokenHighlightJS</a>, <a href="../symbols/RXBuild.Dom.Node.html#.NodeRegExTokenHighlight">NodeRegExTokenHighlight</a>, <a href="../symbols/RXBuild.Dom.Node.html#RunForAll">RunForAll</a>, <a href="../symbols/RXBuild.Dom.Node.html#StartVisit">StartVisit</a></dd>
+				
 				</dl>
 				
 			
@@ -434,11 +413,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>RXBuild.Dom.GroupMatch</b>(childMatch, groupType)
+						<b>RXBuild.UI.HtmlResultTreeViewer</b>(container, id)
 				</div>
 				
 				<div class="description">
-					
+					Creates a new instance of RXBuild.UI.HtmlResultTreeViewer (which inherits RXBuild.Engine.ResultListener)
 					
 				</div>
 				
@@ -450,16 +429,16 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>}</span>  <b>childMatch</b>
+								 <b>container</b>
 								
 							</dt>
-								<dd>The actual match required by this group</dd>
+								<dd></dd>
 						
 							<dt>
-								<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span>  <b>groupType</b>
+								 <b>id</b>
 								
 							</dt>
-								<dd>The type of group this represents.</dd>
+								<dd></dd>
 						
 						</dl>
 					
@@ -479,85 +458,15 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name="groupIndex"> </a>
+					<a name="container"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Number}</span>
-					<b>groupIndex</b>
+					<span class="light">{HTMLElement}</span>
+					<b>container</b>
 					
 					</div>
 					<div class="description">
-						The index of the group in the regular expression
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="groupName"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>groupName</b>
-					
-					</div>
-					<div class="description">
-						The name of the group if it is a named capture
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="groupType"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>groupType</b>
-					
-					</div>
-					<div class="description">
-						The type of group this represents. Possible values are:<br />
-	&quot;capture&quot; - Normal captured group<br />
-	&quot;no_capture&quot; - Non captured group<br />
-	&quot;pos_la&quot; - Positive lookahead group<br />
-	&quot;neg_la&quot; - Negative lookahead group<br />
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="subMatch"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>}</span>
-					<b>subMatch</b>
-					
-					</div>
-					<div class="description">
-						The actual match required by this group
+						The DOM element that holds the results for display
 						
 						
 					</div>
@@ -579,15 +488,15 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="Accept"> </a>
+					<a name="clickedOnNode"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Boolean}</span>
-					<b>Accept</b>(visitor)
+					
+					<b>clickedOnNode</b>(node)
 					
 					</div>
 					<div class="description">
-						Recursively visits this node
+						Event handler for the yahoo tree labelClick event
 						
 						
 					</div>
@@ -599,82 +508,7 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{<a href="../symbols/RXBuild.Dom.NodeVisitor.html#constructor">RXBuild.Dom.NodeVisitor</a>}</span> <b>visitor</b>
-									
-								</dt>
-								<dd>The visitor currently exploring the DOM</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Boolean}</span> The last result of the visitors calls.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="GetDescription"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>GetDescription</b>()
-					
-					</div>
-					<div class="description">
-						Returns a human readable description of this match
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> The description of this node in human readable format.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="GetHtml"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>GetHtml</b>(excludeChildren)
-					
-					</div>
-					<div class="description">
-						Returns an HTML description of this match
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>excludeChildren</b>
+									<b>node</b>
 									
 								</dt>
 								<dd></dd>
@@ -685,27 +519,20 @@ ul.inheritsList
 						
 						
 						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> An HTML description of this match</dd>
-							
-							</dl>
-						
 						
 						
 
 					<hr />
 				
-					<a name="RunOnMe"> </a>
+					<a name="finished"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{object}</span>
-					<b>RunOnMe</b>(func, param)
+					
+					<b>finished</b>(regexp, inputText, matchCount, error)
 					
 					</div>
 					<div class="description">
-						Visits this node and its children with the provided visitor
+						Called when matching is over.
 						
 						
 					</div>
@@ -717,16 +544,82 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{Function}</span> <b>func</b>
+									<span class="light fixedFont">{<a href="../symbols/RXBuild.RegExp.html#constructor">RXBuild.RegExp</a>}</span> <b>regexp</b>
 									
 								</dt>
-								<dd>The function to call with each node as first parameter</dd>
+								<dd>The pattern that was run</dd>
 							
 								<dt>
-									<span class="light fixedFont">{object}</span> <b>param</b>
+									<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> <b>inputText</b>
 									
 								</dt>
-								<dd>The second parameter to func</dd>
+								<dd>The input text against which to match</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Integer}</span> <b>matchCount</b>
+									
+								</dt>
+								<dd>The number of matches (until aborting), or -1 if an error occured.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> <b>error</b>
+									
+								</dt>
+								<dd>If an error occured, the error object, otherwise, null</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="foundMatch"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Boolean}</span>
+					<b>foundMatch</b>(regexp, inputText, matchIndex, matchItem)
+					
+					</div>
+					<div class="description">
+						Called once for each match.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/RXBuild.RegExp.html#constructor">RXBuild.RegExp</a>}</span> <b>regexp</b>
+									
+								</dt>
+								<dd>The pattern that is running</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> <b>inputText</b>
+									
+								</dt>
+								<dd>The input text against which to match</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>matchIndex</b>
+									
+								</dt>
+								<dd>The 0-based index of this match</dd>
+							
+								<dt>
+									<span class="light fixedFont">{object}</span> <b>matchItem</b>
+									
+								</dt>
+								<dd>A single match description</dd>
 							
 							</dl>
 						
@@ -737,9 +630,93 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{object}</span> Whatever func when called on the current instance</dd>
+								<dd><span class="light fixedFont">{Boolean}</span> True to continue matching, false to abort.</dd>
 							
 							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="startMatch"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>startMatch</b>(regexp, inputText)
+					
+					</div>
+					<div class="description">
+						Called when a new match session has started
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/RXBuild.RegExp.html#constructor">RXBuild.RegExp</a>}</span> <b>regexp</b>
+									
+								</dt>
+								<dd>The pattern that will be ran</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> <b>inputText</b>
+									
+								</dt>
+								<dd>The input text against which to match</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="updateRegExp"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>updateRegExp</b>(regex, input)
+					
+					</div>
+					<div class="description">
+						Updates the view to reflect the provided regular expression and input
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/RXBuild.RegExp.html#constructor">RXBuild.RegExp</a>}</span> <b>regex</b>
+									
+								</dt>
+								<dd>The new pattern</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> <b>input</b>
+									
+								</dt>
+								<dd>The sample input text in which to run the matches</dd>
+							
+							</dl>
+						
+						
+						
+						
 						
 						
 						
@@ -754,7 +731,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Sun Feb 22 2009 20:44:20 GMT+0100 (CET)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Sun Feb 22 2009 20:44:22 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

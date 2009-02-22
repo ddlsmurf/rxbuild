@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - _global_</title>
+		<title>JsDoc Reference - RXBuild.UI.HtmlExplanationTreeBuilder</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -260,19 +260,44 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Built-In Namespace _global_
+				Class RXBuild.UI.HtmlExplanationTreeBuilder
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
+				<br />Extends
+					<a href="../symbols/RXBuild.Dom.NodeVisitor.html#constructor">RXBuild.Dom.NodeVisitor</a>.<br />
 				
 			
+				The RXBuild.UI.HtmlExplanationTreeBuilder visits the DOM of the parsed regexp to build a corresponding YUI tree
 				
 				
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Sites_rxbuild_src_ui_regex_viewer_explain_tree.js.html">ui_regex_viewer_explain_tree.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class RXBuild.UI.HtmlExplanationTreeBuilder.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/RXBuild.UI.HtmlExplanationTreeBuilder.html#constructor">RXBuild.UI.HtmlExplanationTreeBuilder</a></b>(parentNode)
+							</div>
+							<div class="description">Creates a new instance of RXBuild.UI.HtmlExplanationTreeBuilder (which inherits RXBuild.Dom.NodeVisitor)</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 			
 
 <!-- ============================== properties summary ===================== -->
@@ -280,14 +305,235 @@ ul.inheritsList
 
 <!-- ============================== methods summary ======================== -->
 			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class RXBuild.UI.HtmlExplanationTreeBuilder.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.HtmlExplanationTreeBuilder.html#visit">visit</a></b>(leafNode)
+								</div>
+								<div class="description">Called when visiting a leaf node</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.HtmlExplanationTreeBuilder.html#visitEnter">visitEnter</a></b>(compositeNode)
+								</div>
+								<div class="description">Called when visiting a parent node</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.HtmlExplanationTreeBuilder.html#visitLeave">visitLeave</a></b>(compositeNode)
+								</div>
+								<div class="description">Called when finished visiting a parent node</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+				<dl class="inheritsList">
+				
+				</dl>
+				
+			
 
 <!-- ============================== constructor details ==================== -->		
+			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Class Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>RXBuild.UI.HtmlExplanationTreeBuilder</b>(parentNode)
+				</div>
+				
+				<div class="description">
+					Creates a new instance of RXBuild.UI.HtmlExplanationTreeBuilder (which inherits RXBuild.Dom.NodeVisitor)
+					
+				</div>
+				
+				
+				
+				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								 <b>parentNode</b>
+								
+							</dt>
+								<dd></dd>
+						
+						</dl>
+					
+					
+					
+					
+					
+					
+					
+
+			</div>
 			
 
 <!-- ============================== field details ========================== -->		
 			
 
 <!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="visit"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Boolean}</span>
+					<b>visit</b>(leafNode)
+					
+					</div>
+					<div class="description">
+						Called when visiting a leaf node
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>}</span> <b>leafNode</b>
+									
+								</dt>
+								<dd>The node being visited</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Boolean}</span> Return true to continue visit</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="visitEnter"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Boolean}</span>
+					<b>visitEnter</b>(compositeNode)
+					
+					</div>
+					<div class="description">
+						Called when visiting a parent node
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>}</span> <b>compositeNode</b>
+									
+								</dt>
+								<dd>The node being visited</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Boolean}</span> Return true to visit children on this node</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="visitLeave"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Boolean}</span>
+					<b>visitLeave</b>(compositeNode)
+					
+					</div>
+					<div class="description">
+						Called when finished visiting a parent node
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>}</span> <b>compositeNode</b>
+									
+								</dt>
+								<dd>The node that completed visit</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Boolean}</span> Return true to continue the visit after the compositeNode</dd>
+							
+							</dl>
+						
+						
+						
+
+					
+				
 			
 			
 			<hr />
@@ -296,7 +542,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Sun Feb 22 2009 20:44:19 GMT+0100 (CET)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Sun Feb 22 2009 20:44:21 GMT+0100 (CET)
 		</div>
 	</body>
 </html>

@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - RXBuild.Dom.AlternativeMatch</title>
+		<title>JsDoc Reference - RXBuild.Engine.ResultListener</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -260,25 +260,23 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class RXBuild.Dom.AlternativeMatch
+				Class RXBuild.Engine.ResultListener
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
-				<br />Extends
-					<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>.<br />
 				
 			
-				The AlternativeMatch class matches exactly one of its children
+				The RXBuild.Engine.ResultListener is an abstract interface that receives the result of a regular expression matcher.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Sites_rxbuild_src_regex_dom.js.html">regex_dom.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Sites_rxbuild_src_regex_engine.js.html">regex_engine.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class RXBuild.Dom.AlternativeMatch.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class RXBuild.Engine.ResultListener.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -291,9 +289,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.AlternativeMatch.html#constructor">RXBuild.Dom.AlternativeMatch</a></b>()
+								<b><a href="../symbols/RXBuild.Engine.ResultListener.html#constructor">RXBuild.Engine.ResultListener</a></b>()
 							</div>
-							<div class="description"></div>
+							<div class="description">Creates a new instance of RXBuild.Engine.ResultListener</div>
 						</td>
 					</tr>
 				</tbody>
@@ -302,44 +300,12 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
-				
-				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class RXBuild.Dom.AlternativeMatch.">
-					<caption>Field Summary</caption>
-					<thead>
-						<tr>
-							<th scope="col">Field Attributes</th>
-							<th scope="col">Field Name and Description</th>
-						</tr>
-					</thead>
-					<tbody>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/RXBuild.Dom.AlternativeMatch.html#alternatives">alternatives</a></b>
-								</div>
-								<div class="description">The list of acceptable matches</div>
-							</td>
-						</tr>
-					
-					</tbody>
-				</table>
-				
-				
-				
-				<dl class="inheritsList">
-				<dt>Fields borrowed from class <a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>: </dt><dd><a href="../symbols/RXBuild.Dom.Node.html#id">id</a>, <a href="../symbols/RXBuild.Dom.Node.html#next">next</a>, <a href="../symbols/RXBuild.Dom.Node.html#tokens">tokens</a></dd>
-				</dl>
-				
-			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class RXBuild.Dom.AlternativeMatch.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class RXBuild.Engine.ResultListener.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -352,45 +318,27 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.AlternativeMatch.html#Accept">Accept</a></b>(visitor)
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.Engine.ResultListener.html#finished">finished</a></b>(regexp, inputText, matchCount, error)
 								</div>
-								<div class="description">Recursively visits this node</div>
+								<div class="description">Called when matching is over.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.AlternativeMatch.html#AddAlternative">AddAlternative</a></b>(alt)
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.Engine.ResultListener.html#foundMatch">foundMatch</a></b>(regexp, inputText, matchIndex, matchItem)
 								</div>
-								<div class="description">Adds an alternative match to the collection of acceptable matches</div>
+								<div class="description">Called once for each match.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.AlternativeMatch.html#GetDescription">GetDescription</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.Engine.ResultListener.html#startMatch">startMatch</a></b>(regexp, inputText)
 								</div>
-								<div class="description">Returns a human readable description of this match</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.AlternativeMatch.html#GetHtml">GetHtml</a></b>(excludeChildren)
-								</div>
-								<div class="description">Returns an HTML description of this match</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.AlternativeMatch.html#RunOnMe">RunOnMe</a></b>(func, param)
-								</div>
-								<div class="description">Visits this node and its alternatives with the provided visitor</div>
+								<div class="description">Called when a new match session has started</div>
 							</td>
 						</tr>
 					
@@ -398,10 +346,6 @@ ul.inheritsList
 				</table>
 				
 				
-				
-				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>: </dt><dd><a href="../symbols/RXBuild.Dom.Node.html#AddTokens">AddTokens</a>, <a href="../symbols/RXBuild.Dom.Node.html#AppendAtEnd">AppendAtEnd</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetChainDescription">GetChainDescription</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetChainHtml">GetChainHtml</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetHtmlOpenTag">GetHtmlOpenTag</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetLast">GetLast</a>, <a href="../symbols/RXBuild.Dom.Node.html#GetTokenHighlightJS">GetTokenHighlightJS</a>, <a href="../symbols/RXBuild.Dom.Node.html#.NodeRegExTokenHighlight">NodeRegExTokenHighlight</a>, <a href="../symbols/RXBuild.Dom.Node.html#RunForAll">RunForAll</a>, <a href="../symbols/RXBuild.Dom.Node.html#StartVisit">StartVisit</a></dd>
-				</dl>
 				
 			
 
@@ -413,11 +357,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>RXBuild.Dom.AlternativeMatch</b>()
+						<b>RXBuild.Engine.ResultListener</b>()
 				</div>
 				
 				<div class="description">
-					
+					Creates a new instance of RXBuild.Engine.ResultListener
 					
 				</div>
 				
@@ -437,33 +381,6 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
-				<div class="sectionTitle">
-					Field Detail
-				</div>
-				
-					<a name="alternatives"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>[]}</span>
-					<b>alternatives</b>
-					
-					</div>
-					<div class="description">
-						The list of acceptable matches
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					
-				
-			
 
 <!-- ============================== method details ========================= -->		
 			
@@ -471,15 +388,69 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="Accept"> </a>
+					<a name="finished"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>finished</b>(regexp, inputText, matchCount, error)
+					
+					</div>
+					<div class="description">
+						Called when matching is over.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/RXBuild.RegExp.html#constructor">RXBuild.RegExp</a>}</span> <b>regexp</b>
+									
+								</dt>
+								<dd>The pattern that was run</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> <b>inputText</b>
+									
+								</dt>
+								<dd>The input text against which to match</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Integer}</span> <b>matchCount</b>
+									
+								</dt>
+								<dd>The number of matches (until aborting), or -1 if an error occured.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> <b>error</b>
+									
+								</dt>
+								<dd>If an error occured, the error object, otherwise, null</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="foundMatch"> </a>
 					<div class="fixedFont">
 					
 					<span class="light">{Boolean}</span>
-					<b>Accept</b>(visitor)
+					<b>foundMatch</b>(regexp, inputText, matchIndex, matchItem)
 					
 					</div>
 					<div class="description">
-						Recursively visits this node
+						Called once for each match.
 						
 						
 					</div>
@@ -491,10 +462,28 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{<a href="../symbols/RXBuild.Dom.NodeVisitor.html#constructor">RXBuild.Dom.NodeVisitor</a>}</span> <b>visitor</b>
+									<span class="light fixedFont">{<a href="../symbols/RXBuild.RegExp.html#constructor">RXBuild.RegExp</a>}</span> <b>regexp</b>
 									
 								</dt>
-								<dd>The visitor currently exploring the DOM</dd>
+								<dd>The pattern that is running</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> <b>inputText</b>
+									
+								</dt>
+								<dd>The input text against which to match</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>matchIndex</b>
+									
+								</dt>
+								<dd>The 0-based index of this match</dd>
+							
+								<dt>
+									<span class="light fixedFont">{object}</span> <b>matchItem</b>
+									
+								</dt>
+								<dd>A single match description</dd>
 							
 							</dl>
 						
@@ -505,7 +494,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{Boolean}</span> The last result of the visitors calls.</dd>
+								<dd><span class="light fixedFont">{Boolean}</span> True to continue matching, false to abort.</dd>
 							
 							</dl>
 						
@@ -514,15 +503,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="AddAlternative"> </a>
+					<a name="startMatch"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>AddAlternative</b>(alt)
+					<b>startMatch</b>(regexp, inputText)
 					
 					</div>
 					<div class="description">
-						Adds an alternative match to the collection of acceptable matches
+						Called when a new match session has started
 						
 						
 					</div>
@@ -534,140 +523,22 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{<a href="../symbols/RXBuild.Dom.Node.html#constructor">RXBuild.Dom.Node</a>}</span> <b>alt</b>
+									<span class="light fixedFont">{<a href="../symbols/RXBuild.RegExp.html#constructor">RXBuild.RegExp</a>}</span> <b>regexp</b>
 									
 								</dt>
-								<dd>The acceptable match to add</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="GetDescription"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>GetDescription</b>()
-					
-					</div>
-					<div class="description">
-						Returns a human readable description of this match
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> The description of this node in human readable format.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="GetHtml"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>GetHtml</b>(excludeChildren)
-					
-					</div>
-					<div class="description">
-						Returns an HTML description of this match
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
+								<dd>The pattern that will be ran</dd>
 							
 								<dt>
-									<b>excludeChildren</b>
+									<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> <b>inputText</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The input text against which to match</dd>
 							
 							</dl>
 						
 						
 						
 						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span> An HTML description of this match</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="RunOnMe"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{object}</span>
-					<b>RunOnMe</b>(func, param)
-					
-					</div>
-					<div class="description">
-						Visits this node and its alternatives with the provided visitor
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Function}</span> <b>func</b>
-									
-								</dt>
-								<dd>The function to call with each node as first parameter</dd>
-							
-								<dt>
-									<span class="light fixedFont">{object}</span> <b>param</b>
-									
-								</dt>
-								<dd>The second parameter to func</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{object}</span> Whatever func when called on the current instance</dd>
-							
-							</dl>
 						
 						
 						
@@ -682,7 +553,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Sun Feb 22 2009 20:44:20 GMT+0100 (CET)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Sun Feb 22 2009 20:44:21 GMT+0100 (CET)
 		</div>
 	</body>
 </html>
