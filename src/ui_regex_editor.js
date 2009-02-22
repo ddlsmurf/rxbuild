@@ -115,6 +115,7 @@ RXBuild.UI.RXEditor.prototype.insertIntoRegexp = function(str) {
 		this.textBox.selectionStart = sValueBefore.length;
 		this.textBox.selectionEnd = sValueBefore.length + str.length;
 	}
+	this.__raiseRegExpChanged();
 };
 /** Returns the current selection in the pattern editor
 	@private
