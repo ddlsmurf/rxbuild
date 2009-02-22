@@ -142,7 +142,7 @@ RXBuild.Dom.Node.NodeRegExTokenHighlight = function(tokenlist) {
 		oObj.style.color = IsCharInTokenList(i - 1, tokenlist) ? "black" : "grey";
 	}
 	window.event.stopPropagation();
-}
+};
 /** Used to display this nodes HTML in an interactive way to the user - to be rewritten */
 RXBuild.Dom.Node.prototype.GetHtmlOpenTag = function() {
 	return "<li onmouseover=\"RXBuild.Dom.Node.NodeRegExTokenHighlight([" + this.GetTokenHighlightJS() + "]);\" onmouseout=\"RXBuild.Dom.Node.NodeRegExTokenHighlight(null);\">" + (this.id != null ? "<span class=\"rx_id\">" + this.id + ")</span> " : "");
@@ -177,3 +177,48 @@ RXBuild.Dom.Node.prototype.RunForAll = function(func,param) {
 		this.next = this.next.RunForAll(func,param);
 	return oResult;
 };
+
+/** Makes the visitor explore the current instance and all followers
+	@param {RXBuild.DOM.NodeVisitor} visitor The visitor object
+	@return {Boolean} False, if the visit was cancelled by the visitor
+*/
+RXBuild.Dom.Node.prototype.StartVisit = function(visitor) {
+	var oCurrentNode = this;
+	while (oCurrentNode) {
+		if (!oCurrentNode.Accept(visitor))
+			return false;
+		oCurrentNode = oCurrentNode.next;
+	}
+	return true;
+};
+/** Makes the visitor explore the current instance
+	@param {RXBuild.DOM.NodeVisitor} visitor The visitor object
+	@return {Boolean} The return value of the visitor
+*/
+RXBuild.Dom.Node.prototype.Accept = function(visitor) {
+	return visitor.visit(this);
+};
+
+/** 
+	Creates a new instance of RXBuild.Dom.NodeVisitor
+	@class The RXBuild.Dom.NodeVisitor is an abstrcact class that implements the hierarchical visitor pattern in a way suitable for building trees
+	@constructor
+*/
+RXBuild.Dom.NodeVisitor = function (params) {
+};
+RXBuild.Dom.NodeVisitor.prototype.constructor = RXBuild.Dom.NodeVisitor;
+/** Called when visiting a leaf node
+	@param {RXBuild.Dom.Node} leafNode The node being visited
+	@return {Boolean} Return true to continue visit
+*/
+RXBuild.Dom.NodeVisitor.prototype.visit = function(leafNode) { return true; };
+/** Called when visiting a parent node
+	@param {RXBuild.Dom.Node} compositeNode The node being visited
+	@return {Boolean} Return true to visit children on this node
+*/
+RXBuild.Dom.NodeVisitor.prototype.visitEnter = function(compositeNode) { return true; };
+/** Called when finished visiting a parent node
+	@param {RXBuild.Dom.Node} compositeNode The node that completed visit
+	@return {Boolean} Return true to continue the visit after the compositeNode
+*/
+RXBuild.Dom.NodeVisitor.prototype.visitLeave = function(compositeNode) { return true; };
