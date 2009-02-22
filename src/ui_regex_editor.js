@@ -1,4 +1,19 @@
 /* (c) Copyright 2009 Eric Doughty-Papassideris. All Rights Reserved.
+
+	This file is part of RXBuild.
+
+    RXBuild is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    RXBuild is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with RXBuild.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /**	@fileOverview Contains the main editor controller
@@ -161,7 +176,7 @@ RXBuild.UI.RXEditor.prototype.initUI = function() {
 		function buildRegexpOptionsOverlay(prefix) {
 			var oRes = new YAHOO.widget.Overlay(prefix + "divChkContainer", { visible: false });
 			oRes.setBody(
-				"<div class=\"\" style=\"background: lightblue; border: 1px solid black; text-align:left;\">" +
+				"<div class=\"\" style=\"background: lightblue; border: 1px solid black; text-align:left; color: black;\">" +
 					"<h2>Compilation Options</h2>" +
 					"<ul id=\"ulList1\"><li>" +
 						"<input type=\"checkbox\" id=\"" + prefix + "chkCaseInsensitive\" value=\"checked\" checked><label for=\"" + prefix + "chkCaseInsensitive\"> <strong>/i</strong> (case insensitive)</label>" +
@@ -275,6 +290,13 @@ RXBuild.UI.RXEditor.prototype.initUI = function() {
 			};
 			return oRes;
 		}
+		function buildQuickReferenceButton(prefix) {
+			this.quickRef = new RXBuild.UI.QuickRefViewer(document.body, prefix + "_quickRef");
+			var oRes = new YAHOO.widget.Overlay(prefix + "divQuickRef", { visible: false });
+			oRes.setBody(this.quickRef.div);	
+			oRes.render(document.body);
+			return oRes;
+		}
 		var sPrefix = "rx_";
 		var oCheckBoxContainer = buildRegexpOptionsOverlay(sPrefix);
 		this.btnExplain = new YAHOO.widget.Button({ type: "button", label: "Explain", container:this.header,
@@ -283,6 +305,7 @@ RXBuild.UI.RXEditor.prototype.initUI = function() {
 				scope: this
 			}});
 		this.btnDisplayOptions = new YAHOO.widget.Button({ type: "menu", label: "Options", menu: oCheckBoxContainer, container:this.header});
+		this.btnDisplayQuickRef = new YAHOO.widget.Button({ type: "menu", label: "Quick Reference", menu: buildQuickReferenceButton(sPrefix), container:this.header});
 		this.chkCaseInsensitive = document.getElementById(sPrefix + "chkCaseInsensitive");
 		this.chkMultiline = document.getElementById(sPrefix + "chkMultiline");
 		this.chkGlobal = document.getElementById(sPrefix + "chkGlobal");

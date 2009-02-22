@@ -305,6 +305,28 @@ RXBuild.Utils.createDelegate = function(object, method) {
     return function() { method.apply(object, arguments); };
 };
 
+/** Recreates and returns all the text in all nodes under the provided item
+	@param {XMLNodeList|XMLNode|Array} item The root item whos content we want
+	@return {String} All text content in the provided item
+*/
+RXBuild.Utils.getXMLInnerText = function(item) {
+	function addXMLInnerText(item, output) {
+		if (!item) return;
+		if (item.nodeValue) {
+			output.push(item.nodeValue);
+		} else if (item.length) {
+			for (var i=0; i < item.length; i++) {
+				addXMLInnerText(item[i], output);
+			};
+		} else if (item.hasChildNodes && item.hasChildNodes()) {
+			addXMLInnerText(item.childNodes, output);
+		}
+	}
+	var oResult = [];
+	addXMLInnerText(item, oResult);
+	return oResult.join("");
+};
+
 /**
 	Generates a recursive print out of the provided object (o), skipping any properties
 	contained in skip, and functions (unless requested).

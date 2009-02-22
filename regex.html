@@ -21,22 +21,12 @@
 -->
 
 
-<!-- Yahoo hosting -->
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/reset-fonts-grids/reset-fonts-grids.css">  
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/base/base-min.css">  
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.2/build/assets/skins/sam/skin.css">    
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/utilities/utilities.js"></script>  
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/element/element-beta-min.js"></script>
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/cookie/cookie-beta-min.js"></script>
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/button/button-min.js"></script>  
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/container/container-min.js"></script>  
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/menu/menu-min.js"></script>
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/resize/resize-beta-min.js"></script>  
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/selector/selector-beta-min.js"></script>  
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/layout/layout-beta-min.js"></script>  
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/tabview/tabview-min.js"></script>  
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/treeview/treeview-min.js"></script>
+<!-- Yahoo hosting
+	Configure @ http://developer.yahoo.com/yui/articles/hosting/?animation&base&button&connection&container&containercore&dom&dragdrop&element&event&fonts&get&grids&layout&menu&reset&reset-fonts&reset-fonts-grids&resize&selector&stylesheet&tabview&treeview&utilities&yahoo&yahoo-dom-event&yuiloader&yuiloader-dom-event&MIN
+-->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.7.0/build/reset-fonts-grids/reset-fonts-grids.css&2.7.0/build/base/base-min.css&2.7.0/build/assets/skins/sam/skin.css">  
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.7.0/build/utilities/utilities.js&2.7.0/build/container/container-min.js&2.7.0/build/menu/menu-min.js&2.7.0/build/button/button-min.js&2.7.0/build/resize/resize-min.js&2.7.0/build/selector/selector-min.js&2.7.0/build/layout/layout-min.js&2.7.0/build/stylesheet/stylesheet-min.js&2.7.0/build/tabview/tabview-min.js&2.7.0/build/treeview/treeview-min.js"></script>  
+
 <!-- -->
 
 <!-- local YUI hosting 
@@ -73,6 +63,7 @@
 	<script src="src/regex_engine.js" type="text/javascript" charset="utf-8"></script>
 	<script src="src/ui_regex_viewer.js" type="text/javascript" charset="utf-8"></script>
 	<script src="src/ui_regex_editor.js" type="text/javascript" charset="utf-8"></script>
+	<script src="src/ui_quick_reference_viewer.js" type="text/javascript" charset="utf-8"></script>
 
  <STYLE type="text/css">
 		
@@ -83,8 +74,11 @@
    .fixed,
    .input { font-family: Monaco, courrier, monospace; }
    textarea { width: 100%; height: 100%; overflow:auto; }
-   
-   
+   .quickRefPanel { width: 450px; height: 400px; font: 0.7em Monaco, courrier, monospace; background: white; border: 1px solid black; overflow-y: scroll; color: black; }
+   .quickRefPanel h1 {color: black; font: 2em Verdana bold;}
+   .yui-skin-sam .yui-layout .yui-layout-unit div.yui-layout-hd .yui-content h2 {color: black; font: 1.7em Verdana bold;}
+   .yui-content h3 {color: black; font: 1.2em Verdana bold;}
+
    .regExText { font: bolder 2em Monaco, courrier, monospace; }
    .innerTable { font-size: 8pt; border: solid gray 1px; }
    .button { border: 3px dotted black; padding: 5px; margin: 5px;  background: skyblue;}
@@ -121,72 +115,33 @@
 	<div id="divLeftContainer" class="yui-navset">
 		<ul class="yui-nav">
 			<li class="selected">
-				<a href="#tabTools"><em>Commands</em></a>
-			</li>
-			<li>
-				<a href="#tabTodo"><em>Todo</em></a>
-			</li>
-			<li>
-				<a href="#tabCredits"><em>Credits</em></a>
+				<a href="#tabAbout"><em>About RXBuild</em></a>
 			</li>
 		</ul>
 		<div class="yui-content">
-			<div id="tabTools" class="htmlDialog">
-				<h2>
-					Tools
-				</h2>
+			<div id="tabAbout" class="htmlDialog">
+				<h2>Welcome to RXBuild</h2>
+				Simply edit your regular expression on the right, the input text at the top, and view the match results at the bottom.
 				<ul>
 					<li>
-						<a href="javascript:void(0);" id="lnkShowQuickRef" name="lnkShowQuickRef">Quick reference</a>
+						<a href="http://github.com/ddlsmurf/rxbuild/tree/master">GitHub Project Page (source code)</a>
+					</li>
+					<li>
+						<a href="http://wiki.github.com/ddlsmurf/rxbuild">Documentation</a>
+					</li>
+					<li>
+						<a href="./jsdoc">Source code documentation</a>
+					</li>
+					<li>
+						<a href="http://wiki.github.com/ddlsmurf/rxbuild/todo">Stuff left to do</a>
 					</li>
 				</ul>
-			</div>
-			<div id="tabTodo" class="htmlDialog">
 				<h2>
-					TODO
+					Copyright
 				</h2>
-				<ul>
-					<li>
-						More sample inputs
-					</li>                 
-					<li>                  
-						Replace mode  
-					</li>                 
-					<li>                  
-						DOM/Graph view
-					</li>
-					<li>
-						Smarter match result view (forget tree)
-					</li>
-					<li>                  
-						Make reference dynamically loaded
-					</li>
-					<li>                  
-						DOM runtime (+ unit tests + debug mode)
-					</li>
-					<li>                  
-						Emulated named group support
-					</li>
-					<li>                  
-						More exports (language variants, replace mode, named groups, send to paste bin)
-					</li>
-					<li>
-						Clean up code
-					</li>
-					<li>
-						Accept GET parameter
-					</li>
-					<li>
-						Use <a href="http://stevenlevithan.com/regex/xregexp/">xregexp</a> for advanced unicode support
-					</li>
-				</ul>
-			</div>
-			<div id="tabCredits" class="htmlDialog">
-				<h2>
-					Credits
-				</h2>
-				Software developped by Eric Doughty-Papassideris.<br />
-				Uses:
+				See the source for a full description.<br />
+				Code is licenced under the <a href="http://www.gnu.org/licenses/lgpl.html">L-GPL</a>.<br />
+				Software developped by Eric Doughty-Papassideris, loosly based on work by Jan Max Meyer.<br />
 				<ul>
 					<li><a href="http://developer.yahoo.com/yui/">Yahoo User Interface Library</a></li>
 					<li><a href="http://jscc.jmksf.com/">JS/CC Parser Generator</a> - Copyright © 2007, 2008 by Jan Max Meyer, J.M.K S.F. Software Technologies</li>
@@ -205,495 +160,7 @@
 </p>
 <div id="treeDiv1"></div>
 
-<div id="refPanel">
-	<div class="hd">
-		Regexp References
-	</div>
-	<div class="bd">
-		<div id="refPanelBody" class="yui-navset">
-			<ul class="yui-nav">
-				<li class="selected">
-					<a href="#tab1"><em>Operators</em></a>
-				</li>
-				<li>
-					<a href="#tab2"><em>Groups</em></a>
-				</li>
-				<li>
-					<a href="#tab3"><em>Escaping</em></a>
-				</li>
-				<li>
-					<a href="#tab4"><em>Credits</em></a>
-				</li>
-			</ul>
-			<div class="yui-content">
-				<div id="tab1" class="htmlDialog">
-					<table border="1" class="innerTable">
-						<tr>
-							<td>
-								<code>^</code>
-							</td>
-							<td>
-								<p>
-									Matches beginning of input. If the multiline flag is set to true, also matches immediately after a line break character.
-								</p>
-								<p>
-									For example, <code>/^A/</code> does not match the 'A' in "an A", but does match the first 'A' in "An A."
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>$</code>
-							</td>
-							<td>
-								<p>
-									Matches end of input. If the multiline flag is set to true, also matches immediately before a line break character.
-								</p>
-								<p>
-									For example, <code>/t$/</code> does not match the 't' in "eater", but does match it in "eat".
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>*</code>
-							</td>
-							<td>
-								<p>
-									Matches the preceding item 0 or more times.
-								</p>
-								<p>
-									For example, <code>/bo*/</code> matches 'boooo' in "A ghost booooed" and 'b' in "A bird warbled", but nothing in "A goat grunted".
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>+</code>
-							</td>
-							<td>
-								<p>
-									Matches the preceding item 1 or more times. Equivalent to <code>{1,}</code>.
-								</p>
-								<p>
-									For example, <code>/a+/</code> matches the 'a' in "candy" and all the a's in "caaaaaaandy".
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>?</code>
-							</td>
-							<td>
-								<p>
-									Matches the preceding item 0 or 1 time.
-								</p>
-								<p>
-									For example, <code>/e?le?/</code> matches the 'el' in "angel" and the 'le' in "angle."
-								</p>
-								<p>
-									If used immediately after any of the quantifiers <code>*</code>, <code>+</code>, <code>?</code>, or <code>{}</code>, makes the quantifier non-greedy (matching the minimum number of times), as opposed to the default, which is greedy (matching the maximum number of times).
-								</p>
-								<p>
-									Also used in lookahead assertions, described under <code>(?=)</code>, <code>(?!)</code>, and <code>(?:)</code> in this table.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>.</code>
-							</td>
-							<td>
-								<p>
-									(The decimal point) matches any single character except the newline characters: \n \r \u2028 or \u2029. (<code>[\s\S]</code> can be used to match any character including newlines.)
-								</p>
-								<p>
-									For example, <code>/.n/</code> matches 'an' and 'on' in "nay, an apple is on the tree", but not 'nay'.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code><em>x</em>|<em>y</em></code>
-							</td>
-							<td>
-								<p>
-									Matches either <code><em>x</em></code> or <code><em>y</em></code>.
-								</p>
-								<p>
-									For example, <code>/green|red/</code> matches 'green' in "green apple" and 'red' in "red apple."
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>{<em>n</em>}</code>
-							</td>
-							<td>
-								<p>
-									Where <code><em>n</em></code> is a positive integer. Matches exactly <code><em>n</em></code> occurrences of the preceding item.
-								</p>
-								<p>
-									For example, <code>/a{2}/</code> doesn't match the 'a' in "candy," but it matches all of the a's in "caandy," and the first two a's in "caaandy."
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>{<em>n</em>,}</code>
-							</td>
-							<td>
-								<p>
-									Where <code><em>n</em></code> is a positive integer. Matches at least <code><em>n</em></code> occurrences of the preceding item.
-								</p>
-								<p>
-									For example, <code>/a{2,}/</code> doesn't match the 'a' in "candy", but matches all of the a's in "caandy" and in "caaaaaaandy."
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>{<em>n</em>,<em>m</em>}</code>
-							</td>
-							<td>
-								<p>
-									Where <code><em>n</em></code> and <code><em>m</em></code> are positive integers. Matches at least <code><em>n</em></code> and at most <code><em>m</em></code> occurrences of the preceding item.
-								</p>
-								<p>
-									For example, <code>/a{1,3}/</code> matches nothing in "cndy", the 'a' in "candy," the first two a's in "caandy," and the first three a's in "caaaaaaandy". Notice that when matching "caaaaaaandy", the match is "aaa", even though the original string had more a's in it.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>[<em>xyz</em>]</code>
-							</td>
-							<td>
-								<p>
-									A character set. Matches any one of the enclosed characters. You can specify a range of characters by using a hyphen.
-								</p>
-								<p>
-									For example, <code>[abcd]</code> is the same as <code>[a-d]</code>. They match the 'b' in "brisket" and the 'c' in "ache".
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>[^<em>xyz</em>]</code>
-							</td>
-							<td>
-								<p>
-									A negated or complemented character set. That is, it matches anything that is not enclosed in the brackets. You can specify a range of characters by using a hyphen.
-								</p>
-								<p>
-									For example, <code>[^abc]</code> is the same as <code>[^a-c]</code>. They initially match 'r' in "brisket" and 'h' in "chop."
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>[\b]</code>
-							</td>
-							<td>
-								<p>
-									Matches a backspace. (Not to be confused with <code>\b</code>.)
-								</p>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div id="tab2" class="htmlDialog">
-					<table border="1" class="innerTable">
-						<tr>
-							<td nowrap>
-								<code>(<em>x</em>)</code>
-							</td>
-							<td>
-								<p>
-									Matches <code><em>x</em></code> and remembers the match. These are called capturing parentheses.
-								</p>
-								<p>
-									For example, <code>/(foo)/</code> matches and remembers 'foo' in "foo bar." The matched substring can be recalled from the resulting array's elements <code>[1], ..., [<em>n</em>]</code> or from the predefined <code>RegExp</code> object's properties <code>$1, ..., $9</code>.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td nowrap>
-								<code>(?:<em>x</em>)</code>
-							</td>
-							<td>
-								<p>
-									Matches <code><em>x</em></code> but does not remember the match. These are called non-capturing parentheses. The matched substring can not be recalled from the resulting array's elements <code>[1], ..., [<em>n</em>]</code> or from the predefined <code>RegExp</code> object's properties <code>$1, ..., $9</code>.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td nowrap>
-								<code><em>x</em>(?=<em>y</em>)</code>
-							</td>
-							<td>
-								<p>
-									Matches <code><em>x</em></code> only if <code><em>x</em></code> is followed by <code><em>y</em></code>. For example, <code>/Jack(?=Sprat)/</code> matches 'Jack' only if it is followed by 'Sprat'. <code>/Jack(?=Sprat|Frost)/</code> matches 'Jack' only if it is followed by 'Sprat' or 'Frost'. However, neither 'Sprat' nor 'Frost' is part of the match results.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td nowrap>
-								<code><em>x</em>(?!<em>y</em>)</code>
-							</td>
-							<td>
-								<p>
-									Matches <code><em>x</em></code> only if <code><em>x</em></code> is not followed by <code><em>y</em></code>. For example, <code>/\d+(?!\.)/</code> matches a number only if it is not followed by a decimal point.
-								</p>
-								<p>
-									<code>/\d+(?!\.)/.exec("3.141")</code> matches 141 but not 3.141.
-								</p>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div id="tab3" class="htmlDialog">
-					<table border="1" class="innerTable">
-						<tr>
-							<td>
-								<code>\b</code>
-							</td>
-							<td>
-								<p>
-									Matches a word boundary, such as a space. (Not to be confused with <code>[\b]</code>.)
-								</p>
-								<p>
-									For example, <code>/\bn\w/</code> matches the 'no' in "noonday"; <code>/\wy\b/</code> matches the 'ly' in "possibly yesterday."
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\B</code>
-							</td>
-							<td>
-								<p>
-									Matches a non-word boundary.
-								</p>
-								<p>
-									For example, <code>/\w\Bn/</code> matches 'on' in "noonday", and <code>/y\B\w/</code> matches 'ye' in "possibly yesterday."
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\c<em>X</em></code>
-							</td>
-							<td>
-								<p>
-									Where <code><em>X</em></code> is a letter from A - Z. Matches a control character in a string.
-								</p>
-								<p>
-									For example, <code>/\cM/</code> matches control-M in a string.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\d</code>
-							</td>
-							<td>
-								<p>
-									Matches a digit character in the basic Latin alphabet. Equivalent to <code>[0-9]</code>.
-								</p>
-								<p>
-									<strong>Note</strong>: In Firefox 2 and earlier, matches a digit character from any alphabet. ( <span class="lang lang-*"><a rel="external nofollow" target="_blank" href="https://bugzilla.mozilla.org/show_bug.cgi?id=378738" title="https://bugzilla.mozilla.org/show_bug.cgi?id=378738" class=" link-https">bug 378738</a></span> )
-								</p>
-								<p>
-									For example, <code>/\d/</code> or <code>/[0-9]/</code> matches '2' in "B2 is the suite number."
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\D</code>
-							</td>
-							<td>
-								<p>
-									Matches any non-digit character in the basic Latin alphabet. Equivalent to <code>[^0-9]</code>.
-								</p>
-								<p>
-									<strong>Note</strong>: In Firefox 2 and earlier, all alphabet. ( <span class="lang lang-*"><a rel="external nofollow" target="_blank" href="https://bugzilla.mozilla.org/show_bug.cgi?id=378738" title="https://bugzilla.mozilla.org/show_bug.cgi?id=378738" class=" link-https">bug 378738</a></span> )
-								</p>
-								<p>
-									For example, <code>/\D/</code> or <code>/[^0-9]/</code> matches 'B' in "B2 is the suite number."
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\f</code>
-							</td>
-							<td>
-								<p>
-									Matches a form-feed.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\n</code>
-							</td>
-							<td>
-								<p>
-									Matches a linefeed.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\r</code>
-							</td>
-							<td>
-								<p>
-									Matches a carriage return.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\s</code>
-							</td>
-							<td>
-								<p>
-									Matches a single white space character, including space, tab, form feed, line feed and other unicode spaces.<span class="lang lang-en"><small><sup id="ref_equivalent_s" class="plainlinksneverexpand"><a rel="internal" href="https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/RegExp#endnote_equivalent_s">equivalent_s</a></sup></small></span>
-								</p>
-								<p>
-									For example, <code>/\s\w*/</code> matches ' bar' in "foo bar."
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\S</code>
-							</td>
-							<td>
-								<p>
-									Matches a single character other than white space.<span class="lang lang-en"><small><sup id="ref_equivalent_S" class="plainlinksneverexpand"><a rel="internal" href="https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/RegExp#endnote_equivalent_S">equivalent_S</a></sup></small></span>
-								</p>
-								<p>
-									For example, <code>/\S\w*/</code> matches 'foo' in "foo bar."
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\t</code>
-							</td>
-							<td>
-								<p>
-									Matches a tab.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\v</code>
-							</td>
-							<td>
-								<p>
-									Matches a vertical tab.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\w</code>
-							</td>
-							<td>
-								<p>
-									Matches any alphanumeric character from the basic Latin alphabet, including the underscore. Equivalent to <code>[A-Za-z0-9_]</code>.
-								</p>
-								<p>
-									For example, <code>/\w/</code> matches 'a' in "apple," '5' in "$5.28," and '3' in "3D."
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\W</code>
-							</td>
-							<td>
-								<p>
-									Matches any character that is not a word character from the basic Latin alphabet. Equivalent to <code>[^A-Za-z0-9_]</code>.
-								</p>
-								<p>
-									For example, <code>/\W/</code> or <code>/[^$A-Za-z0-9_]/</code> matches '%' in "50%."
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\<em>n</em></code>
-							</td>
-							<td>
-								<p>
-									Where <code><em>n</em></code> is a positive integer. A back reference to the last substring matching the n parenthetical in the regular expression (counting left parentheses).
-								</p>
-								<p>
-									For example, <code>/apple(,)\sorange\1/</code> matches 'apple, orange,' in "apple, orange, cherry, peach." A more complete example follows this table.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\0</code>
-							</td>
-							<td>
-								<p>
-									Matches a NUL character. Do not follow this with another digit.
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\x<em>hh</em></code>
-							</td>
-							<td>
-								<p>
-									Matches the character with the code <code><em>hh</em></code> (two hexadecimal digits)
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<code>\u<em>hhhh</em></code>
-							</td>
-							<td>
-								<p>
-									Matches the character with the Unicode value <code><em>hhhh</em></code> (four hexadecimal digits).
-								</p>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div id="tab4">
-					<p>
-						Content provided (with no garantees what so ever) from <a href="https://developer.mozilla.org/En/Core_JavaScript_1.5_Reference/Global_Objects/RegExp">https://developer.mozilla.org/En/Core_JavaScript_1.5_Reference/Global_Objects/RegExp</a>
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="ft">
-		<a href="http://msdn.microsoft.com/en-us/library/az24scfc.aspx" title=".Net reg exp reference">.net</a> <a href="http://www.perl.com/doc/manual/html/pod/perlre.html" title="Perlre man page">perl</a> <a href="http://docs.python.org/library/re.html" title="Python re doc page">python</a> <a href="http://www.ruby-doc.org/docs/ProgrammingRuby/html/language.html#UJ" title="Ruby pickaxe">ruby</a>
-	</div>
-</div>
-
 <script language="JavaScript">
-
-var tabView = new YAHOO.widget.TabView('refPanelBody');
-var oPanel = new YAHOO.widget.Panel("refPanel", { width:"640px", visible:false, constraintoviewport:false, effect:{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.25}, fixedcenter: true } );
-oPanel.render();
-
-YAHOO.util.Event.addListener("lnkShowQuickRef", "click", oPanel.show, oPanel, true);
-	
-
 	RXBuild.UI.initUI = function() {
 		var iItemHeight = Math.round(YAHOO.util.Dom.getViewportHeight() / 3);
         this.layout = new YAHOO.widget.Layout({
@@ -757,7 +224,6 @@ YAHOO.util.Event.addListener("lnkShowQuickRef", "click", oPanel.show, oPanel, tr
 		oLeftLayoutUnit.addListener("heightChange", oLeftResize);
 		oLeftResize();
 	};
-
 
     YAHOO.util.Event.onDOMReady(function() {	
 		try {
