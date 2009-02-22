@@ -32,6 +32,10 @@ SRC = \
 	$(SRC_PATH)/ui_dialog_extensions.js \
 	$(SRC_PATH)/ui_status.js \
 	$(SRC_PATH)/regex_controller.js \
+	$(SRC_PATH)/regex_engine.js \
+	$(SRC_PATH)/ui_regex_viewer.js \
+	$(SRC_PATH)/ui_regex_editor.js \
+	$(SRC_PATH)/ui_quick_reference_viewer.js \
 	$(RES_PARSERS)
 
 OUT =  compressed.js

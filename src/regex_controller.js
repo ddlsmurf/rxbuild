@@ -24,15 +24,12 @@
 if (!RXBuild)
 	/** @namespace The RXBuild namespace is the root namespace for all things RXBuild */
 	var RXBuild = { };
-if (!RXBuild.UI)
-	/** @namespace The RXBuild.UI namespace is the root namespace for all things related to RXBuilds user interface */
-	 RXBuild.UI = {};
 
 (function() {
 
 	/** 
-		Creates a new instance of RXBuild.UI.RX
-		@class The RXBuild.UI.RX class holds a regular expression as input by the user, and connects with the various operations
+		Creates a new instance of RXBuild.RegExp
+		@class The RXBuild.RegExp class holds a regular expression as input by the user, and connects with the various operations
 		@property {String} pattern Gets the regular expression as input by the user
 		@property {Options} options Gets the options selected by the user. This object has the properties <strong>g</strong>, <strong>m</strong> and
 		 							<strong>i</strong> set to true if the corresponding option is active. There is also a <strong>str</strong> property
@@ -43,7 +40,7 @@ if (!RXBuild.UI)
 		@param {Boolean} i True if the pattern is case insensitive
 		@param {Boolean} m True if the pattern is in multiline mode
 	*/
-	RXBuild.UI.RX = function (pattern, g, i, m) {
+	RXBuild.RegExp = function (pattern, g, i, m) {
 		this.pattern = pattern;
 		this.options = {};
 		if (g) this.options.g = true;
@@ -51,13 +48,16 @@ if (!RXBuild.UI)
 		if (i) this.options.i = true;
 		this.options.str = (i ? "i" : "") + (g ? "g" : "") + (m ? "m" : "");
 	};
-	RXBuild.UI.RX.prototype.constructor = RXBuild.UI.RX;
-	RXBuild.UI.RX.prototype.CodeBuilders = [];
+	RXBuild.RegExp.prototype.constructor = RXBuild.RegExp;
+	
+	/** @field {Array} Index of builder functions. It is an array of builder, each being an array of 2 items, the english name, and the function.
+	*/
+	RXBuild.RegExp.prototype.CodeBuilders = [];
 
 	/** Compiles the regexp using the custom parser, and returns the expressions DOM, or throws a string with errors encountered during parse
 		@return {Matcher} The root compiled matcher if the pattern was valid
 	*/
-	RXBuild.UI.RX.prototype.compile = function()
+	RXBuild.RegExp.prototype.compile = function()
 	{
 		var oParser = new regex_parser();
 		var oResult = oParser.compile(this.pattern, this.options.i, this.options.m, this.options.g);
@@ -67,9 +67,9 @@ if (!RXBuild.UI)
 			throw oResult;
 	};
 	/** Generates and returns an equivalent JavaScript code
-		@return {String} The code that would run this javascript.
+		@return {String} A snippet of JavaScript code that would run this regular expression.
 	*/
-	RXBuild.UI.RX.prototype.getJSCode = function()
+	RXBuild.RegExp.prototype.getJSCode = function()
 	{
 		var sResult = "var oRegExp = new RegExp(" + this.pattern.escapeJS() + ", \"" + this.options.str + "\");\n";
 		sResult += "var oMatches;\n";
@@ -78,12 +78,12 @@ if (!RXBuild.UI)
 		sResult += "}\n";
 		return sResult;
 	};
-	RXBuild.UI.RX.prototype.CodeBuilders.push(["JavaScript", RXBuild.UI.RX.prototype.getJSCode]);
+	RXBuild.RegExp.prototype.CodeBuilders.push(["JavaScript", RXBuild.RegExp.prototype.getJSCode]);
 	
 	/** Generates and returns an equivalent C# code
-		@return {String} The code that would run this javascript.
+		@return {String} A snippet of C# code that would run this regular expression.
 	*/
-	RXBuild.UI.RX.prototype.getCSCode = function()
+	RXBuild.RegExp.prototype.getCSCode = function()
 	{
 		var sResult = "System.Text.RegularExpressions.Regex oRegExp = new System.Text.RegularExpressions.Regex(" + this.pattern.escapeCS() + ", ";
 		sResult += "   RegexOptions.Compiled.RegexOptions.Compiled|RegexOptions.Compiled.RegexOptions.ECMAScript";
@@ -98,12 +98,12 @@ if (!RXBuild.UI)
 	    "}\n";
 		return sResult;
 	};
-	RXBuild.UI.RX.prototype.CodeBuilders.push(["C#", RXBuild.UI.RX.prototype.getCSCode]);
+	RXBuild.RegExp.prototype.CodeBuilders.push(["C#", RXBuild.RegExp.prototype.getCSCode]);
 	
 	/** Generates and returns an equivalent Perl code
-		@return {String} The code that would run this javascript.
+		@return {String} A snippet of Perl code that would run this regular expression.
 	*/
-	RXBuild.UI.RX.prototype.getPerlCode = function() {
+	RXBuild.RegExp.prototype.getPerlCode = function() {
 		var sRegExStart = "";
 		var sRegex = this.pattern.normaliseNewLines();
 		if (sRegex.indexOf("$") > -1) {
@@ -120,14 +120,14 @@ if (!RXBuild.UI)
 		else
 			sRegex = sRegex.replace(/\\/g,'\\\\').replace(/\//g,'\\/');
 		return sRegExStart + "while ($ReplaceMeWithTheInputText =~ m/" + sRegex + "/" + this.options.str +") {\n" +
-			"# matches are in $1, $2... position in pos $ReplaceMeWithTheInputText\n# but please! Consider learning a real language\n}"; 
+			"# matches are in $1, $2... position in pos $ReplaceMeWithTheInputText\n}"; 
 	};
-	RXBuild.UI.RX.prototype.CodeBuilders.push(["Perl", RXBuild.UI.RX.prototype.getPerlCode]);
+	RXBuild.RegExp.prototype.CodeBuilders.push(["Perl", RXBuild.RegExp.prototype.getPerlCode]);
 	
 	/** Generates and returns an equivalent Bash/Grep code
-		@return {String} The code that would run this javascript.
+		@return {String} A snippet of Bash/Grep code that would run this regular expression.
 	*/
-	RXBuild.UI.RX.prototype.getBashGrepCode = function () {
+	RXBuild.RegExp.prototype.getBashGrepCode = function () {
 		var sRes = "grep -E -o ";
 		var sOptions = "";
 		if (this.options.i) sOptions += "-i ";
@@ -142,24 +142,24 @@ if (!RXBuild.UI)
 		sRes += sOptions + sEscapedRegExp;
 		return sRes;
 	};
-	RXBuild.UI.RX.prototype.CodeBuilders.push(["Bash and grep", RXBuild.UI.RX.prototype.getBashGrepCode]);
+	RXBuild.RegExp.prototype.CodeBuilders.push(["Bash and grep", RXBuild.RegExp.prototype.getBashGrepCode]);
 
 	/** Generates and return an equivalent Ruby code
-	 *  @return {String} The cdo that would run this javascript.
+	 *  @return {String} A snippet of ruby code that would run this regular expression.
 	 */
-	RXBuild.UI.RX.prototype.getRubyCode = function () {
+	RXBuild.RegExp.prototype.getRubyCode = function () {
 		var sRes = "";
 		var sOptions = this.options.str.replace('g', '');
 		var sRe = "/" + this.pattern.replace(/\\/g,'\\\\').replace(/\//g, '\\/') + '/' + sOptions;
 		if (this.options.g) {
 			sRes += 'while match_group = replace_me_with_the_input_text.match(' + sRe + ")\n";
-			sRes += "  # Your matches are in match_group[n]\n"
-			sRes += "end\n"
+			sRes += "  # Your matches are in match_group[n]\n";
+			sRes += "end\n";
 		} else {
 			sRes += 'match_group = replace_me_with_the_input_text.match(' + sRe + ")\n";
 			sRes += "# Your match are in match_group[n]\n";
 		}
 		return sRes;
-	}
-	RXBuild.UI.RX.prototype.CodeBuilders.push(["Ruby", RXBuild.UI.RX.prototype.getRubyCode]);
+	};
+	RXBuild.RegExp.prototype.CodeBuilders.push(["Ruby", RXBuild.RegExp.prototype.getRubyCode]);
 })();

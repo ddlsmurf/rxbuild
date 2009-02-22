@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- (c) Copyright 2009 Eric Doughty-Papassideris. All Rights Reserved.
+	
+	Most content composed from other sources - see quickref/dialects XPath for details - they retain copyright and stuff.
+	
+	This file is part of RXBuild.
+
+    RXBuild is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    RXBuild is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with RXBuild.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<quickref>
+	<dialects>
+		<dialect id="ecma">
+			<name>ECMAscript/JavaScript</name>
+			<description>The javascript regular expression dialect</description>
+			<source>
+				Content copied (with no garantees what so ever) from &lt;a href=&quot;https://developer.mozilla.org/En/Core_JavaScript_1.5_Reference/Global_Objects/RegExp&quot;&gt;Mozilla Developper Center - Core JavaScript 1.5 Reference&lt;/a&gt;
+			</source> 
+		</dialect>
+	</dialects>
+	<category name="Operators">
+		<item dialect="ecma">
+			<sample>^</sample>
+			<description>
+								&lt;p&gt;
+									Matches beginning of input. If the multiline flag is set to true, also matches immediately after a line break character.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/^A/&lt;/code&gt; does not match the 'A' in "an A", but does match the first 'A' in "An A."
+								&lt;/p&gt;
+			</description>
+		</item>
+		<item dialect="ecma">
+			<sample>$</sample>
+			<description>
+								&lt;p&gt;
+									Matches end of input. If the multiline flag is set to true, also matches immediately before a line break character.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/t$/&lt;/code&gt; does not match the 't' in "eater", but does match it in "eat".
+								&lt;/p&gt;
+			</description>
+		</item>
+		<item dialect="ecma">
+			<sample>*</sample>
+			<description>
+								&lt;p&gt;
+									Matches the preceding item 0 or more times.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/bo*/&lt;/code&gt; matches 'boooo' in "A ghost booooed" and 'b' in "A bird warbled", but nothing in "A goat grunted".
+								&lt;/p&gt;
+			</description>
+		</item>
+		<item dialect="ecma">
+			<sample>+</sample>
+			<description>
+								&lt;p&gt;
+									Matches the preceding item 1 or more times. Equivalent to &lt;code&gt;{1,}&lt;/code&gt;.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/a+/&lt;/code&gt; matches the 'a' in "candy" and all the a's in "caaaaaaandy".
+								&lt;/p&gt;
+			</description>
+		</item>
+		<item dialect="ecma">
+			<sample>?</sample>
+			<description>
+								&lt;p&gt;
+									Matches the preceding item 0 or 1 time.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/e?le?/&lt;/code&gt; matches the 'el' in "angel" and the 'le' in "angle."
+								&lt;/p&gt;
+								&lt;p&gt;
+									If used immediately after any of the quantifiers &lt;code&gt;*&lt;/code&gt;, &lt;code&gt;+&lt;/code&gt;, &lt;code&gt;?&lt;/code&gt;, or &lt;code&gt;{}&lt;/code&gt;, makes the quantifier non-greedy (matching the minimum number of times), as opposed to the default, which is greedy (matching the maximum number of times).
+								&lt;/p&gt;
+								&lt;p&gt;
+									Also used in lookahead assertions, described under &lt;code&gt;(?=)&lt;/code&gt;, &lt;code&gt;(?!)&lt;/code&gt;, and &lt;code&gt;(?:)&lt;/code&gt; in this table.
+								&lt;/p&gt;
+			</description>
+		</item>
+		<item dialect="ecma">
+			<sample>.</sample>
+			<description>
+								&lt;p&gt;
+									(The decimal point) matches any single character except the newline characters: \n \r \u2028 or \u2029. (&lt;code&gt;[\s\S]&lt;/code&gt; can be used to match any character including newlines.)
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/.n/&lt;/code&gt; matches 'an' and 'on' in "nay, an apple is on the tree", but not 'nay'.
+								&lt;/p&gt;
+			</description>
+		</item>
+		<item dialect="ecma">
+			<sample>&lt;em&gt;x&lt;/em&gt;|&lt;em&gt;y&lt;/em&gt;</sample>
+			<description>
+								&lt;p&gt;
+									Matches either &lt;code&gt;&lt;em&gt;x&lt;/em&gt;&lt;/code&gt; or &lt;code&gt;&lt;em&gt;y&lt;/em&gt;&lt;/code&gt;.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/green|red/&lt;/code&gt; matches 'green' in "green apple" and 'red' in "red apple."
+								&lt;/p&gt;
+			</description>
+		</item>
+		<item dialect="ecma">
+			<sample>{&lt;em&gt;n&lt;/em&gt;}</sample>
+			<description>
+								&lt;p&gt;
+									Where &lt;code&gt;&lt;em&gt;n&lt;/em&gt;&lt;/code&gt; is a positive integer. Matches exactly &lt;code&gt;&lt;em&gt;n&lt;/em&gt;&lt;/code&gt; occurrences of the preceding item.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/a{2}/&lt;/code&gt; doesn't match the 'a' in "candy," but it matches all of the a's in "caandy," and the first two a's in "caaandy."
+								&lt;/p&gt;
+			</description>
+		</item>
+		<item dialect="ecma">
+			<sample>{&lt;em&gt;n&lt;/em&gt;,}</sample>
+			<description>
+								&lt;p&gt;
+									Where &lt;code&gt;&lt;em&gt;n&lt;/em&gt;&lt;/code&gt; is a positive integer. Matches at least &lt;code&gt;&lt;em&gt;n&lt;/em&gt;&lt;/code&gt; occurrences of the preceding item.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/a{2,}/&lt;/code&gt; doesn't match the 'a' in "candy", but matches all of the a's in "caandy" and in "caaaaaaandy."
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>{&lt;em&gt;n&lt;/em&gt;,&lt;em&gt;m&lt;/em&gt;}</sample>
+			<description>
+								&lt;p&gt;
+									Where &lt;code&gt;&lt;em&gt;n&lt;/em&gt;&lt;/code&gt; and &lt;code&gt;&lt;em&gt;m&lt;/em&gt;&lt;/code&gt; are positive integers. Matches at least &lt;code&gt;&lt;em&gt;n&lt;/em&gt;&lt;/code&gt; and at most &lt;code&gt;&lt;em&gt;m&lt;/em&gt;&lt;/code&gt; occurrences of the preceding item.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/a{1,3}/&lt;/code&gt; matches nothing in "cndy", the 'a' in "candy," the first two a's in "caandy," and the first three a's in "caaaaaaandy". Notice that when matching "caaaaaaandy", the match is "aaa", even though the original string had more a's in it.
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>[&lt;em&gt;xyz&lt;/em&gt;]</sample>
+			<description>
+								&lt;p&gt;
+									A character set. Matches any one of the enclosed characters. You can specify a range of characters by using a hyphen.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;[abcd]&lt;/code&gt; is the same as &lt;code&gt;[a-d]&lt;/code&gt;. They match the 'b' in "brisket" and the 'c' in "ache".
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>[^&lt;em&gt;xyz&lt;/em&gt;]</sample>
+			<description>
+								&lt;p&gt;
+									A negated or complemented character set. That is, it matches anything that is not enclosed in the brackets. You can specify a range of characters by using a hyphen.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;[^abc]&lt;/code&gt; is the same as &lt;code&gt;[^a-c]&lt;/code&gt;. They initially match 'r' in "brisket" and 'h' in "chop."
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>[\b]</sample>
+			<description>
+								&lt;p&gt;
+									Matches a backspace. (Not to be confused with &lt;code&gt;\b&lt;/code&gt;.)
+								&lt;/p&gt;
+				</description>
+		</item>
+	</category>
+	<category name="Groups">
+		<item dialect="ecma">
+			<sample>(&lt;em&gt;x&lt;/em&gt;)</sample>
+			<description>
+								&lt;p&gt;
+									Matches &lt;code&gt;&lt;em&gt;x&lt;/em&gt;&lt;/code&gt; and remembers the match. These are called capturing parentheses.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/(foo)/&lt;/code&gt; matches and remembers 'foo' in "foo bar." The matched substring can be recalled from the resulting array's elements &lt;code&gt;[1], ..., [&lt;em&gt;n&lt;/em&gt;]&lt;/code&gt; or from the predefined &lt;code&gt;RegExp&lt;/code&gt; object's properties &lt;code&gt;$1, ..., $9&lt;/code&gt;.
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>(?:&lt;em&gt;x&lt;/em&gt;)</sample>
+			<description>
+								&lt;p&gt;
+									Matches &lt;code&gt;&lt;em&gt;x&lt;/em&gt;&lt;/code&gt; but does not remember the match. These are called non-capturing parentheses. The matched substring can not be recalled from the resulting array's elements &lt;code&gt;[1], ..., [&lt;em&gt;n&lt;/em&gt;]&lt;/code&gt; or from the predefined &lt;code&gt;RegExp&lt;/code&gt; object's properties &lt;code&gt;$1, ..., $9&lt;/code&gt;.
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>&lt;em&gt;x&lt;/em&gt;(?=&lt;em&gt;y&lt;/em&gt;)</sample>
+			<description>
+								&lt;p&gt;
+									Matches &lt;code&gt;&lt;em&gt;x&lt;/em&gt;&lt;/code&gt; only if &lt;code&gt;&lt;em&gt;x&lt;/em&gt;&lt;/code&gt; is followed by &lt;code&gt;&lt;em&gt;y&lt;/em&gt;&lt;/code&gt;. For example, &lt;code&gt;/Jack(?=Sprat)/&lt;/code&gt; matches 'Jack' only if it is followed by 'Sprat'. &lt;code&gt;/Jack(?=Sprat|Frost)/&lt;/code&gt; matches 'Jack' only if it is followed by 'Sprat' or 'Frost'. However, neither 'Sprat' nor 'Frost' is part of the match results.
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>&lt;em&gt;x&lt;/em&gt;(?!&lt;em&gt;y&lt;/em&gt;)</sample>
+			<description>
+								&lt;p&gt;
+									Matches &lt;code&gt;&lt;em&gt;x&lt;/em&gt;&lt;/code&gt; only if &lt;code&gt;&lt;em&gt;x&lt;/em&gt;&lt;/code&gt; is not followed by &lt;code&gt;&lt;em&gt;y&lt;/em&gt;&lt;/code&gt;. For example, &lt;code&gt;/\d+(?!\.)/&lt;/code&gt; matches a number only if it is not followed by a decimal point.
+								&lt;/p&gt;
+								&lt;p&gt;
+									&lt;code&gt;/\d+(?!\.)/.exec("3.141")&lt;/code&gt; matches 141 but not 3.141.
+								&lt;/p&gt;
+					</description>
+		</item>
+	</category>
+	<category name="Escaping">
+		<item dialect="ecma">
+			<sample>\b</sample>
+			<description>
+								&lt;p&gt;
+									Matches a word boundary, such as a space. (Not to be confused with &lt;code&gt;[\b]&lt;/code&gt;.)
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/\bn\w/&lt;/code&gt; matches the 'no' in "noonday"; &lt;code&gt;/\wy\b/&lt;/code&gt; matches the 'ly' in "possibly yesterday."
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\B</sample>
+			<description>
+								&lt;p&gt;
+									Matches a non-word boundary.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/\w\Bn/&lt;/code&gt; matches 'on' in "noonday", and &lt;code&gt;/y\B\w/&lt;/code&gt; matches 'ye' in "possibly yesterday."
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\c&lt;em&gt;X&lt;/em&gt;</sample>
+			<description>
+								&lt;p&gt;
+									Where &lt;code&gt;&lt;em&gt;X&lt;/em&gt;&lt;/code&gt; is a letter from A - Z. Matches a control character in a string.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/\cM/&lt;/code&gt; matches control-M in a string.
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\d</sample>
+			<description>
+								&lt;p&gt;
+									Matches a digit character in the basic Latin alphabet. Equivalent to &lt;code&gt;[0-9]&lt;/code&gt;.
+								&lt;/p&gt;
+								&lt;p&gt;
+									&lt;strong&gt;Note&lt;/strong&gt;: In Firefox 2 and earlier, matches a digit character from any alphabet. ( &lt;span class="lang lang-*"&gt;&lt;a rel="external nofollow" target="_blank" href="https://bugzilla.mozilla.org/show_bug.cgi?id=378738" title="https://bugzilla.mozilla.org/show_bug.cgi?id=378738" class=" link-https"&gt;bug 378738&lt;/a&gt;&lt;/span&gt; )
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/\d/&lt;/code&gt; or &lt;code&gt;/[0-9]/&lt;/code&gt; matches '2' in "B2 is the suite number."
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\D</sample>
+			<description>
+								&lt;p&gt;
+									Matches any non-digit character in the basic Latin alphabet. Equivalent to &lt;code&gt;[^0-9]&lt;/code&gt;.
+								&lt;/p&gt;
+								&lt;p&gt;
+									&lt;strong&gt;Note&lt;/strong&gt;: In Firefox 2 and earlier, all alphabet. ( &lt;span class="lang lang-*"&gt;&lt;a rel="external nofollow" target="_blank" href="https://bugzilla.mozilla.org/show_bug.cgi?id=378738" title="https://bugzilla.mozilla.org/show_bug.cgi?id=378738" class=" link-https"&gt;bug 378738&lt;/a&gt;&lt;/span&gt; )
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/\D/&lt;/code&gt; or &lt;code&gt;/[^0-9]/&lt;/code&gt; matches 'B' in "B2 is the suite number."
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\f</sample>
+			<description>
+								&lt;p&gt;
+									Matches a form-feed.
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\n</sample>
+			<description>
+								&lt;p&gt;
+									Matches a linefeed.
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\r</sample>
+			<description>
+								&lt;p&gt;
+									Matches a carriage return.
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\s</sample>
+			<description>
+								&lt;p&gt;
+									Matches a single white space character, including space, tab, form feed, line feed and other unicode spaces.&lt;span class="lang lang-en"&gt;&lt;small&gt;&lt;sup id="ref_equivalent_s" class="plainlinksneverexpand"&gt;&lt;a rel="internal" href="https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/RegExp#endnote_equivalent_s"&gt;equivalent_s&lt;/a&gt;&lt;/sup&gt;&lt;/small&gt;&lt;/span&gt;
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/\s\w*/&lt;/code&gt; matches ' bar' in "foo bar."
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\S</sample>
+			<description>
+								&lt;p&gt;
+									Matches a single character other than white space.&lt;span class="lang lang-en"&gt;&lt;small&gt;&lt;sup id="ref_equivalent_S" class="plainlinksneverexpand"&gt;&lt;a rel="internal" href="https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/RegExp#endnote_equivalent_S"&gt;equivalent_S&lt;/a&gt;&lt;/sup&gt;&lt;/small&gt;&lt;/span&gt;
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/\S\w*/&lt;/code&gt; matches 'foo' in "foo bar."
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\t</sample>
+			<description>
+								&lt;p&gt;
+									Matches a tab.
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\v</sample>
+			<description>
+								&lt;p&gt;
+									Matches a vertical tab.
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\w</sample>
+			<description>
+								&lt;p&gt;
+									Matches any alphanumeric character from the basic Latin alphabet, including the underscore. Equivalent to &lt;code&gt;[A-Za-z0-9_]&lt;/code&gt;.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/\w/&lt;/code&gt; matches 'a' in "apple," '5' in "$5.28," and '3' in "3D."
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\W</sample>
+			<description>
+								&lt;p&gt;
+									Matches any character that is not a word character from the basic Latin alphabet. Equivalent to &lt;code&gt;[^A-Za-z0-9_]&lt;/code&gt;.
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/\W/&lt;/code&gt; or &lt;code&gt;/[^$A-Za-z0-9_]/&lt;/code&gt; matches '%' in "50%."
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\&lt;em&gt;n&lt;/em&gt;</sample>
+			<description>
+								&lt;p&gt;
+									Where &lt;code&gt;&lt;em&gt;n&lt;/em&gt;&lt;/code&gt; is a positive integer. A back reference to the last substring matching the n parenthetical in the regular expression (counting left parentheses).
+								&lt;/p&gt;
+								&lt;p&gt;
+									For example, &lt;code&gt;/apple(,)\sorange\1/&lt;/code&gt; matches 'apple, orange,' in "apple, orange, cherry, peach." A more complete example follows this table.
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\0</sample>
+			<description>
+								&lt;p&gt;
+									Matches a NUL character. Do not follow this with another digit.
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\x&lt;em&gt;hh&lt;/em&gt;</sample>
+			<description>
+								&lt;p&gt;
+									Matches the character with the code &lt;code&gt;&lt;em&gt;hh&lt;/em&gt;&lt;/code&gt; (two hexadecimal digits)
+								&lt;/p&gt;
+				</description>
+		</item>
+		<item dialect="ecma">
+			<sample>\u&lt;em&gt;hhhh&lt;/em&gt;</sample>
+			<description>
+								&lt;p&gt;
+									Matches the character with the Unicode value &lt;code&gt;&lt;em&gt;hhhh&lt;/em&gt;&lt;/code&gt; (four hexadecimal digits).
+								&lt;/p&gt;
+				</description>
+		</item>
+	</category>
+</quickref>
