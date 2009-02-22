@@ -216,7 +216,8 @@ if (!RXBuild.UI)
 		                        id: id + "_btnSelectView",   
 		                        label: "<em class=\"yui-button-label\">Results - tree</em>",
 		                        type: "menu",    
-		                        menu: oAcceptableViewersMenu,   
+		                        menu: oAcceptableViewersMenu,
+								menualignment: ["tl", "tl"],
 		                        container: header});
 		this.btnChangeView.on("selectedMenuItemChange", RXBuild.Utils.createDelegate(this, function (event) {  
 		    var oMenuItem = event.newValue;
@@ -237,7 +238,6 @@ if (!RXBuild.UI)
 		this.editor.onRegExpApplyChanges.subscribe(RXBuild.Utils.createDelegate(this, function() { this.autoRefresh(); }));
 		
 		this.setCurrentView(0);
-		
 	};
 	RXBuild.UI.RegexViewer.prototype.constructor = RXBuild.UI.RegexViewer;
 	
