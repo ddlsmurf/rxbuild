@@ -48,7 +48,14 @@ if (!RXBuild.UI)
 	};
 	RXBuild.UI.HtmlResultTreeViewer.prototype = new RXBuild.Engine.ResultListener;
 	RXBuild.UI.HtmlResultTreeViewer.prototype.constructor = RXBuild.UI.HtmlResultTreeViewer;
-	
+	/** Updates the view to reflect the provided regular expression and input
+		@param {RXBuild.RegExp} regex The new pattern
+		@param {String} input The sample input text in which to run the matches
+	*/
+	RXBuild.UI.HtmlResultTreeViewer.prototype.updateRegExp = function (regex, input) {
+		var oEngine = new RXBuild.Engine.BrowserEngine();
+		oEngine.runMatch(regex, input, this);
+	};
 	/** Event handler for the yahoo tree labelClick event */
 	RXBuild.UI.HtmlResultTreeViewer.prototype.clickedOnNode = function (node) {
 		function showNodeDetails(node) {
@@ -122,10 +129,7 @@ if (!RXBuild.UI)
 		this.tree.draw();
 	};
 	
-	
-	
-	
-	
+
 	/** 
 		Creates a new instance of RXBuild.UI.HtmlResultViewer (which inherits RXBuild.Engine.ResultListener)
 		@class The RXBuild.UI.HtmlResultViewer displays the results of matching a regular expression inline with the text
@@ -143,6 +147,15 @@ if (!RXBuild.UI)
 	};
 	RXBuild.UI.HtmlResultViewer.prototype = new RXBuild.Engine.ResultListener;
 	RXBuild.UI.HtmlResultViewer.prototype.constructor = RXBuild.UI.HtmlResultViewer;
+	/** Updates the view to reflect the provided regular expression and input
+		@param {RXBuild.RegExp} regex The new pattern
+		@param {String} input The sample input text in which to run the matches
+	*/
+	RXBuild.UI.HtmlResultViewer.prototype.updateRegExp = function (regex, input) {
+		var oEngine = new RXBuild.Engine.BrowserEngine();
+		oEngine.runMatch(regex, input, this);
+	};
+	
 	/** Called when a new match session has started
 		@param {RXBuild.RegExp} regexp The pattern that will be ran
 		@param {String} inputText The input text against which to match
@@ -265,8 +278,7 @@ if (!RXBuild.UI)
 	/** Runs the provided regular expression and updates the results view accordingly
 	*/
 	RXBuild.UI.RegexViewer.prototype.update = function() {
-		var oEngine = new RXBuild.Engine.BrowserEngine();
-		oEngine.runMatch(this.editor.getRX(), this.editor.getInput(), this.activeViewer);
+		this.activeViewer.updateRegExp(this.editor.getRX(), this.editor.getInput());
 		YAHOO.util.Dom.setStyle(this.container, "opacity", "1.0");
 	};
 	/** Notifies the user that the display is no longer uptodate with the regular expression
