@@ -46,7 +46,7 @@ OUT =  compressed.js
 
 $(OUT): $(SRC)
 	-@echo Compressing JS to $@
-	-cat $(SRC) | $(YUICOMPRESSOR) --type js > $@
+	-(cat js-copyright-notice.js && cat $(SRC) | $(YUICOMPRESSOR) --type js) > $@
 
 #Configure dependencies @ http://developer.yahoo.com/yui/articles/hosting/?animation&base&button&connection&container&containercore&dom&dragdrop&element&event&fonts&get&grids&layout&menu&reset&reset-fonts&reset-fonts-grids&resize&selector&stylesheet&tabview&treeview&utilities&yahoo&yahoo-dom-event&yuiloader&yuiloader-dom-event&MIN
 external-yui:
