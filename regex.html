@@ -66,8 +66,6 @@
 	<script src="src/ui_quick_reference_viewer.js" type="text/javascript" charset="utf-8"></script>
 
  <STYLE type="text/css">
-		
-	.screenWide {  }
 	.lightBox { border: none; padding: 0px; margin: 0px 0; }
 	.htmlDialog {text-align:left; overflow: scroll; height: 300px;}
 	.innerTable td:first-child,
@@ -113,44 +111,32 @@
 </textarea>
 </div>
 <div id="toolBar">
-	<div id="divLeftContainer" class="yui-navset">
-		<ul class="yui-nav">
-			<li class="selected">
-				<a href="#tabAbout"><em>About RXBuild</em></a>
-			</li>
-		</ul>
-		<div class="yui-content">
-			<div id="tabAbout" class="htmlDialog">
-				<h2>Welcome to RXBuild</h2>
-				Simply edit your regular expression on the right, the input text at the top, and view the match results at the bottom.
-				<ul>
-					<li>
-						<a href="http://github.com/ddlsmurf/rxbuild/tree/master">GitHub Project Page (source code)</a>
-					</li>
-					<li>
-						<a href="http://wiki.github.com/ddlsmurf/rxbuild">Documentation</a>
-					</li>
-					<li>
-						<a href="./jsdoc">Source code documentation</a>
-					</li>
-					<li>
-						<a href="http://wiki.github.com/ddlsmurf/rxbuild/todo">Stuff left to do</a>
-					</li>
-				</ul>
-				<h2>
-					Copyright
-				</h2>
-				See the source for a full description.<br />
-				Code is licenced under the <a href="http://www.gnu.org/licenses/lgpl.html">L-GPL</a>.<br />
-				Software developped by Eric Doughty-Papassideris, loosly based on work by Jan Max Meyer.<br />
-				<ul>
-					<li><a href="http://developer.yahoo.com/yui/">Yahoo User Interface Library</a></li>
-					<li><a href="http://jscc.jmksf.com/">JS/CC Parser Generator</a> - Copyright © 2007, 2008 by Jan Max Meyer, J.M.K S.F. Software Technologies</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-
+	<h2>Welcome to RXBuild</h2>
+	Simply edit your regular expression on the right, the input text at the top, and view the match results at the bottom.
+	<ul>
+		<li>
+			<a href="http://github.com/ddlsmurf/rxbuild/tree/master">GitHub Project Page (source code)</a>
+		</li>
+		<li>
+			<a href="http://wiki.github.com/ddlsmurf/rxbuild">Documentation</a>
+		</li>
+		<li>
+			<a href="./jsdoc">Source code documentation</a>
+		</li>
+		<li>
+			<a href="http://wiki.github.com/ddlsmurf/rxbuild/todo">Stuff left to do</a>
+		</li>
+	</ul>
+	<h2>
+		Copyright
+	</h2>
+	See the source for a full description.<br />
+	Code is licenced under the <a href="http://www.gnu.org/licenses/lgpl.html">L-GPL</a>.<br />
+	Software developped by Eric Doughty-Papassideris, loosly based on work by Jan Max Meyer.<br />
+	<ul>
+		<li><a href="http://developer.yahoo.com/yui/">Yahoo User Interface Library</a></li>
+		<li><a href="http://jscc.jmksf.com/">JS/CC Parser Generator</a> - Copyright © 2007, 2008 by Jan Max Meyer, J.M.K S.F. Software Technologies</li>
+	</ul>
 </div>
 <div id="contTxtRegEx" class="screenWide lightBox" style="height: 100%;">
 	<textarea type="text" class="screenWide lightBox regExText" id="txtRegEx" style="height: 100%;">
@@ -167,8 +153,8 @@
         this.layout = new YAHOO.widget.Layout({
             units: [
                 { position: 'top', body: 'contTxtSample', header: 'Sample text (Haystack)', gutter: '5px', scroll: true, collapse: true, resize: true, height: iItemHeight, easing: YAHOO.util.Easing.easeOut},
-                { position: 'bottom', header: '', height: iItemHeight, resize: true, body: 'treeDiv1', scroll: true, gutter: '5px', collapse: true, easing: YAHOO.util.Easing.easeOut },
-                { position: 'left', header: 'Tools', width: 350, resize: true, body: 'toolBar', gutter: '5px', collapse: true, collapseSize: 25, scroll: false, animate: true, easing: YAHOO.util.Easing.easeOut },
+                { position: 'bottom', header: 'View: ', height: iItemHeight, resize: true, body: 'treeDiv1', scroll: true, gutter: '5px', collapse: true, easing: YAHOO.util.Easing.easeOut },
+                { position: 'left', header: 'About RXBuild', width: 350, resize: true, body: 'toolBar', gutter: '5px', collapse: true, collapseSize: 25, scroll: true, animate: true, easing: YAHOO.util.Easing.easeOut },
                 { position: 'center', header: 'Your Regular Expression', scroll: true, resize: true, body: 'contTxtRegEx', gutter: '5px', animate: true, easing: YAHOO.util.Easing.easeOut }
             ]
         	});
@@ -182,8 +168,6 @@
 		this.dlg = new RXBuild.UI.Dialog("divGeneralDialog");
 		
 		this.rx = new RXBuild.UI.RXEditor("contTxtRegEx", oCenterLayoutUnit.header.getElementsByTagName("H2")[0], "txtRegEx", "txtSample");
-		
-		this.tabViewLeft = new YAHOO.widget.TabView('divLeftContainer', {autofillheight: "body"});
 		
 		this.rx.initUI();
 		
@@ -209,21 +193,7 @@
 		oCenterLayoutUnit.addListener("topChange", oCenterResize);
 		oCenterLayoutUnit.addListener("widthChange", oCenterResize);
 				
-		var oLeftResize = RXBuild.Utils.createDelegate(this, function() {
-			var oTabs = this.tabViewLeft.get("tabs");
-			var iTotalHeight = this.layout.getUnitByPosition("left").get("height");
-			iTotalHeight -= 86 + this.tabViewLeft.get("activeTab").get('element').offsetTop;
-			for (var i = oTabs.length - 1; i >= 0; i--){
-				var oItem = oTabs[i].get("contentEl");
-				oItem.style.height = iTotalHeight;
-			};
-		});
-		this.layout.addListener("resize", oLeftResize);
-		oLeftLayoutUnit.addListener("leftChange", oLeftResize);
-		oLeftLayoutUnit.addListener("topChange", oLeftResize);
-		oLeftLayoutUnit.addListener("widthChange", oLeftResize);
-		oLeftLayoutUnit.addListener("heightChange", oLeftResize);
-		oLeftResize();
+
 	};
 
     YAHOO.util.Event.onDOMReady(function() {	
