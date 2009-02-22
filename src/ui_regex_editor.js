@@ -326,9 +326,7 @@ RXBuild.UI.RXEditor.prototype.initUI = function() {
 			id: sPrefix + "btnInsertMenu",
 			container:this.header,
 			onclick: {
-				fn: function() {
-					this.insertMenu.show();
-					},
+				fn: function() { this.insertMenu.show(); },
 				scope: this
 			}});
 		this.insertMenu = new YAHOO.widget.Menu(sPrefix + "mnuInserter", {maxheight: "600px", position: "dynamic", context:[sPrefix + "btnInsertMenu", "tl", "bl"]});

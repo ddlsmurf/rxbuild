@@ -139,7 +139,7 @@ if (!RXBuild.UI)
 		this.container = document.createElement("DIV");
 		this.container.setAttribute("class", "rxbuild_regextester");
 		this.container.setAttribute("id", id);
-		container.appendChild(this.div);
+		container.appendChild(this.container);
 	};
 	RXBuild.UI.HtmlResultViewer.prototype = new RXBuild.Engine.ResultListener;
 	RXBuild.UI.HtmlResultViewer.prototype.constructor = RXBuild.UI.HtmlResultViewer;
@@ -195,11 +195,33 @@ if (!RXBuild.UI)
 		@param {String} id A unique name for this controls dom element
 		@param {String} className Optional. A CSS class name to apply to the container DIV. 
 	*/
-	RXBuild.UI.RegexViewer = function (container, id, header, editor) {
+	RXBuild.UI.RegexViewer = function (container, id, header, editor, viewers) {
 		this.container = container;
 		this.editor = editor;
-		this.resultViewer = new RXBuild.UI.HtmlResultTreeViewer(this.container, id + "_flat");
-
+		
+		if (viewers)
+			this.viewers = viewers;
+		else
+			this.viewers = [
+				["Results - tree", new RXBuild.UI.HtmlResultTreeViewer(this.container, id + "_tree")],
+				["Results - inline", new RXBuild.UI.HtmlResultViewer(this.container, id + "_flat")]
+			];
+		
+		var oAcceptableViewersMenu = [];
+		for (var i=0; i < this.viewers.length; i++) {
+			oAcceptableViewersMenu.push({text: this.viewers[i][0], value: i});
+		};
+		 
+		this.btnChangeView = new YAHOO.widget.Button({   
+		                        id: id + "_btnSelectView",   
+		                        label: "<em class=\"yui-button-label\">Results - tree</em>",
+		                        type: "menu",    
+		                        menu: oAcceptableViewersMenu,   
+		                        container: header});
+		this.btnChangeView.on("selectedMenuItemChange", RXBuild.Utils.createDelegate(this, function (event) {  
+		    var oMenuItem = event.newValue;
+			this.setCurrentView(oMenuItem.value);
+		}));
 		this.btnAutoRefresh = new YAHOO.widget.Button({ type: "checkbox", label: "Auto-refresh", container:header, checked: true,
 			onclick: {
 				fn: function() { this.autoRefresh(); this.btnRefresh.set("disabled", this.btnAutoRefresh.get("checked")); },
@@ -213,6 +235,9 @@ if (!RXBuild.UI)
 		
 		this.editor.onRegExpInvalidated.subscribe(RXBuild.Utils.createDelegate(this, function() { this.invalidate(); }));
 		this.editor.onRegExpApplyChanges.subscribe(RXBuild.Utils.createDelegate(this, function() { this.autoRefresh(); }));
+		
+		this.setCurrentView(0);
+		
 	};
 	RXBuild.UI.RegexViewer.prototype.constructor = RXBuild.UI.RegexViewer;
 	
@@ -223,11 +248,25 @@ if (!RXBuild.UI)
 			this.update();
 	};
 	
+	/** Sets the currently active viewer to the one with the specified index
+		@param {Number} viewIndex The index in this instances viewers property of the view to display
+	*/
+	RXBuild.UI.RegexViewer.prototype.setCurrentView = function(viewIndex) {
+		var oView = this.viewers[viewIndex];
+		this.btnChangeView.set("label", ("<em class=\"yui-button-label\">" + oView[0] + "</em>"));
+	    for (var i=0; i < this.viewers.length; i++) {
+	    	this.viewers[i][1].container.style.display = i == viewIndex ? "" : "none";
+	    };
+		this.activeViewer = oView[1];
+		this.invalidate();
+		this.autoRefresh();
+	};
+
 	/** Runs the provided regular expression and updates the results view accordingly
 	*/
 	RXBuild.UI.RegexViewer.prototype.update = function() {
 		var oEngine = new RXBuild.Engine.BrowserEngine();
-		oEngine.runMatch(this.editor.getRX(), this.editor.getInput(), this.resultViewer);
+		oEngine.runMatch(this.editor.getRX(), this.editor.getInput(), this.activeViewer);
 		YAHOO.util.Dom.setStyle(this.container, "opacity", "1.0");
 	};
 	/** Notifies the user that the display is no longer uptodate with the regular expression
