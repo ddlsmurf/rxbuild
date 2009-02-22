@@ -36,6 +36,9 @@ SRC = \
 	$(SRC_PATH)/ui_regex_viewer.js \
 	$(SRC_PATH)/ui_regex_editor.js \
 	$(SRC_PATH)/ui_quick_reference_viewer.js \
+	$(SRC_PATH)/ui_regex_viewer_explain_tree.js \
+	$(SRC_PATH)/ui_regex_viewer_matcher_inline.js \
+	$(SRC_PATH)/ui_regex_viewer_matcher_tree.js \
 	$(RES_PARSERS)
 
 OUT = rxbuild.js
