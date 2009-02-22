@@ -47,7 +47,16 @@ OUT =  compressed.js
 $(OUT): $(SRC)
 	-@echo Compressing JS to $@
 	-cat $(SRC) | $(YUICOMPRESSOR) --type js > $@
- 
+
+#Configure dependencies @ http://developer.yahoo.com/yui/articles/hosting/?animation&base&button&connection&container&containercore&dom&dragdrop&element&event&fonts&get&grids&layout&menu&reset&reset-fonts&reset-fonts-grids&resize&selector&stylesheet&tabview&treeview&utilities&yahoo&yahoo-dom-event&yuiloader&yuiloader-dom-event&MIN
+external-yui:
+	-@mkdir -p ./external/yui
+	-@wget -O external/yui/yui.css "http://yui.yahooapis.com/combo?2.7.0/build/reset-fonts-grids/reset-fonts-grids.css&2.7.0/build/base/base-min.css&2.7.0/build/assets/skins/sam/skin.css"
+	-@wget -O external/yui/yui.js "http://yui.yahooapis.com/combo?2.7.0/build/utilities/utilities.js&2.7.0/build/container/container-min.js&2.7.0/build/menu/menu-min.js&2.7.0/build/button/button-min.js&2.7.0/build/resize/resize-min.js&2.7.0/build/selector/selector-min.js&2.7.0/build/layout/layout-min.js&2.7.0/build/stylesheet/stylesheet-min.js&2.7.0/build/tabview/tabview-min.js&2.7.0/build/treeview/treeview-min.js"
+
+externals: external-yui
+	
+
 min: $(OUT)
 	-@echo "  Was:"
 	-@wc -c $(SRC)
