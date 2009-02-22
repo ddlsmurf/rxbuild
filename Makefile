@@ -38,7 +38,7 @@ SRC = \
 	$(SRC_PATH)/ui_quick_reference_viewer.js \
 	$(RES_PARSERS)
 
-OUT =  compressed.js
+OUT = rxbuild.js
 
 %.js: %.par
 	-@echo Building grammar $< into $@
@@ -46,7 +46,7 @@ OUT =  compressed.js
 
 $(OUT): $(SRC)
 	-@echo Compressing JS to $@
-	-(cat js-copyright-notice.js && cat $(SRC) | $(YUICOMPRESSOR) --type js) > $@
+	-(cat js-copyright-notice.js && cat $(SRC) external/yui/yui.js | $(YUICOMPRESSOR) --type js) > $@
 
 #Configure dependencies @ http://developer.yahoo.com/yui/articles/hosting/?animation&base&button&connection&container&containercore&dom&dragdrop&element&event&fonts&get&grids&layout&menu&reset&reset-fonts&reset-fonts-grids&resize&selector&stylesheet&tabview&treeview&utilities&yahoo&yahoo-dom-event&yuiloader&yuiloader-dom-event&MIN
 external-yui:
@@ -59,7 +59,7 @@ externals: external-yui
 
 min: $(OUT)
 	-@echo "  Was:"
-	-@wc -c $(SRC)
+	-@wc -c $(SRC) external/yui/yui.js
 	-@echo "  Is now:"
 	-@wc -c $(OUT)
 	-@echo "  Geeky chest thumping complete."
