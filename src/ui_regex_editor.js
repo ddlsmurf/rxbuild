@@ -304,8 +304,19 @@ RXBuild.UI.RXEditor.prototype.initUI = function() {
 				fn: function() { this.explainRegexp(); },
 				scope: this
 			}});
-		this.btnDisplayOptions = new YAHOO.widget.Button({ type: "menu", label: "Options", menu: oCheckBoxContainer, container:this.header});
-		this.btnDisplayQuickRef = new YAHOO.widget.Button({ type: "menu", label: "Quick Reference", menu: buildQuickReferenceButton(sPrefix), container:this.header});
+		this.btnDisplayOptions = new YAHOO.widget.Button({
+			type: "menu",
+			label: "Options",
+			id: sPrefix + "btnDisplayOptions",
+			menu: oCheckBoxContainer,
+			container:this.header});
+		this.btnDisplayQuickRef = new YAHOO.widget.Button({
+			type: "menu",
+			id: sPrefix + "btnDisplayQuickRef",
+			label: "Quick Reference",
+			menu: buildQuickReferenceButton(sPrefix),
+			container:this.header});
+
 		this.chkCaseInsensitive = document.getElementById(sPrefix + "chkCaseInsensitive");
 		this.chkMultiline = document.getElementById(sPrefix + "chkMultiline");
 		this.chkGlobal = document.getElementById(sPrefix + "chkGlobal");
@@ -326,12 +337,16 @@ RXBuild.UI.RXEditor.prototype.initUI = function() {
 			id: sPrefix + "btnInsertMenu",
 			container:this.header,
 			onclick: {
-				fn: function() { this.insertMenu.show(); },
+				fn: function() { this.mnuInsert.show(); },
 				scope: this
 			}});
-		this.insertMenu = new YAHOO.widget.Menu(sPrefix + "mnuInserter", {maxheight: "600px", position: "dynamic", context:[sPrefix + "btnInsertMenu", "tl", "bl"]});
-		this.insertMenu.addItems(buildInserterMenu(this, sPrefix + "mnuInserter_"), 0);
-		this.insertMenu.render(document.body);
+		this.mnuInsert = new YAHOO.widget.Menu(sPrefix + "mnuInserter", {
+			maxheight: "600px",
+			position: "dynamic",
+			context: [this.btnInsertItems.get("element"), "tl", "bl", ["beforeShow", "windowResize"]]
+			});
+		this.mnuInsert.addItems(buildInserterMenu(this, sPrefix + "mnuInserter_"), 0);
+		this.mnuInsert.render(document.body);
 		
 		this.btnGenerateCodeItems = new YAHOO.widget.Button({
 			type: "menu",
@@ -344,7 +359,11 @@ RXBuild.UI.RXEditor.prototype.initUI = function() {
 					},
 				scope: this
 			}});
-		this.genCodeMenu = new YAHOO.widget.Menu(sPrefix + "mnuGenerator", {maxheight: "600px", position: "dynamic", context:[sPrefix + "btnGenerateMenu", "tl", "bl"]});
+		this.genCodeMenu = new YAHOO.widget.Menu(sPrefix + "mnuGenerator", {
+			maxheight: "600px",
+			position: "dynamic",
+			context:[this.btnGenerateCodeItems.get("element"), "tl", "bl", ["beforeShow", "windowResize"]]
+			});
 		this.genCodeMenu.addItems(buildGeneratorMenu(this, sPrefix + "mnuGenerator_"), 0);
 		this.genCodeMenu.render(document.body);
 		
