@@ -211,19 +211,39 @@ ul.inheritsList
 	
 	<li><a href="../symbols/RXBuild.Dom.Node.html">RXBuild.Dom.Node</a></li>
 	
+	<li><a href="../symbols/RXBuild.Dom.NodeVisitor.html">RXBuild.Dom.NodeVisitor</a></li>
+	
 	<li><a href="../symbols/RXBuild.Dom.PositionalMatch.html">RXBuild.Dom.PositionalMatch</a></li>
 	
 	<li><a href="../symbols/RXBuild.Dom.RepeatedMatch.html">RXBuild.Dom.RepeatedMatch</a></li>
+	
+	<li><a href="../symbols/RXBuild.Engine.html">RXBuild.Engine</a></li>
+	
+	<li><a href="../symbols/RXBuild.Engine.BrowserEngine.html">RXBuild.Engine.BrowserEngine</a></li>
+	
+	<li><a href="../symbols/RXBuild.Engine.ResultListener.html">RXBuild.Engine.ResultListener</a></li>
+	
+	<li><a href="../symbols/RXBuild.RegExp.html">RXBuild.RegExp</a></li>
 	
 	<li><a href="../symbols/RXBuild.UI.html">RXBuild.UI</a></li>
 	
 	<li><a href="../symbols/RXBuild.UI.DelayedRefresh.html">RXBuild.UI.DelayedRefresh</a></li>
 	
-	<li><a href="../symbols/RXBuild.UI.Dialogs.html">RXBuild.UI.Dialogs</a></li>
+	<li><a href="../symbols/RXBuild.UI.Dialog.html">RXBuild.UI.Dialog</a></li>
 	
-	<li><a href="../symbols/RXBuild.UI.Dialogs.TextAreaDialog.html">RXBuild.UI.Dialogs.TextAreaDialog</a></li>
+	<li><a href="../symbols/RXBuild.UI.HtmlExplanationTreeBuilder.html">RXBuild.UI.HtmlExplanationTreeBuilder</a></li>
 	
-	<li><a href="../symbols/RXBuild.UI.RX.html">RXBuild.UI.RX</a></li>
+	<li><a href="../symbols/RXBuild.UI.HtmlExplanationTreeViewer.html">RXBuild.UI.HtmlExplanationTreeViewer</a></li>
+	
+	<li><a href="../symbols/RXBuild.UI.HtmlResultTreeViewer.html">RXBuild.UI.HtmlResultTreeViewer</a></li>
+	
+	<li><a href="../symbols/RXBuild.UI.HtmlResultViewer.html">RXBuild.UI.HtmlResultViewer</a></li>
+	
+	<li><a href="../symbols/RXBuild.UI.QuickRefViewer.html">RXBuild.UI.QuickRefViewer</a></li>
+	
+	<li><a href="../symbols/RXBuild.UI.RegexViewer.html">RXBuild.UI.RegexViewer</a></li>
+	
+	<li><a href="../symbols/RXBuild.UI.RXEditor.html">RXBuild.UI.RXEditor</a></li>
 	
 	<li><a href="../symbols/RXBuild.UI.Status.html">RXBuild.UI.Status</a></li>
 	
@@ -250,7 +270,7 @@ ul.inheritsList
 				Abstract base class for all matching nodes in the regexps DOM tree
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Documents_Private_Code_js_rxbuild_src_regex_dom_node.js.html">regex_dom_node.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Sites_rxbuild_src_regex_dom_node.js.html">regex_dom_node.js</a>.
 				
 			</p>
 
@@ -342,6 +362,15 @@ ul.inheritsList
 						</tr>
 					</thead>
 					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.Node.html#Accept">Accept</a></b>(visitor)
+								</div>
+								<div class="description">Makes the visitor explore the current instance</div>
+							</td>
+						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
@@ -448,6 +477,15 @@ ul.inheritsList
 								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.Node.html#RunOnMe">RunOnMe</a></b>(func, param)
 								</div>
 								<div class="description">Visits this node with the provided visitor</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.Dom.Node.html#StartVisit">StartVisit</a></b>(visitor)
+								</div>
+								<div class="description">Makes the visitor explore the current instance and all followers</div>
 							</td>
 						</tr>
 					
@@ -567,6 +605,49 @@ ul.inheritsList
 				<div class="sectionTitle">
 					Method Detail
 				</div>
+				
+					<a name="Accept"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Boolean}</span>
+					<b>Accept</b>(visitor)
+					
+					</div>
+					<div class="description">
+						Makes the visitor explore the current instance
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{RXBuild.DOM.NodeVisitor}</span> <b>visitor</b>
+									
+								</dt>
+								<dd>The visitor object</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Boolean}</span> The return value of the visitor</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
 				
 					<a name="AddTokens"> </a>
 					<div class="fixedFont">
@@ -975,6 +1056,49 @@ ul.inheritsList
 						
 						
 
+					<hr />
+				
+					<a name="StartVisit"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Boolean}</span>
+					<b>StartVisit</b>(visitor)
+					
+					</div>
+					<div class="description">
+						Makes the visitor explore the current instance and all followers
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{RXBuild.DOM.NodeVisitor}</span> <b>visitor</b>
+									
+								</dt>
+								<dd>The visitor object</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Boolean}</span> False, if the visit was cancelled by the visitor</dd>
+							
+							</dl>
+						
+						
+						
+
 					
 				
 			
@@ -985,7 +1109,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Tue Feb 17 2009 02:46:47 GMT+0100 (CET)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Sun Feb 22 2009 20:41:02 GMT+0100 (CET)
 		</div>
 	</body>
 </html>
