@@ -182,7 +182,7 @@ RXBuild.UI.RXEditor.prototype.initUI = function() {
 					"<ul id=\"ulList1\"><li>" +
 						"<input type=\"checkbox\" id=\"" + prefix + "chkCaseInsensitive\" value=\"checked\" checked><label for=\"" + prefix + "chkCaseInsensitive\"> <strong>/i</strong> (case insensitive)</label>" +
 					"</li><li>" +
-						"<input type=\"checkbox\" id=\"" + prefix + "chkMultiline\" value=\"checked\"><label for=\"" + prefix + "chkMultiline\"> <strong>/m</strong> (<strong>^</strong>/<strong>&amp;</strong> on lines too)</label>" +
+						"<input type=\"checkbox\" id=\"" + prefix + "chkMultiline\" value=\"checked\"><label for=\"" + prefix + "chkMultiline\"> <strong>/m</strong> (<strong>^</strong>/<strong>$</strong> on lines too)</label>" +
 					"</li><li>" +
 						"<input type=\"checkbox\" id=\"" + prefix + "chkGlobal\" value=\"checked\" checked><label for=\"" + prefix + "chkGlobal\"> <strong>/g</strong> (all matches)</label>" +
 					"</li></ul>" +
