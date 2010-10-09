@@ -150,10 +150,10 @@ if (!RXBuild)
 	RXBuild.RegExp.prototype.getRubyCode = function () {
 		var sRes = "";
 		var sOptions = this.options.str.replace('g', '');
-		var sRe = "/" + this.pattern.replace(/\\/g,'\\\\').replace(/\//g, '\\/') + '/' + sOptions;
+		var sRe = "/" + this.pattern.replace(/\//g, '\\/') + '/' + sOptions;
 		if (this.options.g) {
-			sRes += 'while match_group = replace_me_with_the_input_text.match(' + sRe + ")\n";
-			sRes += "  # Your matches are in match_group[n]\n";
+			sRes += 'for match in replace_me_with_the_input_text.scan(' + sRe + ")\n";
+			sRes += "  # Your matches are in match or match[n]\n";
 			sRes += "end\n";
 		} else {
 			sRes += 'match_group = replace_me_with_the_input_text.match(' + sRe + ")\n";
