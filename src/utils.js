@@ -106,7 +106,7 @@ String.prototype.findCommonPrefix = function (s, startIndex) {
 	if (typeof(startIndex) != "number") startIndex = 0;
 	for (i = startIndex; i < this.length && i < s.length && this.charAt(i) == s.charAt(i); i++)
 		;
-    return i - startIndex;
+  return i - startIndex;
 };
 
 /**
@@ -184,7 +184,7 @@ String.prototype.parseURLKeyValues = function () {
 			var sPieces = sItems[i].split(/\=/);
 			for (var j = sPieces.length - 1; j >= 0; j--){
 				sPieces[j] = unescape(sPieces[j]);
-			};
+			}
 			sItems[i] = sPieces;
 		}
 		return sItems;
@@ -199,7 +199,7 @@ String.prototype.parseURLKeyValues = function () {
 				if (typeof(oVal) == 'string'){
 					if (oVal == name) return j;
 				} else if (oVal[0] == name) return j;
-			};
+			}
 			return -1;
 		}
 		function replaceItemByName(name, newValue) {
@@ -217,7 +217,7 @@ String.prototype.parseURLKeyValues = function () {
 				deleteItemByName(oItem);
 			else
 				replaceItemByName(oItem[0], oItem);
-		};
+		}
 	}
 	/** @private */
 	function encodeURLKeyValuePair(values) {
@@ -230,10 +230,10 @@ String.prototype.parseURLKeyValues = function () {
 				var sItemString = [];
 				for (var j=0; j < oItem.length; j++) {
 					sItemString.push(escape(oItem[j]));
-				};
+				}
 				sResult.push(sItemString.join("="));
 			}
-		};
+		}
 		return sResult.join("&");
 	}
 	
@@ -317,7 +317,7 @@ RXBuild.Utils.getXMLInnerText = function(item) {
 		} else if (item.length) {
 			for (var i=0; i < item.length; i++) {
 				addXMLInnerText(item[i], output);
-			};
+			}
 		} else if (item.hasChildNodes && item.hasChildNodes()) {
 			addXMLInnerText(item.childNodes, output);
 		}
@@ -423,8 +423,7 @@ RXBuild.Utils.buildRegexpFromTokens = function (tokens, noncapturing, caseinsens
 			if (parent[i].children && parent[i].terminal) {
 				res.push("?");
 			}
-		};
-
+		}
 	}
 	tokens = tokens.sort();
 	for (var i = tokens.length - 1; i >= 0; i--){
@@ -432,7 +431,7 @@ RXBuild.Utils.buildRegexpFromTokens = function (tokens, noncapturing, caseinsens
 			tokens.pop();
 		else
 			tokens[i] = tokens[i].trim();
-	};
+	}
 	for (var j=0; j < tokens.length; j++)
 		addNode(root, tokens[j]);
 	var oRes = [];
