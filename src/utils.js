@@ -75,7 +75,7 @@ String.prototype.escapeToBackslashes = function () {
                replace(/\f/g,'\\f').
                replace(/\v/g,'\\v').
                replace(/\n/g,'\\n').
-			   replace(/[^a-zA-Z0-9_+*\/\\ .,?!@#$%^&*():;\[\]|><~-]/gi, function (s) { 
+			   replace(/[^a-zA-Z0-9_+*\/\\'" .,?!@#$%^&*():;\[\]{}|><~-]/gi, function (s) {
 				var sHexCode = (new Number(s.charCodeAt(0))).toString(16);
 				if (sHexCode.length == 1) sHexCode = "0" + sHexCode;
 				if (sHexCode.length == 2) return "\\x" + sHexCode;
@@ -106,7 +106,7 @@ String.prototype.findCommonPrefix = function (s, startIndex) {
 	if (typeof(startIndex) != "number") startIndex = 0;
 	for (i = startIndex; i < this.length && i < s.length && this.charAt(i) == s.charAt(i); i++)
 		;
-    return i - startIndex;
+  return i - startIndex;
 };
 
 /**
@@ -184,7 +184,7 @@ String.prototype.parseURLKeyValues = function () {
 			var sPieces = sItems[i].split(/\=/);
 			for (var j = sPieces.length - 1; j >= 0; j--){
 				sPieces[j] = unescape(sPieces[j]);
-			};
+			}
 			sItems[i] = sPieces;
 		}
 		return sItems;
@@ -199,7 +199,7 @@ String.prototype.parseURLKeyValues = function () {
 				if (typeof(oVal) == 'string'){
 					if (oVal == name) return j;
 				} else if (oVal[0] == name) return j;
-			};
+			}
 			return -1;
 		}
 		function replaceItemByName(name, newValue) {
@@ -217,7 +217,7 @@ String.prototype.parseURLKeyValues = function () {
 				deleteItemByName(oItem);
 			else
 				replaceItemByName(oItem[0], oItem);
-		};
+		}
 	}
 	/** @private */
 	function encodeURLKeyValuePair(values) {
@@ -230,10 +230,10 @@ String.prototype.parseURLKeyValues = function () {
 				var sItemString = [];
 				for (var j=0; j < oItem.length; j++) {
 					sItemString.push(escape(oItem[j]));
-				};
+				}
 				sResult.push(sItemString.join("="));
 			}
-		};
+		}
 		return sResult.join("&");
 	}
 	
@@ -317,7 +317,7 @@ RXBuild.Utils.getXMLInnerText = function(item) {
 		} else if (item.length) {
 			for (var i=0; i < item.length; i++) {
 				addXMLInnerText(item[i], output);
-			};
+			}
 		} else if (item.hasChildNodes && item.hasChildNodes()) {
 			addXMLInnerText(item.childNodes, output);
 		}
@@ -423,8 +423,7 @@ RXBuild.Utils.buildRegexpFromTokens = function (tokens, noncapturing, caseinsens
 			if (parent[i].children && parent[i].terminal) {
 				res.push("?");
 			}
-		};
-
+		}
 	}
 	tokens = tokens.sort();
 	for (var i = tokens.length - 1; i >= 0; i--){
@@ -432,10 +431,107 @@ RXBuild.Utils.buildRegexpFromTokens = function (tokens, noncapturing, caseinsens
 			tokens.pop();
 		else
 			tokens[i] = tokens[i].trim();
-	};
+	}
 	for (var j=0; j < tokens.length; j++)
 		addNode(root, tokens[j]);
 	var oRes = [];
 	buildRegExp(root, oRes, noncapturing);
 	return "\\b" + oRes.join("") + "\\b";
+};
+
+/** Creates a new instance of RangeSet
+  @class The RangeSet holds a set of numeric ranges sparsely
+  @property {Boolean} inverted True if ranges contained in this instance are to be excluded
+  @property {Array} ranges A sorted array of objects in the form {f: num, t: num} specifying inclusive bounds
+  @constructor
+  @param {boolean} inverted <code>true</code> if ranges added to this instance are to be considered excluded, otherwise <code>false</code>.
+*/
+RXBuild.Utils.RangeSet = function (inverted) {
+  this.ranges = [];
+  this.inverted = !!inverted;
+};
+RXBuild.Utils.RangeSet.prototype.constructor = RXBuild.Utils.RangeSet;
+/** The add method adds the specified range to the current instance.
+  @param {Number|Range} range A range (of the form <code>{f: first_int, t: last_int}</code>), or a single included number.
+*/
+RXBuild.Utils.RangeSet.prototype.add = function (range) {
+  function overlaps(a, b) {
+    return !(a.t < b.f || a.f > b.t);
+  }
+  function normalise(r) {
+    if (r.f > r.t) {
+      var f = r.f;
+      r.f = r.t;
+      r.t = f;
+    }
+    return r;
+  }
+  function mergeIfOverlaps(original, added) {
+    if (overlaps(original, added)) {
+      if (added.f < original.f) original.f = added.f;
+      if (added.t > original.t) original.t = added.t;
+      return true;
+    } else if (original.f == added.t + 1) {
+      original.f = added.f;
+      return true;
+    } else if (original.t == added.f - 1) {
+      original.t = added.t;
+      return true;
+    }
+    return false;
+  }
+  if (typeof range == "number") {
+    if (arguments.length == 1)
+      range = {f: range, t: range};
+    else range = normalise({f: range, t: arguments[1]});
+  }
+  else normalise(range);
+  var iNumberOfRanges = this.ranges.length;
+  for (var i=iNumberOfRanges; i > 0; i--) {
+    var oRange = this.ranges[iNumberOfRanges - i];
+    if (mergeIfOverlaps(oRange, range)) {
+      if (i > 1 && mergeIfOverlaps(oRange, this.ranges[iNumberOfRanges - i + 1])) {
+          this.ranges.splice(iNumberOfRanges - i + 1, 1);
+      }
+      return;
+    }
+    if (range.t < oRange.f) {
+      if (i > 1 && overlaps(this.ranges[iNumberOfRanges - i + 1], range)) {
+        mergeIfOverlaps(this.ranges[iNumberOfRanges - i + 1], range);
+      } else {
+          this.ranges.splice(iNumberOfRanges - i, 0, range);
+      }
+      return;
+    }
+  }
+  this.ranges.push(range);
+};
+/** The has method returns whether the specified number is include in the current rangeset instance
+  @param {Number} num The number to test for
+  @return {boolean} <code>true</code> if the number is in the range set (or absent and the inverted property is <code>true</code>), otherwise <code>false</code>.
+*/
+RXBuild.Utils.RangeSet.prototype.has = function (num) {
+  var iNumberOfRanges = this.ranges.length;
+  for (var i=iNumberOfRanges; i > 0; i--) {
+    var oRange = this.ranges[iNumberOfRanges - i];
+    if (oRange.f <= num && oRange.t >= num)
+      return !this.inverted;
+    if (oRange.f > num) return this.inverted;
+  }
+  return this.inverted;
+};
+/** The toString method builds a string reprensentation of the current instances ranges
+  @return {string} A string representation of this instance (ex: <code>&quot;1, 4..6, 7..9&quot;</code>)
+*/
+RXBuild.Utils.RangeSet.prototype.toString = function () {
+  var sResult = [];
+  var iNumberOfRanges = this.ranges.length;
+  for (var i=iNumberOfRanges; i > 0; i--) {
+    var oRange = this.ranges[iNumberOfRanges - i];
+    if (oRange.f == oRange.t)
+      sResult.push(oRange.f);
+    else
+      sResult.push(oRange.f + ".." + oRange.t);
+  }
+  return sResult.join(", ");
 };

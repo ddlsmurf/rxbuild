@@ -47,6 +47,9 @@
 	<script src="src/ui_regex_viewer_matcher_inline.js" type="text/javascript" charset="utf-8"></script>
 	<script src="src/ui_regex_viewer_matcher_tree.js" type="text/javascript" charset="utf-8"></script>
 	<script src="src/ui_quick_reference_viewer.js" type="text/javascript" charset="utf-8"></script>
+  <script src="src/ui_diagram.js" type="text/javascript" charset="utf-8"></script>
+  <script src="src/ui_syntax_diagram.js" type="text/javascript" charset="utf-8"></script>
+  <script src="src/regex_syntax_diagram.js" type="text/javascript" charset="utf-8"></script>
 
  <style type="text/css">
 	.lightBox { border: none; padding: 0px; margin: 0px 0; }
@@ -115,6 +118,19 @@
 	<ul>
 		<li><a href="http://cuneytyilmaz.com/prog/jrx/">Cüneyt Yýlmaz's JRX</a></li>
 		<li><a href="http://regexpal.com/">Steven Levithan's RegexPal</a></li>
+		<li>Oliver Steele's <a href="http://osteele.com/tools/reanimator/">reAnimator</a> and also his <a href="http://osteele.com/tools/rework/#">reWork</a></li>
+	</ul>
+	<h2>
+		References
+	</h2>
+	Links to some popular reg exp flavour references:<br />
+	<ul>
+		<li><a href="https://developer.mozilla.org/En/Core_JavaScript_1.5_Reference/Global_Objects/RegExp">Mozilla JavaScript</a></li>
+		<li><a href="http://www.w3.org/TR/xmlschema-2/#regexs">W3C XSD/XML</a></li>
+		<li><a href="http://msdn.microsoft.com/en-us/library/az24scfc.aspx">Microsoft .Net</a></li>
+		<li><a href="http://www.perl.com/doc/manual/html/pod/perlre.html">Perl re</a></li>
+		<li><a href="http://docs.python.org/library/re.html">Python re</a></li>
+		<li><a href="http://www.ruby-doc.org/docs/ProgrammingRuby/html/language.html#UJ">Ruby pickaxe</a></li>
 	</ul>
 	<h2>
 		Copyright
@@ -160,6 +176,7 @@
 		this.resultViewer = new RXBuild.UI.RegexViewer(document.getElementById('treeDiv1'), 'TreeContainerThingie',
 													   oBottomLayoutUnit.header.getElementsByTagName("H2")[0], this.rx,
 													[
+													  ["Diagram", RXBuild.UI.DiagramViewer, "diagram"],
 														["Matches - tree", RXBuild.UI.HtmlResultTreeViewer, "tree"],
 														["Matches - inline", RXBuild.UI.HtmlResultViewer, "flat"],
 														["DOM tree", RXBuild.UI.HtmlExplanationTreeViewer, "domTree"]

@@ -147,6 +147,10 @@ RXBuild.Dom.CharacterRangeMatch.prototype.AddChars = function(chars) {
 		this.AddTokens(chars.tokens);
 		chars = chars.texttomatch;
 	}
+  if (this.pending.length == 0 && chars == "^" && (this.tokens == null || this.tokens.length == 0)) {
+    this.reversed = true;
+    return;
+  }
 	if (this.pending.length == 0 && chars == "-")
 	{
 		this.AddChar(chars);

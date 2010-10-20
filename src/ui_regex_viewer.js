@@ -47,12 +47,12 @@ if (!RXBuild.UI)
 		for (var i=0; i < this.viewers.length; i++) {
 			var oCurView = this.viewers[i];
 			oCurView[1] = new oCurView[1](this.container, this.id + "_" + oCurView[2]);
-		};
+		}
 		
 		var oAcceptableViewersMenu = [];
 		for (var i=0; i < this.viewers.length; i++) {
 			oAcceptableViewersMenu.push({text: this.viewers[i][0], value: i});
-		};
+		}
 		 
 		this.btnChangeView = new YAHOO.widget.Button({   
 		                        id: id + "_btnSelectView",   
@@ -96,9 +96,10 @@ if (!RXBuild.UI)
 	RXBuild.UI.RegexViewer.prototype.setCurrentView = function(viewIndex) {
 		var oView = this.viewers[viewIndex];
 		this.btnChangeView.set("label", ("<em class=\"yui-button-label\">" + oView[0] + "</em>"));
-	    for (var i=0; i < this.viewers.length; i++) {
-	    	this.viewers[i][1].container.style.display = i == viewIndex ? "" : "none";
-	    };
+    for (var i=0; i < this.viewers.length; i++) {
+    	this.viewers[i][1].container.style.display = i == viewIndex ? "" : "none";
+    }
+		if (this.activeViewer && this.activeViewer.hide) this.activeViewer.hide();
 		this.activeViewer = oView[1];
 		this.invalidate();
 		this.autoRefresh();
