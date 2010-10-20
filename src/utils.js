@@ -75,7 +75,7 @@ String.prototype.escapeToBackslashes = function () {
                replace(/\f/g,'\\f').
                replace(/\v/g,'\\v').
                replace(/\n/g,'\\n').
-			   replace(/[^a-zA-Z0-9_+*\/\\'" .,?!@#$%^&*():;\[\]|><~-]/gi, function (s) {
+			   replace(/[^a-zA-Z0-9_+*\/\\'" .,?!@#$%^&*():;\[\]{}|><~-]/gi, function (s) {
 				var sHexCode = (new Number(s.charCodeAt(0))).toString(16);
 				if (sHexCode.length == 1) sHexCode = "0" + sHexCode;
 				if (sHexCode.length == 2) return "\\x" + sHexCode;
