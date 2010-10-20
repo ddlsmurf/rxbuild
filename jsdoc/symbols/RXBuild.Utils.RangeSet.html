@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - regex_parser.TokenInfo</title>
+		<title>JsDoc Reference - RXBuild.Utils.RangeSet</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -276,23 +276,23 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class regex_parser.TokenInfo
+				Class RXBuild.Utils.RangeSet
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
 			
-				The TokenInfo class holds information about a token from the input stream
+				The RangeSet holds a set of numeric ranges sparsely
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Desktop_Sites_rxbuild_src_regex_parser.js.html">regex_parser.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Desktop_Sites_rxbuild_src_utils.js.html">utils.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class regex_parser.TokenInfo.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class RXBuild.Utils.RangeSet.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -305,9 +305,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/regex_parser.TokenInfo.html#constructor">regex_parser.TokenInfo</a></b>(value, offset, converter)
+								<b><a href="../symbols/RXBuild.Utils.RangeSet.html#constructor">RXBuild.Utils.RangeSet</a></b>(inverted)
 							</div>
-							<div class="description">Creates a new instance of TokenInfo</div>
+							<div class="description">Creates a new instance of RangeSet</div>
 						</td>
 					</tr>
 				</tbody>
@@ -318,7 +318,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class regex_parser.TokenInfo.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class RXBuild.Utils.RangeSet.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -332,9 +332,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/regex_parser.TokenInfo.html#length">length</a></b>
+								<b><a href="../symbols/RXBuild.Utils.RangeSet.html#inverted">inverted</a></b>
 								</div>
-								<div class="description">The length of this token as it appeared originally in the input stream</div>
+								<div class="description">True if ranges contained in this instance are to be excluded</div>
 							</td>
 						</tr>
 					
@@ -342,19 +342,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/regex_parser.TokenInfo.html#offset">offset</a></b>
+								<b><a href="../symbols/RXBuild.Utils.RangeSet.html#ranges">ranges</a></b>
 								</div>
-								<div class="description">The index of this token in the input stream</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/regex_parser.TokenInfo.html#value">value</a></b>
-								</div>
-								<div class="description">The actual value (possibly converted) of the part matched by this token</div>
+								<div class="description">A sorted array of objects in the form {f: num, t: num} specifying inclusive bounds</div>
 							</td>
 						</tr>
 					
@@ -367,6 +357,51 @@ ul.inheritsList
 
 <!-- ============================== methods summary ======================== -->
 			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class RXBuild.Utils.RangeSet.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.Utils.RangeSet.html#add">add</a></b>(range)
+								</div>
+								<div class="description">The add method adds the specified range to the current instance.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.Utils.RangeSet.html#has">has</a></b>(num)
+								</div>
+								<div class="description">The has method returns whether the specified number is include in the current rangeset instance</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.Utils.RangeSet.html#toString">toString</a></b>()
+								</div>
+								<div class="description">The toString method builds a string reprensentation of the current instances ranges</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
 
 <!-- ============================== constructor details ==================== -->		
 			
@@ -376,11 +411,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>regex_parser.TokenInfo</b>(value, offset, converter)
+						<b>RXBuild.Utils.RangeSet</b>(inverted)
 				</div>
 				
 				<div class="description">
-					Creates a new instance of TokenInfo
+					Creates a new instance of RangeSet
 					
 				</div>
 				
@@ -392,22 +427,10 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span>  <b>value</b>
+								<span class="light fixedFont">{boolean}</span>  <b>inverted</b>
 								
 							</dt>
-								<dd>The value from the input stream</dd>
-						
-							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>offset</b>
-								
-							</dt>
-								<dd>The first index of this token in the input string</dd>
-						
-							<dt>
-								<span class="light fixedFont">{function}</span>  <b>converter</b>
-								
-							</dt>
-								<dd>If defined, this function is called with the value as parameter, and its return value is used as the new value.</dd>
+								<dd><code>true</code> if ranges added to this instance are to be considered excluded, otherwise <code>false</code>.</dd>
 						
 						</dl>
 					
@@ -427,15 +450,15 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name="length"> </a>
+					<a name="inverted"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Number}</span>
-					<b>length</b>
+					<span class="light">{Boolean}</span>
+					<b>inverted</b>
 					
 					</div>
 					<div class="description">
-						The length of this token as it appeared originally in the input stream
+						True if ranges contained in this instance are to be excluded
 						
 						
 					</div>
@@ -449,37 +472,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="offset"> </a>
+					<a name="ranges"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Number}</span>
-					<b>offset</b>
+					<span class="light">{Array}</span>
+					<b>ranges</b>
 					
 					</div>
 					<div class="description">
-						The index of this token in the input stream
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="value"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>value</b>
-					
-					</div>
-					<div class="description">
-						The actual value (possibly converted) of the part matched by this token
+						A sorted array of objects in the form {f: num, t: num} specifying inclusive bounds
 						
 						
 					</div>
@@ -497,6 +498,122 @@ ul.inheritsList
 
 <!-- ============================== method details ========================= -->		
 			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="add"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>add</b>(range)
+					
+					</div>
+					<div class="description">
+						The add method adds the specified range to the current instance.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number|Range}</span> <b>range</b>
+									
+								</dt>
+								<dd>A range (of the form <code>{f: first_int, t: last_int}</code>), or a single included number.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="has"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{boolean}</span>
+					<b>has</b>(num)
+					
+					</div>
+					<div class="description">
+						The has method returns whether the specified number is include in the current rangeset instance
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>num</b>
+									
+								</dt>
+								<dd>The number to test for</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{boolean}</span> <code>true</code> if the number is in the range set (or absent and the inverted property is <code>true</code>), otherwise <code>false</code>.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="toString"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{string}</span>
+					<b>toString</b>()
+					
+					</div>
+					<div class="description">
+						The toString method builds a string reprensentation of the current instances ranges
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{string}</span> A string representation of this instance (ex: <code>&quot;1, 4..6, 7..9&quot;</code>)</dd>
+							
+							</dl>
+						
+						
+						
+
+					
+				
+			
 			
 			<hr />
 		</div>
@@ -504,7 +621,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Wed Oct 20 2010 11:48:48 GMT+0200 (CEST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Wed Oct 20 2010 11:48:50 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

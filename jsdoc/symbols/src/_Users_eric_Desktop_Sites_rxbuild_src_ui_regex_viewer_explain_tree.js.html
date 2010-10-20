@@ -1,0 +1,122 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/* (c) Copyright 2009 Eric Doughty-Papassideris. All Rights Reserved.
+<span class='line'>  2</span> 
+<span class='line'>  3</span> 	This file is part of RXBuild.
+<span class='line'>  4</span> 
+<span class='line'>  5</span>     RXBuild is free software: you can redistribute it and/or modify
+<span class='line'>  6</span>     it under the terms of the GNU Lesser General Public License as published by
+<span class='line'>  7</span>     the Free Software Foundation, either version 3 of the License, or
+<span class='line'>  8</span>     (at your option) any later version.
+<span class='line'>  9</span> 
+<span class='line'> 10</span>     RXBuild is distributed in the hope that it will be useful,
+<span class='line'> 11</span>     but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class='line'> 12</span>     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class='line'> 13</span>     GNU Lesser General Public License for more details.
+<span class='line'> 14</span> 
+<span class='line'> 15</span>     You should have received a copy of the GNU General Public License
+<span class='line'> 16</span>     along with RXBuild.  If not, see &lt;http://www.gnu.org/licenses/>.
+<span class='line'> 17</span> */</span><span class="WHIT">
+<span class='line'> 18</span> 
+<span class='line'> 19</span> </span><span class="COMM">/**	@fileOverview Contains the component that displays an tree view of the regexps DOM
+<span class='line'> 20</span> 	@requires utils.js
+<span class='line'> 21</span> 	@requires regex_controller.js
+<span class='line'> 22</span> 	@requires regex_engine.js
+<span class='line'> 23</span> */</span><span class="WHIT">
+<span class='line'> 24</span> 
+<span class='line'> 25</span> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">RXBuild</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 26</span> 	</span><span class="COMM">/** @namespace The RXBuild namespace is the root namespace for all things RXBuild */</span><span class="WHIT">
+<span class='line'> 27</span> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">RXBuild</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 28</span> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">RXBuild.UI</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 29</span> 	</span><span class="COMM">/** @namespace The RXBuild.UI namespace is the root namespace for all things related to RXBuilds user interface */</span><span class="WHIT">
+<span class='line'> 30</span> 	 </span><span class="NAME">RXBuild.UI</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 31</span> 
+<span class='line'> 32</span> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 33</span> 	</span><span class="COMM">/** 
+<span class='line'> 34</span> 		Creates a new instance of RXBuild.UI.HtmlExplanationTreeBuilder (which inherits RXBuild.Dom.NodeVisitor)
+<span class='line'> 35</span> 		@class The RXBuild.UI.HtmlExplanationTreeBuilder visits the DOM of the parsed regexp to build a corresponding YUI tree
+<span class='line'> 36</span> 		@p
+<span class='line'> 37</span> 		@base RXBuild.Dom.NodeVisitor
+<span class='line'> 38</span> 		@constructor
+<span class='line'> 39</span> 	*/</span><span class="WHIT">
+<span class='line'> 40</span> 	</span><span class="NAME">RXBuild.UI.HtmlExplanationTreeBuilder</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">parentNode</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 41</span> 		</span><span class="NAME">RXBuild.Dom.NodeVisitor.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 42</span> 		</span><span class="NAME">this.parentStack</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 43</span> 		</span><span class="NAME">this.currentParent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">parentNode</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 44</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 45</span> 	</span><span class="NAME">RXBuild.UI.HtmlExplanationTreeBuilder.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">RXBuild.Dom.NodeVisitor</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 46</span> 	</span><span class="NAME">RXBuild.UI.HtmlExplanationTreeBuilder.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">RXBuild.UI.HtmlExplanationTreeBuilder</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 47</span> 	</span><span class="COMM">/** Called when visiting a leaf node
+<span class='line'> 48</span> 		@param {RXBuild.Dom.Node} leafNode The node being visited
+<span class='line'> 49</span> 		@return {Boolean} Return true to continue visit
+<span class='line'> 50</span> 	*/</span><span class="WHIT">
+<span class='line'> 51</span> 	</span><span class="NAME">RXBuild.UI.HtmlExplanationTreeBuilder.prototype.visit</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">leafNode</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 52</span> 		</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">YAHOO.widget.TextNode</span><span class="PUNC">(</span><span class="NAME">leafNode.GetHtml</span><span class="PUNC">(</span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.currentParent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">leafNode</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 53</span> 		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 54</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 55</span> 	</span><span class="COMM">/** Called when visiting a parent node
+<span class='line'> 56</span> 		@param {RXBuild.Dom.Node} compositeNode The node being visited
+<span class='line'> 57</span> 		@return {Boolean} Return true to visit children on this node
+<span class='line'> 58</span> 	*/</span><span class="WHIT">
+<span class='line'> 59</span> 	</span><span class="NAME">RXBuild.UI.HtmlExplanationTreeBuilder.prototype.visitEnter</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">compositeNode</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 60</span> 		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">oNewParent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">YAHOO.widget.TextNode</span><span class="PUNC">(</span><span class="NAME">compositeNode.GetHtml</span><span class="PUNC">(</span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.currentParent</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 61</span> 		</span><span class="NAME">oNewParent.data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">compositeNode</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 62</span> 		</span><span class="NAME">this.parentStack.push</span><span class="PUNC">(</span><span class="NAME">this.currentParent</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 63</span> 		</span><span class="NAME">this.currentParent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">oNewParent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 64</span> 		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 65</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 66</span> 	</span><span class="COMM">/** Called when finished visiting a parent node
+<span class='line'> 67</span> 		@param {RXBuild.Dom.Node} compositeNode The node that completed visit
+<span class='line'> 68</span> 		@return {Boolean} Return true to continue the visit after the compositeNode
+<span class='line'> 69</span> 	*/</span><span class="WHIT">
+<span class='line'> 70</span> 	</span><span class="NAME">RXBuild.UI.HtmlExplanationTreeBuilder.prototype.visitLeave</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">compositeNode</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 71</span> 		</span><span class="NAME">this.currentParent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.parentStack.pop</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 72</span> 		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 73</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 74</span> 	
+<span class='line'> 75</span> 	</span><span class="COMM">/** 
+<span class='line'> 76</span> 		Creates a new instance of RXBuild.UI.HtmlResultTreeViewer (which inherits RXBuild.Engine.ResultListener)
+<span class='line'> 77</span> 		@class The RXBuild.UI.HtmlResultTreeViewer displays the results of matching a regular expression inline with the text
+<span class='line'> 78</span> 		@property {HTMLElement} container The DOM element that holds the results for display		
+<span class='line'> 79</span> 		@base RXBuild.Engine.ResultListener
+<span class='line'> 80</span> 		@constructor
+<span class='line'> 81</span> 		@param {} container
+<span class='line'> 82</span> 	*/</span><span class="WHIT">
+<span class='line'> 83</span> 	</span><span class="NAME">RXBuild.UI.HtmlExplanationTreeViewer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">container</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 84</span> 		</span><span class="NAME">RXBuild.Engine.ResultListener.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 85</span> 		</span><span class="NAME">this.container</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.createElement</span><span class="PUNC">(</span><span class="STRN">"DIV"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 86</span> 		</span><span class="NAME">this.container.className</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"rxb-domtree"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 87</span> 		</span><span class="NAME">this.container.setAttribute</span><span class="PUNC">(</span><span class="STRN">"id"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 88</span> 		</span><span class="NAME">container.appendChild</span><span class="PUNC">(</span><span class="NAME">this.container</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 89</span> 		</span><span class="NAME">this.errorcontainer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">document.createElement</span><span class="PUNC">(</span><span class="STRN">"DIV"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 90</span> 		</span><span class="NAME">this.errorcontainer.setAttribute</span><span class="PUNC">(</span><span class="STRN">"id"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">"_errorContainer"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 91</span> 		</span><span class="NAME">container.appendChild</span><span class="PUNC">(</span><span class="NAME">this.errorcontainer</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 92</span> 		</span><span class="NAME">this.tree</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">YAHOO.widget.TreeView</span><span class="PUNC">(</span><span class="NAME">this.container</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 93</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 94</span> 	</span><span class="NAME">RXBuild.UI.HtmlExplanationTreeViewer.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">RXBuild.UI.HtmlExplanationTreeViewer</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 95</span> 	</span><span class="COMM">/** Updates the view to reflect the provided regular expression and input
+<span class='line'> 96</span> 		@param {RXBuild.RegExp} regex The new pattern
+<span class='line'> 97</span> 		@param {String} input The sample input text in which to run the matches
+<span class='line'> 98</span> 	*/</span><span class="WHIT">
+<span class='line'> 99</span> 	</span><span class="NAME">RXBuild.UI.HtmlExplanationTreeViewer.prototype.updateRegExp</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">regex</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">input</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>100</span> 		</span><span class="NAME">this.tree.removeChildren</span><span class="PUNC">(</span><span class="NAME">this.tree.getRoot</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>101</span> 		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">oCompiledRegExp</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>102</span> 		</span><span class="KEYW">try</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>103</span> 			</span><span class="NAME">oCompiledRegExp</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">regex.compile</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>104</span> 			</span><span class="NAME">this.container.style.display</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">""</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>105</span> 			</span><span class="NAME">this.errorcontainer.style.display</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"none"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>106</span> 			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">oVisitor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">RXBuild.UI.HtmlExplanationTreeBuilder</span><span class="PUNC">(</span><span class="NAME">this.tree.getRoot</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>107</span> 			</span><span class="NAME">oCompiledRegExp.StartVisit</span><span class="PUNC">(</span><span class="NAME">oVisitor</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>108</span> 			</span><span class="NAME">this.tree.draw</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>109</span> 		</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">catch</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>110</span> 			</span><span class="NAME">this.container.style.display</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"none"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>111</span> 			</span><span class="NAME">this.errorcontainer.style.display</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">""</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>112</span> 			</span><span class="NAME">this.errorcontainer.innerHTML</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">e.plainTextToHtml</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>113</span> 		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>114</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

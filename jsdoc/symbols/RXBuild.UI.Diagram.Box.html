@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - regex_parser.TokenInfo</title>
+		<title>JsDoc Reference - RXBuild.UI.Diagram.Box</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -276,23 +276,25 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class regex_parser.TokenInfo
+				Class RXBuild.UI.Diagram.Box
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
+				<br />Extends
+					<a href="../symbols/RXBuild.UI.Diagram.html#.Renderable">RXBuild.UI.Diagram.Renderable</a>.<br />
 				
 			
-				The TokenInfo class holds information about a token from the input stream
+				The RXBuild.UI.Diagram.Box draws the inner renderer with a box around it
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Desktop_Sites_rxbuild_src_regex_parser.js.html">regex_parser.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_eric_Desktop_Sites_rxbuild_src_ui_diagram.js.html">ui_diagram.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class regex_parser.TokenInfo.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class RXBuild.UI.Diagram.Box.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -305,9 +307,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/regex_parser.TokenInfo.html#constructor">regex_parser.TokenInfo</a></b>(value, offset, converter)
+								<b><a href="../symbols/RXBuild.UI.Diagram.Box.html#constructor">RXBuild.UI.Diagram.Box</a></b>(innerRenderable, padding, spacing)
 							</div>
-							<div class="description">Creates a new instance of TokenInfo</div>
+							<div class="description">Creates a new instance of RXBuild.UI.Diagram.Box (which inherits RXBuild.UI.Diagram.Renderable)</div>
 						</td>
 					</tr>
 				</tbody>
@@ -316,14 +318,17 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
+
+<!-- ============================== methods summary ======================== -->
+			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class regex_parser.TokenInfo.">
-					<caption>Field Summary</caption>
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class RXBuild.UI.Diagram.Box.">
+					<caption>Method Summary</caption>
 					<thead>
 						<tr>
-							<th scope="col">Field Attributes</th>
-							<th scope="col">Field Name and Description</th>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -331,30 +336,36 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/regex_parser.TokenInfo.html#length">length</a></b>
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.Diagram.Box.html#draw">draw</a></b>(render, ctx, x, y, size)
 								</div>
-								<div class="description">The length of this token as it appeared originally in the input stream</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/regex_parser.TokenInfo.html#offset">offset</a></b>
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.Diagram.Box.html#drawFrame">drawFrame</a></b>(render, child, frame, overall)
 								</div>
-								<div class="description">The index of this token in the input stream</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/regex_parser.TokenInfo.html#value">value</a></b>
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.Diagram.Box.html#measure">measure</a></b>(render)
 								</div>
-								<div class="description">The actual value (possibly converted) of the part matched by this token</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/RXBuild.UI.Diagram.Box.html#remove">remove</a></b>()
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -363,9 +374,10 @@ ul.inheritsList
 				
 				
 				
-			
-
-<!-- ============================== methods summary ======================== -->
+				<dl class="inheritsList">
+				
+				</dl>
+				
 			
 
 <!-- ============================== constructor details ==================== -->		
@@ -376,11 +388,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>regex_parser.TokenInfo</b>(value, offset, converter)
+						<b>RXBuild.UI.Diagram.Box</b>(innerRenderable, padding, spacing)
 				</div>
 				
 				<div class="description">
-					Creates a new instance of TokenInfo
+					Creates a new instance of RXBuild.UI.Diagram.Box (which inherits RXBuild.UI.Diagram.Renderable)
 					
 				</div>
 				
@@ -392,22 +404,22 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{<a href="../symbols/String.html#constructor">String</a>}</span>  <b>value</b>
+								 <b>innerRenderable</b>
 								
 							</dt>
-								<dd>The value from the input stream</dd>
+								<dd></dd>
 						
 							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>offset</b>
+								 <b>padding</b>
 								
 							</dt>
-								<dd>The first index of this token in the input string</dd>
+								<dd></dd>
 						
 							<dt>
-								<span class="light fixedFont">{function}</span>  <b>converter</b>
+								 <b>spacing</b>
 								
 							</dt>
-								<dd>If defined, this function is called with the value as parameter, and its return value is used as the new value.</dd>
+								<dd></dd>
 						
 						</dl>
 					
@@ -423,79 +435,188 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
-				<div class="sectionTitle">
-					Field Detail
-				</div>
-				
-					<a name="length"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>length</b>
-					
-					</div>
-					<div class="description">
-						The length of this token as it appeared originally in the input stream
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="offset"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>offset</b>
-					
-					</div>
-					<div class="description">
-						The index of this token in the input stream
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="value"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/String.html#constructor">String</a>}</span>
-					<b>value</b>
-					
-					</div>
-					<div class="description">
-						The actual value (possibly converted) of the part matched by this token
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					
-				
-			
 
 <!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="draw"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>draw</b>(render, ctx, x, y, size)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>render</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>ctx</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>x</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>y</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>size</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="drawFrame"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>drawFrame</b>(render, child, frame, overall)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>render</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>child</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>frame</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>overall</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="measure"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>measure</b>(render)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>render</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="remove"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>remove</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					
+				
 			
 			
 			<hr />
@@ -504,7 +625,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Wed Oct 20 2010 11:48:48 GMT+0200 (CEST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.0.2 on Wed Oct 20 2010 11:48:49 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>
