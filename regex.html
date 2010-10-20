@@ -47,6 +47,9 @@
 	<script src="src/ui_regex_viewer_matcher_inline.js" type="text/javascript" charset="utf-8"></script>
 	<script src="src/ui_regex_viewer_matcher_tree.js" type="text/javascript" charset="utf-8"></script>
 	<script src="src/ui_quick_reference_viewer.js" type="text/javascript" charset="utf-8"></script>
+  <script src="src/ui_diagram.js" type="text/javascript" charset="utf-8"></script>
+  <script src="src/ui_syntax_diagram.js" type="text/javascript" charset="utf-8"></script>
+  <script src="src/regex_syntax_diagram.js" type="text/javascript" charset="utf-8"></script>
 
  <style type="text/css">
 	.lightBox { border: none; padding: 0px; margin: 0px 0; }
@@ -173,6 +176,7 @@
 		this.resultViewer = new RXBuild.UI.RegexViewer(document.getElementById('treeDiv1'), 'TreeContainerThingie',
 													   oBottomLayoutUnit.header.getElementsByTagName("H2")[0], this.rx,
 													[
+													  ["Diagram", RXBuild.UI.DiagramViewer, "diagram"],
 														["Matches - tree", RXBuild.UI.HtmlResultTreeViewer, "tree"],
 														["Matches - inline", RXBuild.UI.HtmlResultViewer, "flat"],
 														["DOM tree", RXBuild.UI.HtmlExplanationTreeViewer, "domTree"]
