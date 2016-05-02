@@ -203,6 +203,7 @@ RXBuild.Dom.AlternativeMatch.prototype.Accept = function(visitor) {
 @property {RXBuild.Dom.Node} subMatch The actual match required by this group
 @property {String} groupType The type of group this represents. Possible values are:<br />
 	&quot;capture&quot; - Normal captured group<br />
+	&quot;named&quot; - Named captured group<br />
 	&quot;no_capture&quot; - Non captured group<br />
 	&quot;pos_la&quot; - Positive lookahead group<br />
 	&quot;neg_la&quot; - Negative lookahead group<br />
@@ -213,13 +214,13 @@ RXBuild.Dom.AlternativeMatch.prototype.Accept = function(visitor) {
 @param {RXBuild.Dom.Node} childMatch The actual match required by this group
 @param {String} groupType The type of group this represents.
 */
-RXBuild.Dom.GroupMatch = function (childMatch, groupType)
+RXBuild.Dom.GroupMatch = function (childMatch, groupType, name)
 {
 	RXBuild.Dom.Node.call(this);
 	this.subMatch = childMatch;
 	this.groupIndex = 0;
-	this.groupName = "";
-	this.captured = groupType == "capture";
+	this.groupName = name || "";
+	this.captured = groupType == "capture" || groupType == "named";
 	this.groupType = groupType;
 };
 RXBuild.Dom.GroupMatch.prototype = new RXBuild.Dom.Node;
